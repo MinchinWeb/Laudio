@@ -20,24 +20,35 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-from django.contrib.auth.models import User
-from django.conf import settings
 from django.db import models
 from django import forms
+from django.contrib.auth.models import User
+
+class Artist(models.Model):
+    name = models.CharField(max_length=150)
+
+
+class Album(models.Model):
+    name = models.CharField(max_length=150)
+    date = models.CharField(max_length=100);
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=150)
+
 
 class Song(models.Model):
     title = models.CharField(max_length=250)
-    artist = models.CharField(max_length=150)
-    album = models.CharField(max_length=150)
-    genre = models.CharField(max_length=50)
+    album = models.ForeignKey(Album)
+    artist = models.ForeignKey(Artist)
+    genre = models.ForeignKey(Genre)
     codec = models.CharField(max_length=10)
     tracknumber = models.IntegerField()
-    path = models.CharField(max_length=250, unique=True)
-    lastmodified = models.IntegerField()
-    added =  models.IntegerField()
-    length = models.IntegerField();
+    path = models.FilePathField()
+    lastmodified = models.DateTimeField()
+    added =  models.DateTimeField(auto_now_add=True)
+    length = models.IntegerField()
     bitrate = models.CharField(max_length=100);
-    date = models.CharField(max_length=100);
 
 
 class Playlist(models.Model):
@@ -50,32 +61,6 @@ class Playlist(models.Model):
 class PlaylistEntry(models.Model):
     playlist = models.ForeignKey(Playlist)
     song = models.ForeignKey(Song)
-
-
-class Settings(models.Model):
-    collection = models.CharField("Collection", max_length=500, 
-        help_text="Sets ONLY the path to your music files! To add the \
-                    files to your library hit the \"Scan collection\" \
-                    button button above. All directories above the music \
-                    directory need to have the rights a+x, all music files \
-                    need to be 0755")
-    requireLogin = models.BooleanField("Require Login", 
-        help_text="All users who want to listen to your files have to log in")
-    showLib = models.BooleanField("Show all songs on startup", 
-        help_text="This displays your whole collection automatically on startup. \
-                    Be carefull with bigger collections as it may impact your \
-                    browser's speed")
-    debugAudio = models.BooleanField("Debug", 
-        help_text="Enable output to your firebug console including audio debug information \
-                    and writing of debug information while scanning your collection \
-                    to %s" % settings.DEBUG_LOG)
-    hidePlaylist = models.BooleanField("Hide playlist by default", help_text="Automatically \
-                    hides the playlist in the Collection view so you have \
-                    to click playlist to view it")
-    hideSidebar = models.BooleanField("Hide sidebar by default", help_text="Automatically \
-                    hides the sidebar in the Collection view so you have \
-                    to click sidebar to view it")
-    
 
 
 class UserProfile(models.Model):
