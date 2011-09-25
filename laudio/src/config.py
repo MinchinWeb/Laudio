@@ -20,11 +20,21 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-from laudio.models import *
-from laudio.src.musicindexer import MusicIndexer
 from django.conf import settings
 import os
 
+class LaudioConfig(object):
+"""
+Interface for writing to the config file
+"""
+    def __init__(self, configFilePath="laudio.conf"):
+        """
+
+       """
+       pass
+
+from laudio.models import *
+from laudio.src.musicindexer import MusicIndexer
 class LaudioSettings(object):
 
 

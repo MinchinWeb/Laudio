@@ -28,7 +28,7 @@ from django.conf import settings
 # laudio specific imports
 from laudio.src.song.formats.ogg import OGGSong
 from laudio.src.song.formats.mp3 import MP3Song
-from laudio.models import Song, Settings
+from laudio.player.models import Song
 
 
 class MusicIndexer (object):
