@@ -26,18 +26,19 @@ from laudio.player.ajax import *
 
 urlpatterns = patterns('',
     
-    # settings
+    # Settings
     (r'^settings/$', settings, name='settings'),
-    (r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
-    (r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
-    (r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
     (r'^settings/user/new/$', settings_user_new, name='settings_user_new'),
     (r'^settings/user/delete/(?P<userid>.*)/$', settings_user_delete, name='settings_user_delete'),
     (r'^settings/user/edit/(?P<userid>.*)/$', settings_user_edit, name='settings_user_edit'),
+    # Ajax requests
+    (r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
+    (r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
+    (r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
     
-    # collection
+    # Index view
     (r'^$', index),
-    # ajax requests for collection
+    # Ajax requests for index view 
     (r'^collection/$', index_collection, name='index_collection'),
     (r'^artist/letter/(?P<artist>.*)/$', index_artist_letter, name='index_artist_letter'),
     (r'^search/all/(?P<search>.*)/$', index_search, name='index_search'),
@@ -48,7 +49,7 @@ urlpatterns = patterns('',
     (r'^cover/(?P<id>.*)/$', index_cover, name='index_cover'),
     (r'^autocomplete/(?P<row>.*)/$', index_autocomplete, name='index_autocomplete'),
     
-    # playlist requests
+    # Ajax playlist requests
     (r'^playlist/save/(?P<playlistName>.*)/$', playlist_save, name='playlist_save'),
     (r'^playlist/exists/(?P<playlistName>.*)/$', playlist_exists, name='playlist_exists'),
     (r'^playlist/name/(?P<playlistId>.*)/$', playlist_name, name='playlist_name'),
@@ -57,7 +58,7 @@ urlpatterns = patterns('',
     (r'^playlist/rename/(?P<oldName>.*)/(?P<newName>.*)/$', playlist_rename, name='playlist_rename'),
     (r'^playlist/list/$', playlist_list, name='playlist_list'),
     
-    # other sites
+    # Other sites
     (r'^about/$', about),
     (r'^profile/$', profile),
     (r'^chat/$', 'django.views.generic.simple.direct_to_template', {'template': 'chat.html'}),
