@@ -20,20 +20,28 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
 import os
 import mutagen
-import time
-# django imports
+import datetime 
+
+# Django imports
 from django.conf import settings
-# laudio specific imports
+
+# Laudio imports
 from laudio.src.song.formats.ogg import OGGSong
 from laudio.src.song.formats.mp3 import MP3Song
-from laudio.player.models import Song
+from laudio.player.models import Song, Artist, Album, Genre
+from laudio.inc.debugger import LaudioDebugger
+from laudio.src.config import LaudioConfig
 
 
-class MusicIndexer (object):
-    
-    def __init__(self, musicDir):
+class MusicScanner (object):
+    """
+    Class for scanning the files in your collection
+    """
+
+    def __init__(self, musicDir=False):
         """ Instances some attributes and sets the music directory
         
         Keyword arguments:
@@ -42,18 +50,20 @@ class MusicIndexer (object):
                     path
         
         """
-        self.musicDir = musicDir.encode("utf-8")
+        config = LaudioConfig()
+
+        if musicDir:
+            self.musicDir = musicDir.encode("utf-8")
+        else:
+            self.musicDir = config.collection_path.encode("utf-8")       
+        
         self.scanned = 0
         self.added = 0
         self.modified = 0
         self.broken = []
         self.noRights = []
-        # check config vars
-        try:
-            config = Settings.objects.get(pk=1)
-            self.debug = config.debugAudio
-        except Settings.DoesNotExist, AttributeError:
-            self.debug = False 
+        self._debugger = LaudioDebugger()
+        self.debug = config.debug 
 
 
     def scan(self):
@@ -75,84 +85,125 @@ class MusicIndexer (object):
         for name in fileList:
             # TODO: check for ogg audio in the file rather then extension
             #       possible ogv files could be falsy indexed by this
+            # ogg vorbis
             if name.lower().endswith(".ogg") or name.lower().endswith(".oga"):
                 if self.debug:
                     self._debug("Scanned %s" % name)
-                self._addSong( name, "ogg" )
+                self._addSong( OGGSong(name) )
                 self._updateScanCount()
+            # mp3
             if name.lower().endswith(".mp3"):
                 if self.debug:
                     self._debug("Scanned %s" % name)
-                self._addSong( name, "mp3" )
+                self._addSong( MP3Song(name) )
                 self._updateScanCount()
         if self.debug:
             self._debug("Finished Scan")
         
 
-    def _addSong(self, songpath, codec):
+    def _addSong(self, musicFile):
         """ Add a song to the database.
 
         Keyword arguments:
-        songpath -- the full path to the song
-        codec    -- the codec type we're using
+        musicFile -- The song object
 
         """
-        # get songpath relative to musicdirectory so change of directory wont
-        # render db useless
-        relSongPath = songpath.replace(self.musicDir, '')
-        lastModified = int( os.path.getmtime(songpath) )
         try:
             try:
                 # check if the unique path exists in the db
-                song = Song.objects.get( path=relSongPath )
+                song = Song.objects.get(path=musicFile.path)
                 # if last modified date changed, update the songdata
-                if song.lastmodified != lastModified:
+                lastModified = datetime.datetime.now()
+                if musicFile.lastmodified != lastModified:
                     try:
-                        musicFile = self._musicFile( songpath, codec )
-                        for attr in ('title', 'artist', 'album', 'genre',
-                                     'tracknumber', 'codec', 'bitrate', 
-                                     'length', 'date'):
+                        # Get artist 
+                        try:
+                            artist = Artist.objects.get(name=musicFile.artist)
+                        except Artist.DoesNotExist:
+                            artist = Artist(name=musicFile.artist)
+                            artist.save()
+
+                        # Get genre
+                        try:
+                            genre = Genre.objects.get(name=musicFile.genre)
+                        except Genre.DoesNotExist:
+                            genre = Genre(name=musicFile.genre)
+                            genre.save()
+
+                        # Get album
+                        try:
+                            album = Album.objects.get(name=musicFile.album,
+                                                      artist=artist,
+                                                      date=musicFile.date)
+                        except Album.DoesNotExist:
+                            album= Album(name=musicFile.album,
+                                         artist=artist,
+                                         date=musicFile.date)
+                            album.save()
+
+                        # Now set song metadata
+                        for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
+                                     'length', 'date', 'path'):
                             setattr( song, attr, getattr(musicFile, attr) )
                         song.lastmodified = lastModified
-                        song.path = relSongPath
+                        song.album = album
+                        song.genre = genre
                         song.save()
                         self.modified += 1
-                        self._debug("modified %s in the db" % songpath)
+                        self._debug("modified %s in the db" % musicFile.path)
                     # broken ogg file
                     except mutagen.oggvorbis.OggVorbisHeaderError:
-                        self.broken.append(songpath)
+                        self.broken.append(musicFile.path)
             except Song.DoesNotExist:
                 # if song does not exist, add a new line to the db
-                try: 
-                    musicFile = self._musicFile(songpath, codec)
-                    song = Song(title=musicFile.title,
-                                artist=musicFile.artist,
-                                album=musicFile.album,
-                                genre=musicFile.genre,
-                                tracknumber=musicFile.tracknumber,
-                                codec=musicFile.codec,
-                                lastmodified=lastModified,
-                                path=relSongPath,
-                                added=int( time.time() ),
-                                length=musicFile.length,
-                                bitrate=musicFile.bitrate,
-                                date=musicFile.date
-                                )
+                try:
+                    # Get artist 
+                    try:
+                        artist = Artist.objects.get(name=musicFile.artist)
+                    except Artist.DoesNotExist:
+                        artist = Artist(name=musicFile.artist)
+                        artist.save()
+
+                    # Get genre
+                    try:
+                        genre = Genre.objects.get(name=musicFile.genre)
+                    except Genre.DoesNotExist:
+                        genre = Genre(name=musicFile.genre)
+                        genre.save()
+
+                    # Get album
+                    try:
+                        album = Album.objects.get(name=musicFile.album,
+                                                  artist=artist,
+                                                  date=musicFile.date)
+                    except Album.DoesNotExist:
+                        album= Album(name=musicFile.album,
+                                     artist=artist
+                                     date=musicFile.date)
+                        album.save()
+
+                    # Now set song metadata
+                    song = Song()
+                    for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
+                                 'length', 'date', 'path'):
+                        setattr( song, attr, getattr(musicFile, attr) )
+                    
+                    song.lastmodified = lastModified
+                    song.album = album
+                    song.genre = genre
                     song.save()
                     self.added += 1
-                    self._debug("added %s to the db" % songpath)
+                    self._debug("added %s to the db" % musicFile.path)
                 # broken ogg file
                 except mutagen.oggvorbis.OggVorbisHeaderError:
-                    self.broken.append(songpath)
+                    self.broken.append(musicFile.path)
         except IOError:
-            self.noRights.append(songpath)
+            self.noRights.append(musicFile.path)
 
 
     def _debug(self, msg):
         """If no debug log exists, we make a new one"""
-        f = open(settings.DEBUG_LOG, 'a')
-        f.write( '%s\n' % msg )
-        f.close()
+        self._debugger.log("Music Scanner", msg)
 
 
     def _updateScanCount(self, reset=False):
@@ -170,15 +221,3 @@ class MusicIndexer (object):
                 f.close()
 
 
-    def _musicFile(self, songpath, codec):
-        """ Returns the object according to the codec 
-        
-            Keyword arguments:
-            songpath -- the full path to the song
-            codec    -- the codec type we're using
-            
-        """
-        if codec == "ogg":
-            return OGGSong(songpath)
-        elif codec == "mp3":
-            return MP3Song(songpath)

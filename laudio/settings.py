@@ -185,6 +185,9 @@ LOGGING = {
 ########################
 # laudio specific values
 
+# file for storing configuration
+LAUDIO_CFG = os.path.join(INSTALL_DIR, "laudio.cfg")
+
 # The file where debug information is being stored in
 DEBUG_LOG = "/var/log/laudio/debug.log"
 

@@ -20,9 +20,15 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+import datetime
+
 class Song (object):
 
     def __init__(self, path):
         self.path = path
+        self.date = 0
 
-
+    def setDatetime(self):
+        """Converts the year to a datetime object
+        """
+        self.date = datetime.datetime(self.date, 0, 0)

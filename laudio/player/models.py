@@ -29,6 +29,7 @@ class Artist(models.Model):
 
 
 class Album(models.Model):
+    artist = models.ForeignKey(Artist)
     name = models.CharField(max_length=150)
     date = models.CharField(max_length=100);
 
@@ -40,7 +41,6 @@ class Genre(models.Model):
 class Song(models.Model):
     title = models.CharField(max_length=250)
     album = models.ForeignKey(Album)
-    artist = models.ForeignKey(Artist)
     genre = models.ForeignKey(Genre)
     codec = models.CharField(max_length=10)
     tracknumber = models.IntegerField()

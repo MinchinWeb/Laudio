@@ -33,14 +33,14 @@ class LaudioConfig(object):
 Interface for writing to the config file
 """
     
-    def __init__(self, configFilePath="laudio.cfg"):
+    def __init__(self, configFilePath=settings.LAUDIO_CFG):
         """Constructor
     
         Keyword arguments:
         configFilePath -- The path to the config file
                          relatively to the project directory
         """
-        self.configFilePath = os.path.join(settings.INSTALL_DIR, configFilePath)
+        self.configFilePath = configFilePath
         # read in config
         config = ConfigParser.SafeConfigParser(allow_no_value=True)
         config.read(self.configFilePath)

@@ -33,8 +33,8 @@ class OGGSong (Song):
         Keyword arguments:
         path -- the full path to the song
         """
+        super(path)
         self.codec = "ogg"
-        self.path = path
         self.song = OggVorbis(self.path)
         for key in ('title', 'artist', 'album', 'genre', 'date'):
             attr = self.song.get(key, ('',))[0]
@@ -43,6 +43,8 @@ class OGGSong (Song):
         self.length = int(self.song.info.length)
         if self.title == "":
             self.title = os.path.basename(self.path)
+        # set date
+        self.setDatetime()
         # check for empty track number
         try:
             self.tracknumber = int(self.song['tracknumber'][0])

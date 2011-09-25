@@ -35,8 +35,8 @@ class MP3Song (Song):
         Keyword arguments:
         path -- the full path to the song
         """
+        super(path)
         self.codec = "mp3"
-        self.path = path
         self.song = MP3(self.path)
         try:
             self.id3 = EasyID3(self.path)
@@ -45,6 +45,8 @@ class MP3Song (Song):
                 setattr(self, key, attr.encode("utf-8") )
             self.bitrate = int(self.song.info.bitrate) / 1000
             self.length = int(self.song.info.length)
+            # convert date
+            self.setDatetime()
             # check if tracknumber is numeric
             if not self.tracknumber.isdigit():
                 self.tracknumber = 0
