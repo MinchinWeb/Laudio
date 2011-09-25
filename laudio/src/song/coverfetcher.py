@@ -19,12 +19,17 @@ You should have received a copy of the GNU General Public License
 along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+
+# System imports
 import os
 import urllib, urllib2
 from urllib2 import URLError, HTTPError
 from lxml import etree
+
+# Django imports
 from django.conf import settings
 from django.core.urlresolvers import reverse
+
 
 class CoverFetcher(object):
     

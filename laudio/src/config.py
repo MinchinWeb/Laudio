@@ -20,76 +20,50 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-from django.conf import settings
+# System imports
 import os
+import ConfigParser
+
+# Django imports
+from django.conf import settings
+
 
 class LaudioConfig(object):
 """
 Interface for writing to the config file
 """
-    def __init__(self, configFilePath="laudio.conf"):
-        """
-
-       """
-       pass
-
-from laudio.models import *
-from laudio.src.musicindexer import MusicIndexer
-class LaudioSettings(object):
-
-
-    def __init__(self):
-        """This class is used for Laudio settings, NOT django settings. 
-        Those belong into the settings.py!"""
-        self.log = []
-        # get the path of the current collection if it exists
-        if os.path.exists(settings.AUDIO_DIR):
-            self.collectionPath = os.readlink(settings.AUDIO_DIR)
-        else:
-            self.collectionPath = ""
-        pass
-
     
-    def scan(self):
-        """Scan the directory where the collection is"""
-        # we have to add a trailing slash for scanning
-        indexer = MusicIndexer( settings.AUDIO_DIR + "/")
-        dbPath = settings.DATABASES['default']['NAME']
-        if not os.access(dbPath, os.W_OK):
-            raise OSError( "No write access to database!" )
-        indexer.scan()
-        self.log.append( "Scanned %i files" % indexer.scanned )
-        self.log.append( "Updated %i files" %  indexer.modified )
-        self.log.append( "Added %i songs to the library" %  indexer.added )        
-        # append broken and no right files
-        for file in indexer.broken:
-            self.log.append( "The file: %s is broken" % file )
-        for file in indexer.noRights:
-            self.log.append( "The file: %s is not accessible due to filerights" % file )
-        
-        
-    def setCollectionPath(self, path):
-        """ Sets the collection path
-
+    def __init__(self, configFilePath="laudio.cfg"):
+        """Constructor
+    
         Keyword arguments:
-        songpath -- The new path to the collection
-
+        configFilePath -- The path to the config file
+                         relatively to the project directory
         """
+        self.configFilePath = os.path.join(settings.INSTALL_DIR, configFilePath)
+        # read in config
+        config = ConfigParser.SafeConfigParser(allow_no_value=True)
+        config.read(self.configFilePath)
+        self.collectionPath = config.get("settings", "collection_path")
+        self.collectionStartup = config.getboolean("settings", "collection_startup")
+        self.requireLogin = config.getboolean("settings", "require_login")
+        self.debug = config.getboolean("settings", "debug")
+        self.hidePlaylist = config.getboolean("settings", "hide_playlist")
+        self.hideSidebar = config.getboolean("settings", "hide_sidebar")
 
-        # if the given path exists add a symlink, try except is used to 
-        # avoid a race condition
-        try:
-            os.unlink(settings.AUDIO_DIR)
-        except OSError:
-            pass
-        os.symlink( path, settings.AUDIO_DIR )
-        self.collectionPath = path
-        self.log.append( "Musiclibrarypath set to %s!" % (path) )
-        
-        
-    def resetDB(self):
-        """Deletes all songs and playlists in the db"""
-        Song.objects.all().delete()
-        Playlist.objects.all().delete()
-        self.log.append( "Deleted all files and playlists in the Database!" )
-            
+    def save(self):
+        """Writes the current values into the configfile
+        """
+        config = ConfigParser.SafeConfigParser()
+        config.read(self.configFilePath)
+        config.add_section("settings")
+        config.set("settings", "collection_path", self.collectionPath)
+        config.set("settings", "collection_startup", self.collectionStartup)
+        config.set("settings", "require_login", self.requireLogin)
+        config.set("settings", "debug", self.debug)
+        config.set("settings", "hide_playlist", self.hidePlaylist)
+        config.set("settings", "hide_sidebar", self.hideSidebar)
+        with open(self.configFilePath, 'wb') as confFile:
+            config.write(confFile)
+
+
