@@ -20,10 +20,16 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
+import os
+
+# Django imports
 from django.template import Context, Template
 from django.conf import settings
-from laudio.models import Settings
-import os
+
+# Laudio imports 
+from laudio.src.config import LaudioConfig
+
 
 class JavaScript(object):
     """This class is for enabling django template vars and template syntax

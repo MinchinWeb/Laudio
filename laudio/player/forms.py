@@ -20,11 +20,17 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
+import os
+
+# Django imports
 from django import forms
 from django.contrib.auth.models import User
 from django.conf import settings
-from laudio.models import *
-import os
+
+# Laudio imports
+from laudio.player.models import *
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -34,6 +40,7 @@ class UserProfileForm(forms.ModelForm):
             'lastFMPass': forms.PasswordInput(render_value=False),
             'libreFMPass': forms.PasswordInput(render_value=False),
         }
+
 
 class UserForm(forms.ModelForm):
     is_superuser = forms.BooleanField(label="Superuser", 

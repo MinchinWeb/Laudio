@@ -20,14 +20,17 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-from laudio.models import Settings
-# django
+# Django imports
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+
+# Laudio imports
+from laudio.src.config import LaudioConfig
+
 
 def check_login(authLevel):
     """This decorator checks if the user has to be authenticated and checks
@@ -47,11 +50,9 @@ def check_login(authLevel):
         def wrapper(*args, **kwargs):
             """get the first argument which is always the request object
             and check if the user is authenticated"""
-            try:
-                config = Settings.objects.get(pk=1)
-                requireLogin = config.requireLogin
-            except Settings.DoesNotExist:
-                requireLogin = False
+            config = LaudioConfig()
+            requireLogin = config.requireLogin
+
             """Sites marked with admin are required to log in regardless
             if requireLogin is set"""
             if requireLogin or authLevel == "admin":

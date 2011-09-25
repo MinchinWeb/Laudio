@@ -21,13 +21,12 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # laudio modules
-from laudio.src.coverfetcher import CoverFetcher
-from laudio.src.laudiosettings import LaudioSettings
+from laudio.src.song.coverfetcher import CoverFetcher
 from laudio.src.javascript import JavaScript
-from laudio.src.decorators import check_login
-import laudio.src.scrobbler as scrobbler
-from laudio.models import *
-from laudio.forms import *
+from laudio.inc.decorators import check_login
+import laudio.src.song.scrobbler as scrobbler
+from laudio.player.models import *
+from laudio.player.forms import *
 # django
 from django.db.models import Q
 from django.db.models import Count, Sum
@@ -58,7 +57,7 @@ import urllib2
 # Visible Sites                                                        #
 ########################################################################
 @check_login("user")
-def laudio_index(request):
+def index(request):
     """The collection view which is displayed as index by default
     
     If the directory is not set and thus you can't play songs, redirect
@@ -91,13 +90,13 @@ def laudio_index(request):
                     )
                                 
 
-def laudio_about(request):
+def about(request):
     """A plain about site"""
     return render(request, 'about.html', {"version": settings.LAUDIO_VERSION })
     
     
 @check_login("admin")
-def laudio_settings(request):
+def settings(request):
     """Site where the configuration happens"""
     config = LaudioSettings()
     users = User.objects.all()
@@ -135,7 +134,7 @@ def laudio_settings(request):
                      
                             
 @check_login("admin")    
-def laudio_settings_new_user(request):
+def settings_user_new(request):
     """Create a new user"""
     if request.method == 'POST':
         userform = UserForm(request.POST)
@@ -167,7 +166,7 @@ def laudio_settings_new_user(request):
 
 
 @check_login("admin")
-def laudio_settings_edit_user(request, userid):
+def settings_user_edit(request, userid):
     """Edit a user by userid"""
     if request.method == 'POST':
         
@@ -204,7 +203,7 @@ def laudio_settings_edit_user(request, userid):
 
 
 @check_login("admin")
-def laudio_settings_delete_user(request, userid):
+def settings_user_delete(request, userid):
     """Deletes a user by userid"""
     user = User.objects.get(pk=userid)
     user.delete()
@@ -212,7 +211,7 @@ def laudio_settings_delete_user(request, userid):
     
     
 @check_login("user")
-def laudio_profile(request):
+def profile(request):
     """Edit a profile"""
     user = request.user
     

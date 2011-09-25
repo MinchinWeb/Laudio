@@ -29,9 +29,9 @@ from django.conf import settings
 
 
 class LaudioConfig(object):
-"""
-Interface for writing to the config file
-"""
+    """
+    Interface for writing to the config file
+    """
     
     def __init__(self, configFilePath=settings.LAUDIO_CFG):
         """Constructor

@@ -21,6 +21,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -28,7 +29,6 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     # Example:
-    (r'^', include('laudio.player.urls'), namespace='player', app_name='player'),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
@@ -38,3 +38,12 @@ urlpatterns = patterns('',
     # (r'^admin/', include(admin.site.urls)),
     
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('django.contrib.staticfiles.views',
+        url(r'^static/(?P<path>.*)$', 'serve'),
+    )
+
+urlpatterns += patterns('',
+     url(r'^', include('laudio.player.urls', namespace='player', app_name='player')),
+    )
