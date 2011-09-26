@@ -37,9 +37,9 @@ urlpatterns = patterns('',
     url(r'^settings/user/delete/(?P<userid>.*)/$', settings_user_delete, name='settings_user_delete'),
     url(r'^settings/user/edit/(?P<userid>.*)/$', settings_user_edit, name='settings_user_edit'),
     # Ajax requests
-#    url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
-#    url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
-#    url(r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
+    #url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
+    #url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
+    #url(r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
     
     # Index view
     url(r'^$', index, name='index'),

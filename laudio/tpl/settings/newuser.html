@@ -8,7 +8,11 @@
 {% block content %}
 
 <div id="settings">
-    <h1>Add a new user</h1>
+    {% if not user.is_superuser %}
+        <h1>Create a superuser</h1>
+    {% else %}
+        <h1>Add a new user</h1>
+    {% endif %}
     <form method="post" action=".">
         {% csrf_token %}
         <fieldset>

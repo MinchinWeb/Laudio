@@ -36,7 +36,7 @@ $(document).ready(function() {
         $("#deleteinfo").fadeIn("slow");
         
         // execute the ajax query which deletes the db
-        $("#popup").load("{% url laudio.views.ajax_drop_collection_db %}", function (){ 
+        $("#popup").load("{% url player:settings_db_reset %}", function (){ 
             $("#deleteinfo").fadeOut("slow", function() {
                 $("#popup").slideDown("slow");
             });
@@ -72,7 +72,7 @@ $(document).ready(function() {
         timeout = setTimeout("query_start()",2000);
         
         // execute the ajax query which scans the collection
-        $("#popup").load("{% url laudio.views.ajax_scan_collection %}", function (){ 
+        $("#popup").load("{% url player:settings_db_scan %}", function (){ 
             $("#scaninfo").fadeOut("slow", function() {
                 $("#popup").slideDown("slow");
                 clearTimeout(timeout);
@@ -118,7 +118,7 @@ function clear_loaded(){
  */
 function update_percentage(){
     // get the percentage from the db
-    $.getJSON("{% url laudio.views.ajax_scan_perc %}", function(json){
+    $.getJSON("{% url player:settings_db_scan_info %}", function(json){
         $("#scanned").html(json.scanned + "/");
         $("#total").html(json.total);
         var percent = json.scanned / json.total;

@@ -60,7 +60,7 @@ def index(request):
     # Check if there are any superusers, otherwise redirect them
     # to the settings page to create one
     if User.objects.filter(is_superuser=1).count() == 0:
-        return HttpResponseRedirect( reverse("player:settings") )
+        return HttpResponseRedirect( reverse("player:settings_user_new") )
 
     config = LaudioConfig()
     # get javascript
@@ -91,6 +91,11 @@ def index(request):
 @check_login("admin")
 def settings(request):
     """Site where the configuration happens"""
+    # Check if there are any superusers, otherwise redirect them
+    # to the settings page to create one
+    if User.objects.filter(is_superuser=1).count() == 0:
+        return HttpResponseRedirect( reverse("player:settings_user_new") )
+
     config = LaudioConfig()
     
     if request.method == 'POST':
@@ -157,6 +162,11 @@ def settings_user_new(request):
 @check_login("admin")
 def settings_user_edit(request, userid):
     """Edit a user by userid"""
+    # Check if there are any superusers, otherwise redirect them
+    # to the settings page to create one
+    if User.objects.filter(is_superuser=1).count() == 0:
+        return HttpResponseRedirect( reverse("player:settings_user_new") )
+
     if request.method == 'POST':
         userForm = UserEditForm(request.POST)
         profileForm = UserProfileForm(request.POST)
@@ -187,6 +197,11 @@ def settings_user_edit(request, userid):
 def settings_user_delete(request, userid):
     """Deletes a user by userid"""
     # FIXME: possible csrf vulnerability
+    # Check if there are any superusers, otherwise redirect them
+    # to the settings page to create one
+    if User.objects.filter(is_superuser=1).count() == 0:
+        return HttpResponseRedirect( reverse("player:settings_user_new") )
+
     user = User.objects.get(pk=userid)
     user.delete()
     return HttpResponseRedirect( reverse ("player:settings") )
@@ -195,6 +210,11 @@ def settings_user_delete(request, userid):
 @check_login("user")
 def profile(request):
     """Edit a profile"""
+    # Check if there are any superusers, otherwise redirect them
+    # to the settings page to create one
+    if User.objects.filter(is_superuser=1).count() == 0:
+        return HttpResponseRedirect( reverse("player:settings_user_new") )
+   
     user = request.user
     
     if request.method == 'POST':
