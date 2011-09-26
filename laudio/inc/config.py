@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
@@ -33,7 +33,7 @@ class LaudioConfig(object):
     Interface for writing to the config file
     """
     
-    def __init__(self, configFilePath=settings.LAUDIO_CFG):
+    def __init__(self, settings.LAUDIO_CFG):
         """Constructor
     
         Keyword arguments:
@@ -55,14 +55,13 @@ class LaudioConfig(object):
         """Writes the current values into the configfile
         """
         config = ConfigParser.SafeConfigParser()
-        config.read(self.configFilePath)
         config.add_section("settings")
         config.set("settings", "collection_path", self.collectionPath)
-        config.set("settings", "collection_startup", self.collectionStartup)
-        config.set("settings", "require_login", self.requireLogin)
-        config.set("settings", "debug", self.debug)
-        config.set("settings", "hide_playlist", self.hidePlaylist)
-        config.set("settings", "hide_sidebar", self.hideSidebar)
+        config.set("settings", "collection_startup", str(self.collectionStartup))
+        config.set("settings", "require_login", str(self.requireLogin))
+        config.set("settings", "debug", str(self.debug))
+        config.set("settings", "hide_playlist", str(self.hidePlaylist))
+        config.set("settings", "hide_sidebar", str(self.hideSidebar))
         with open(self.configFilePath, 'wb') as confFile:
             config.write(confFile)
 
