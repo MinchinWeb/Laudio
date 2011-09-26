@@ -33,7 +33,7 @@ from laudio.src.song.formats.ogg import OGGSong
 from laudio.src.song.formats.mp3 import MP3Song
 from laudio.player.models import Song, Artist, Album, Genre
 from laudio.inc.debugger import LaudioDebugger
-from laudio.src.config import LaudioConfig
+from laudio.inc.config import LaudioConfig
 
 
 class MusicScanner (object):
@@ -55,7 +55,7 @@ class MusicScanner (object):
         if musicDir:
             self.musicDir = musicDir.encode("utf-8")
         else:
-            self.musicDir = config.collection_path.encode("utf-8")       
+            self.musicDir = config.collectionPath.encode("utf-8")       
         
         self.scanned = 0
         self.added = 0

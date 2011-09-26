@@ -59,10 +59,14 @@ urlpatterns = patterns('',
     url(r'^playlist/list/$', playlist_list, name='playlist_list'),
     
     # Other sites
-    url(r'^about/$', about, name='about'),
     url(r'^profile/$', profile, name='profile'),
-    url(r'^chat/$', 'django.views.generic.simple.direct_to_template', {'template': 'chat.html'}, name='chat'),
-    url(r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}, name='logout'),
+    url(r'^about/$', 'django.views.generic.simple.direct_to_template', 
+        {'template': 'about.html', 'extra_context': {'version': settings.LAUDIO_VERSION}}, name='about'),
+    url(r'^chat/$', 'django.views.generic.simple.direct_to_template', 
+        {'template': 'chat.html'}, name='chat'),
+    url(r'^login/', 'django.contrib.auth.views.login', 
+        {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', 
+        {'template_name': 'logout.html'}, name='logout'),
 
 )

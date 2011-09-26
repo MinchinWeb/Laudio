@@ -28,7 +28,7 @@ from django.template import Context, Template
 from django.conf import settings
 
 # Laudio imports 
-from laudio.src.config import LaudioConfig
+from laudio.inc.config import LaudioConfig
 
 
 class JavaScript(object):
@@ -44,20 +44,17 @@ class JavaScript(object):
                 according to those views
         
         """
+        config = LaudioConfig
         self.view = view   
         files = []
         
         """check settings values"""         
-        try:
-            config = Settings.objects.get(pk=1)
-            if request.user.is_authenticated():
-                if request.user.get_profile().showLib and self.view == "library":
-                    files.append("func/autoload.js")                
-            else:
-                if config.showLib and self.view == "library":
-                    files.append("func/autoload.js")
-        except Settings.DoesNotExist, AttributeError:
-            pass
+        if request.user.is_authenticated():
+            if request.user.get_profile().showLib and self.view == "library":
+                files.append("func/autoload.js")                
+        else:
+            if config.collectionStartup and self.view == "library":
+                files.append("func/autoload.js")
         
         
         """Depending on the view, different js files are being included. 

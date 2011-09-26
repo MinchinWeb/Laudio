@@ -33,7 +33,7 @@ class LaudioConfig(object):
     Interface for writing to the config file
     """
     
-    def __init__(self, settings.LAUDIO_CFG):
+    def __init__(self, configFilePath=settings.LAUDIO_CFG):
         """Constructor
     
         Keyword arguments:
@@ -42,14 +42,26 @@ class LaudioConfig(object):
         """
         self.configFilePath = configFilePath
         # read in config
-        config = ConfigParser.SafeConfigParser(allow_no_value=True)
-        config.read(self.configFilePath)
-        self.collectionPath = config.get("settings", "collection_path")
-        self.collectionStartup = config.getboolean("settings", "collection_startup")
-        self.requireLogin = config.getboolean("settings", "require_login")
-        self.debug = config.getboolean("settings", "debug")
-        self.hidePlaylist = config.getboolean("settings", "hide_playlist")
-        self.hideSidebar = config.getboolean("settings", "hide_sidebar")
+        try:
+            config = ConfigParser.SafeConfigParser(allow_no_value=True)
+            config.read(self.configFilePath)
+            self.collectionPath = config.get("settings", "collection_path")
+            self.collectionStartup = config.getboolean("settings", "collection_startup")
+            self.requireLogin = config.getboolean("settings", "require_login")
+            self.debug = config.getboolean("settings", "debug")
+            self.hidePlaylist = config.getboolean("settings", "hide_playlist")
+            self.hideSidebar = config.getboolean("settings", "hide_sidebar")
+            self.version = config.get("settings", "version")
+        except ConfigParser.NoSectionError:
+            # write default values
+            self.collectionPath = ""
+            self.collectionStartup = False
+            self.requireLogin = False
+            self.debug = False
+            self.hidePlaylist = False
+            self.hideSidebar = False
+            self.version = settings.LAUDIO_VERSION
+            self.save()
 
     def save(self):
         """Writes the current values into the configfile
@@ -62,6 +74,7 @@ class LaudioConfig(object):
         config.set("settings", "debug", str(self.debug))
         config.set("settings", "hide_playlist", str(self.hidePlaylist))
         config.set("settings", "hide_sidebar", str(self.hideSidebar))
+        config.set("settings", "version", self.version)
         with open(self.configFilePath, 'wb') as confFile:
             config.write(confFile)
 

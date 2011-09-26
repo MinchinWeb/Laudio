@@ -20,14 +20,14 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-# laudio modules
-from laudio.src.song.coverfetcher import CoverFetcher
-from laudio.src.javascript import JavaScript
-from laudio.inc.decorators import check_login
-import laudio.src.song.scrobbler as scrobbler
-from laudio.player.models import *
-from laudio.player.forms import *
-# django
+# System imports 
+import time
+import datetime
+import os
+import urllib
+import urllib2
+
+# Django imports 
 from django.db.models import Q
 from django.db.models import Count, Sum
 from django.utils.datastructures import MultiValueDictKeyError
@@ -40,34 +40,28 @@ from django.contrib.auth import authenticate, login
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
+# Laudio imports 
+import laudio.src.song.scrobbler as scrobbler
+from laudio.src.song.coverfetcher import CoverFetcher
+from laudio.src.javascript import JavaScript
+from laudio.inc.decorators import check_login
+from laudio.inc.config import LaudioConfig
+from laudio.player.models import *
+from laudio.player.forms import *
 
 
-# other python libs
-import time
-import datetime
-import os
-import urllib
-import urllib2
-
-
-
-
-
-########################################################################
-# Visible Sites                                                        #
-########################################################################
 @check_login("user")
 def index(request):
     """The collection view which is displayed as index by default
     
     If the directory is not set and thus you can't play songs, redirect
     to the settings page."""
-    try:
-        settings = Settings.objects.get(pk=1)
-    except Settings.DoesNotExist:
-        return HttpResponseRedirect( reverse ("laudio.views.laudio_settings") )
+
+    config = LaudioConfig()
+
     # get javascript
     js = JavaScript("library", request)
+    
     # get number of songs
     count = Song.objects.aggregate( Count("id"), Sum("length") )
     mp3s = Song.objects.filter(codec="mp3").aggregate( Count("id") )

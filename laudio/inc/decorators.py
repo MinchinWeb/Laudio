@@ -29,7 +29,7 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
 # Laudio imports
-from laudio.src.config import LaudioConfig
+from laudio.inc.config import LaudioConfig
 
 
 def check_login(authLevel):
