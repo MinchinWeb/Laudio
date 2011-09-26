@@ -9,24 +9,31 @@
 
 
 <div id="settings">
-    <h1>Setttings</h1>
     
+    <h1>Setttings</h1>
+
+    {% if not user.is_superuser %}
+    <h2>Please create a superuser!</h2>
+    {% endif %}
+
     <fieldset>
         <legend>Utils</legend>
         <a href="#" id="scancoll">Scan Collection</a>
         <a href="#" id="resetcoll">Reset Songs and Playlists</a>
-        
     </fieldset>
+    
     <div class="small_loading" id="scaninfo">
         <p>Scanning songs, please wait: <span id="scanned">0</span><span id="total"></span></p>
         <p class="percentage"><canvas height="24" width="300"></p>
     </div>
+    
     <div class="small_loading" id="deleteinfo">
         <p>Deleting database, please wait.</p>
     </div>
     
     <div id="popup">Error While Scanning/Deleting: Maybe the server isn't reachable</div>
     <p style="clear: both;"></p>
+    
     <form method="post" action=".">
         {% csrf_token %}
         <fieldset>
@@ -55,13 +62,17 @@
     
     
     <h1>Usermanagement</h1>
+    
     <fieldset>
         <legend>Utils</legend>
         <a id="adduser" href="{% url player:settings_user_new %}">Add a new user</a>
     </fieldset>
+    
     <h2>Users</h2>
+    
     <p>Please add a superuser if you plan to share your music with other
     people! If a superuser exists, only he can change the settings.</p>
+    
     {% for user in users %}
     <fieldset>
         <legend>{{ user.username }}</legend>
@@ -78,10 +89,11 @@
             <a class="closeduser" onclick="return false;" href="#">Disabled</a>
         {% endif %}
         
-        <a class="edituser" href="{% url player:settings_user_edit user.id }/">Edit</a>
-        <a class="deleteuser" href="{% url player:settins_user_delete user.id %}/">Delete</a>
+        <a class="edituser" href="{% url player:settings_user_edit user.id %}">Edit</a>
+        <a class="deleteuser" href="{% url player:settings_user_delete user.id %}">Delete</a>
     </fieldset>
     {% endfor %}
+    
     <p style="height: 175px;"></p>
 </div>
 {% endblock %}

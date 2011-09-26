@@ -57,22 +57,24 @@ def index(request):
     If the directory is not set and thus you can't play songs, redirect
     to the settings page."""
 
-    config = LaudioConfig()
+    # Check if there are any superusers, otherwise redirect them
+    # to the settings page to create one
+    if User.objects.filter(is_superuser=1).count() == 0:
+        return HttpResponseRedirect( reverse("player:settings") )
 
+    config = LaudioConfig()
     # get javascript
     # js = JavaScript("library", request)
     js = ""
     
     # get number of songs
-    count = Song.objects.aggregate( Count("id"), Sum("length") )
-    mp3s = Song.objects.filter(codec="mp3").aggregate( Count("id") )
-    oggs = Song.objects.filter(codec="ogg").aggregate( Count("id") )
-    songs = count["id__count"]
+    count = Song.objects.aggregate( Sum("length") )
+    mp3s = Song.objects.filter(codec="mp3").aggregate( Count("id") )["id__count"]
+    oggs = Song.objects.filter(codec="ogg").aggregate( Count("id") )["id__count"]
+    songs = mp3s + oggs 
     hours = 0 # int( count["length__sum"] / (60 * 60) )
     days = int( hours / 24 )
     weeks = int( days / 7 )
-    mp3s = mp3s["id__count"]
-    oggs = oggs["id__count"]
     
     return render(request, 'index.html', { 
                                             'js': js, 
@@ -89,34 +91,34 @@ def index(request):
 @check_login("admin")
 def settings(request):
     """Site where the configuration happens"""
-    config = LaudioSettings()
-    users = User.objects.all()
+    config = LaudioConfig()
     
     if request.method == 'POST':
         settingsForm = SettingsForm(request.POST)
         if settingsForm.is_valid(): 
-            # get the first setting in the db
-            try:
-                settings = Settings.objects.get(pk=1)
-            except Settings.DoesNotExist:
-                settings = Settings()
-            fields = ("requireLogin", "debugAudio", "collection", "showLib",
-                      "hideSidebar", "hidePlaylist")
-            # write data into db
+            fields = ("requireLogin", "debug", "collectionPath", 
+                      "collectionStartup", "hideSidebar", "hidePlaylist",
+                      "xmlAPIAuth")
+            # write data config file
             for key in fields:
-                setattr(settings, key, settingsForm.cleaned_data[key])
-            settings.save()
-            # set symlink
-            config.setCollectionPath(settingsForm.cleaned_data['collection'])
+                setattr(config, key, settingsForm.cleaned_data[key])
+            config.save()
     else:
-        try:
-            settings = Settings.objects.get(pk=1)
-            settingsForm = SettingsForm(instance=settings)
-        except Settings.DoesNotExist:
-            settingsForm = SettingsForm(initial={'cacheSize': 100})
+        default_data = {
+            "collectionPath": config.collectionPath,
+            "debug": config.debug,
+            "requireLogin": config.requireLogin,
+            "collectionStartup": config.collectionStartup,
+            "hideSidebar": config.hideSidebar,
+            "hidePlaylist": config.hidePlaylist,
+            "xmlAPIAuth": config.xmlAPIAuth,
+        }
+        settingsForm = SettingsForm(default_data)
             
-    # get javascript
-    js = JavaScript("settings", request)
+    # js = JavaScript("settings", request)
+    js = ""
+    users = User.objects.all()
+
     return render(request, 'settings/settings.html', { 
                                                 "collection": config.collectionPath,  
                                                 "settingsForm": settingsForm,
@@ -130,31 +132,25 @@ def settings(request):
 def settings_user_new(request):
     """Create a new user"""
     if request.method == 'POST':
-        userform = UserForm(request.POST)
-        profileform = UserProfileForm(request.POST)
+        userForm = UserForm(request.POST)
+        profileForm = UserProfileForm(request.POST)
         
-        if userform.is_valid() and profileform.is_valid(): 
-            user = User(username=userform.cleaned_data['username'],
-                        email=userform.cleaned_data['email'],
-                        is_superuser=userform.cleaned_data['is_superuser'],
-                        is_active=userform.cleaned_data['is_active'])
+        if userForm.is_valid() and profileForm.is_valid(): 
+            user = userForm.save(commit=False)
             user.set_password( request.POST.get('password') )
             user.save()
             # profile
-            profile = UserProfile(user=user)
-            for key in ("lastFMName", "lastFMPass", "lastFMSubmit", 
-                         "libreFMName", "libreFMPass", "libreFMSubmit",
-                         "hidePlaylist", "hideSidebar", "showLib"):
-                setattr(profile, key, profileform.cleaned_data[key])
+            profile = profileForm.save(commit=False)
+            profile.user = user
             profile.save()
-            return HttpResponseRedirect( reverse ("laudio.views.laudio_settings") )
+            return HttpResponseRedirect( reverse ("player:settings") )
     else:
-        userform = UserForm()
-        profileform = UserProfileForm()
+        userForm = UserForm()
+        profileForm = UserProfileForm()
 
-    return render(request, 'settings/newuser.html', { "userform": userform,  
-                                                          "profileform": profileform
-                                                        }
+    return render(request, 'settings/newuser.html', { "userform": userForm,  
+                                                      "profileform": profileForm
+                                                    }
                             )
 
 
@@ -162,36 +158,28 @@ def settings_user_new(request):
 def settings_user_edit(request, userid):
     """Edit a user by userid"""
     if request.method == 'POST':
+        userForm = UserEditForm(request.POST)
+        profileForm = UserProfileForm(request.POST)
         
-        userform = UserEditForm(request.POST)
-        profileform = UserProfileForm(request.POST)
-        
-        if userform.is_valid() and profileform.is_valid(): 
-            user = User.objects.get(pk=userid)
-            user.email = userform.cleaned_data['email']
-            user.is_superuser = userform.cleaned_data['is_superuser']
-            user.is_active = userform.cleaned_data['is_active']
+        if userForm.is_valid() and profileForm.is_valid(): 
+            user = userForm.save(commit=False)
             if request.POST.get('password') != "":
                 user.set_password( request.POST.get('password') )
             user.save()
             # profile
-            profile = UserProfile.objects.get(user=user)
+            profile = profileForm.save(commit=False)
             profile.user = user
-            for key in ("lastFMName", "lastFMPass", "lastFMSubmit", 
-                         "libreFMName", "libreFMPass", "libreFMSubmit",
-                         "hidePlaylist", "hideSidebar", "showLib"):
-                setattr(profile, key, profileform.cleaned_data[key])
             profile.save()
-            return HttpResponseRedirect( reverse ("laudio.views.laudio_settings") )
+            return HttpResponseRedirect( reverse ("player:settings") )
     else:
         user = User.objects.get(pk=userid)
-        userform = UserEditForm(instance=user)
+        userForm = UserEditForm(instance=user)
         profile = UserProfile.objects.get(user=user)
-        profileform = UserProfileForm(instance=profile)
+        profileForm = UserProfileForm(instance=profile)
 
-    return render(request, 'settings/edituser.html', { "userform": userform,  
-                                                          "profileform": profileform
-                                                        }
+    return render(request, 'settings/edituser.html', {"userform": userForm,  
+                                                      "profileform": profileForm
+                                                     }
                             )
 
 
@@ -201,7 +189,7 @@ def settings_user_delete(request, userid):
     # FIXME: possible csrf vulnerability
     user = User.objects.get(pk=userid)
     user.delete()
-    return HttpResponseRedirect( reverse ("laudio.views.laudio_settings") )
+    return HttpResponseRedirect( reverse ("player:settings") )
     
     
 @check_login("user")
@@ -210,32 +198,27 @@ def profile(request):
     user = request.user
     
     if request.method == 'POST':
-        userform = UserEditProfileForm(request.POST)
-        profileform = UserProfileForm(request.POST)
+        userForm = UserEditProfileForm(request.POST)
+        profileForm = UserProfileForm(request.POST)
         
-        if userform.is_valid() and profileform.is_valid(): 
-            user.email = userform.cleaned_data['email']
+        if userForm.is_valid() and profileForm.is_valid(): 
+            user.email = userForm.cleaned_data['email']
             if request.POST.get('password') != "":
                 user.set_password( request.POST.get('password') )
             user.save()
             # profile
-            profile = UserProfile.objects.get(user=user)
+            profile = profileForm.save(commit=False)
             profile.user = user
-            for key in ("lastFMName", "lastFMPass", "lastFMSubmit", 
-                         "libreFMName", "libreFMPass", "libreFMSubmit",
-                         "hidePlaylist", "hideSidebar", "showLib"):
-                setattr(profile, key, profileform.cleaned_data[key])
             profile.save()
-            return HttpResponseRedirect( reverse ("laudio.views.laudio_profile") )
+            return HttpResponseRedirect( reverse ("player:profile") )
     else:
-        
-        userform = UserEditProfileForm(instance=user)
+        userForm = UserEditProfileForm(instance=user)
         profile = UserProfile.objects.get(user=user)
-        profileform = UserProfileForm(instance=profile)
+        profileForm = UserProfileForm(instance=profile)
 
-    return render(request, 'settings/profile.html', { "userform": userform,  
-                                                          "profileform": profileform
-                                                        }
+    return render(request, 'profile.html', { "userform": userForm,  
+                                             "profileform": profileForm
+                                          }
                             )
 
 def song_download(request):

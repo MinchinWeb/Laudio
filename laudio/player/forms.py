@@ -69,7 +69,7 @@ class UserEditProfileForm(forms.ModelForm):
                    "username", "is_active", "is_superuser")
 
 
-class SettingsForm(forms.ModelForm):
+class SettingsForm(forms.Form):
     collectionPath = forms.CharField(label="Collection Path", required=True,
         help_text="Sets ONLY the path to your music files! To add the \
         files to your library hit the \"Scan collection\" \
@@ -98,9 +98,10 @@ class SettingsForm(forms.ModelForm):
         help_text="Any program which wishes to access your data has to \
         properly authenticate with a username and password",
         required=False)
+        
 
-    def clean_collection(self):
-        data = self.cleaned_data['collection']
+    def clean_collectionPath(self):
+        data = self.cleaned_data['collectionPath']
         """We move down folder by folder from the given path and check,
         if we can cd into the folder (we need a+x to cd into it).
         If we get any errors, we stop and tell the user to execute the right
@@ -130,10 +131,4 @@ class SettingsForm(forms.ModelForm):
             raise forms.ValidationError( "Music collection is not readable! Use: <b>sudo chmod \
                            -R 0755 %s</b>" % (data) )
 
-        # check if we can set a symlink
-        mediaPath = settings.MEDIA_ROOT
-        if not os.access(mediaPath, os.R_OK):
-            raise forms.ValidationError( "No write Access in media directory! \
-                           Use: <b>sudo chmod -R 0777 %s</b>" % (mediaPath) )
-            
         return data
