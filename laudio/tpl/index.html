@@ -47,7 +47,7 @@
 
 <div id="sidebar" {% if hide_sidebar %}style="display: none;"{% endif %}>
     <div id="currentSong">
-        <p id="cover"><img src="{% url laudio.views.laudio_index %}media/style/img/nocover.png" alt="cover" title="no cover"/></p>
+        <p id="cover"><img src="{{ STATIC_URL }}style/img/nocover.png" alt="cover" title="no cover"/></p>
         <h1>Now Playing</h1>
         <table id="songinfo" cellpadding="0" cellspacing="0">
             <tr id="title" class="line1">

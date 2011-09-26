@@ -1,0 +1,15 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    {% for t in tags %}
+        <tag id="{{ t.id }}">
+                <name>{{ t.name }}</name>
+                <albums>0</albums>
+                <artists>0</artists>
+                <songs>{{ t.song_set|length }}</songs>
+                <video>0</video>
+                <playlist>0</playlist>
+                <stream>0</stream>
+        </tag>
+    {% endfor %}
+{% endblock %}

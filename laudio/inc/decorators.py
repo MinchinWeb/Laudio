@@ -82,8 +82,8 @@ def check_login(authLevel):
                         return render_to_response( '403.html', {}, 
                                 context_instance=RequestContext(request) )
                 else:
-                    redirect = "%s?next=%s" % ( reverse("django.contrib.auth.views.login"), 
-                                           reverse("laudio.views.laudio_index") )
+                    redirect = "%s?next=%s" % ( reverse("player:login"), 
+                                           reverse("player:index") )
                     return HttpResponseRedirect(redirect)
                 
             else:

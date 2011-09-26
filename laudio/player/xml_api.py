@@ -19,3 +19,16 @@ You should have received a copy of the GNU General Public License
 along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+
+
+# Django imports
+from django.shortcuts import render_to_response
+
+# Laudio imports
+from laudio.player.models import *
+
+
+def xml_api(request):
+    
+    return render_to_response("xml/artists.xml", { "artists": artists })
+    

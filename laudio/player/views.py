@@ -37,13 +37,13 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
-from django.template import RequestContext
 from django.core.urlresolvers import reverse
 
 # Laudio imports 
+from laudio.inc.shortcuts import render
 import laudio.src.song.scrobbler as scrobbler
 from laudio.src.song.coverfetcher import CoverFetcher
-from laudio.src.javascript import JavaScript
+# from laudio.src.javascript import JavaScript
 from laudio.inc.decorators import check_login
 from laudio.inc.config import LaudioConfig
 from laudio.player.models import *
@@ -60,18 +60,20 @@ def index(request):
     config = LaudioConfig()
 
     # get javascript
-    js = JavaScript("library", request)
+    # js = JavaScript("library", request)
+    js = ""
     
     # get number of songs
     count = Song.objects.aggregate( Count("id"), Sum("length") )
     mp3s = Song.objects.filter(codec="mp3").aggregate( Count("id") )
     oggs = Song.objects.filter(codec="ogg").aggregate( Count("id") )
     songs = count["id__count"]
-    hours = int( count["length__sum"] / (60 * 60) )
+    hours = 0 # int( count["length__sum"] / (60 * 60) )
     days = int( hours / 24 )
     weeks = int( days / 7 )
     mp3s = mp3s["id__count"]
     oggs = oggs["id__count"]
+    
     return render(request, 'index.html', { 
                                             'js': js, 
                                             'numberOfSongs': songs,
@@ -89,6 +91,7 @@ def settings(request):
     """Site where the configuration happens"""
     config = LaudioSettings()
     users = User.objects.all()
+    
     if request.method == 'POST':
         settingsForm = SettingsForm(request.POST)
         if settingsForm.is_valid(): 
@@ -114,10 +117,11 @@ def settings(request):
             
     # get javascript
     js = JavaScript("settings", request)
-    return render(request, 'settings/settings.html', { "collection": config.collectionPath,  
-                                               "settingsForm": settingsForm,
-                                               "users": users,
-                                               "js": js, 
+    return render(request, 'settings/settings.html', { 
+                                                "collection": config.collectionPath,  
+                                                "settingsForm": settingsForm,
+                                                "users": users,
+                                                "js": js, 
                                             }
                  )
                      
@@ -234,3 +238,5 @@ def profile(request):
                                                         }
                             )
 
+def song_download(request):
+    return HttpResponse("hi")

@@ -44,7 +44,7 @@ class JavaScript(object):
                 according to those views
         
         """
-        config = LaudioConfig
+        config = LaudioConfig()
         self.view = view   
         files = []
         

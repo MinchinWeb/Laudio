@@ -70,9 +70,35 @@ class UserEditProfileForm(forms.ModelForm):
 
 
 class SettingsForm(forms.ModelForm):
-    class Meta:
-        model = Settings
-        
+    collectionPath = forms.CharField(label="Collection Path", required=True,
+        help_text="Sets ONLY the path to your music files! To add the \
+        files to your library hit the \"Scan collection\" \
+        button button above. All directories above the music \
+        directory need to have the rights a+x, all music files \
+        need to be 0755")
+    requireLogin  = forms.BooleanField(label="Require Login", required=False,
+        help_text="All users who want to listen to your files have to log in")
+    collectionStartup = forms.BooleanField(label="Load collection", required=False,
+        help_text="This displays your whole collection automatically on startup. \
+        Be carefull with bigger collections as it may impact your \
+        browser's speed")
+    debug = forms.BooleanField(label="Debug", required=False,
+        help_text="Enable output to your firebug console including audio debug information \
+        and writing of debug information while scanning your collection \
+        to %s" % settings.DEBUG_LOG)
+    hidePlaylist = forms.BooleanField(label="Hide playlist by default", 
+        help_text="Automatically \
+        hides the playlist in the Collection view so you have \
+        to click playlist to view it", required=False)
+    hideSidebar = forms.BooleanField(label="Hide sidebar by default", 
+        help_text="Automatically \
+        hides the sidebar in the Collection view so you have \
+        to click sidebar to view it", required=False)
+    xmlAPIAuth = forms.BooleanField(label="Require Authentication for XML API", 
+        help_text="Any program which wishes to access your data has to \
+        properly authenticate with a username and password",
+        required=False)
+
     def clean_collection(self):
         data = self.cleaned_data['collection']
         """We move down folder by folder from the given path and check,

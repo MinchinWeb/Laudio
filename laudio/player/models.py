@@ -26,16 +26,19 @@ from django.contrib.auth.models import User
 
 class Artist(models.Model):
     name = models.CharField(max_length=150)
+    modified = models.DateTimeField(auto_now=True)
 
 
 class Album(models.Model):
     artist = models.ForeignKey(Artist)
     name = models.CharField(max_length=150)
     date = models.CharField(max_length=100);
+    modified = models.DateTimeField(auto_now=True)
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=150)
+    modified = models.DateTimeField(auto_now=True)
 
 
 class Song(models.Model):
@@ -49,6 +52,7 @@ class Song(models.Model):
     added =  models.DateTimeField(auto_now_add=True)
     length = models.IntegerField()
     bitrate = models.CharField(max_length=100);
+    modified = models.DateTimeField(auto_now=True)
 
 
 class Playlist(models.Model):
@@ -56,15 +60,19 @@ class Playlist(models.Model):
     added = models.IntegerField()
     songs = models.ManyToManyField(Song, through="PlaylistEntry")
     user = models.ForeignKey(User)
+    modified = models.DateTimeField(auto_now=True)
+
 
 
 class PlaylistEntry(models.Model):
     playlist = models.ForeignKey(Playlist)
     song = models.ForeignKey(Song)
+    modified = models.DateTimeField(auto_now=True)
 
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
+    modified = models.DateTimeField(auto_now=True)
     lastFMName = models.CharField("last.fm username", max_length=100, blank=True)
     lastFMPass = models.CharField("last.fm password", max_length=100, blank=True)
     lastFMSubmit = models.BooleanField("Scrobble last.fm", 

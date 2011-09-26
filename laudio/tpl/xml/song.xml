@@ -1,0 +1,19 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    {% for s in songs %}
+        <song id="{{ s.id }}">
+                <title>{{ s.title }}</title>
+                <artist id="{{ s.artist.id }}">{{ s.artist.name }}</artist>
+                <album id="{{ s.album.id }}">{{ s.album.name }}</album>
+                <tag id="{{ s.genre.id }}" count="1">{{ s.genre.name }}</tag>
+                <track>{{ s.tracknumber }}</track>
+                <time>{{ s.length }}</time>
+                <url>{{ url }}{{ s.id }}</url>
+                <size>{{ s.size }}</size>
+                <art></art>
+                <preciserating>0</preciserating>
+                <rating>0</rating>
+        </song>
+    {% endfor %}
+{% endblock %}

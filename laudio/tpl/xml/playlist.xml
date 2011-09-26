@@ -1,0 +1,12 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    {% p t in playlists %}
+        <playlist id="{{ p.id }}">
+                <name>{{ p.name }}</name>
+                <owner>{{ p.user.login_name }}</owner>
+                <items>{{ p.playlistentry_set|length }}</items>
+                <type>Private</type>
+        </playlist>
+    {% endfor %}
+{% endblock %}

@@ -20,9 +20,14 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# Django imports
+from django.conf import settings as django_settings
 from django.conf.urls.defaults import *
+
+# Laudio imports
 from laudio.player.views import *
-from laudio.player.ajax import *
+from laudio.player.xml_api import *
+#from laudio.player.ajax import *
 
 urlpatterns = patterns('',
     
@@ -32,36 +37,43 @@ urlpatterns = patterns('',
     url(r'^settings/user/delete/(?P<userid>.*)/$', settings_user_delete, name='settings_user_delete'),
     url(r'^settings/user/edit/(?P<userid>.*)/$', settings_user_edit, name='settings_user_edit'),
     # Ajax requests
-    url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
-    url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
-    url(r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
+#    url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
+#    url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
+#    url(r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
     
     # Index view
-    url(r'^$', index),
+    url(r'^$', index, name='index'),
     # Ajax requests for index view 
-    url(r'^collection/$', index_collection, name='index_collection'),
-    url(r'^artist/letter/(?P<artist>.*)/$', index_artist_letter, name='index_artist_letter'),
-    url(r'^search/all/(?P<search>.*)/$', index_search, name='index_search'),
-    url(r'^search/advanced/$', index_search_advanced, name='index_search_advanced'),
-    url(r'^song/meta/(?P<id>.*)/$', index_song_meta, name='index_song_meta'),
-    url(r'^song/download/(?P<id>.*)/$', index_song_download, name='index_song_download'),
-    url(r'^scrobble/(?P<id>.*)/$', index_scrobble, name='index_scrobble'),
-    url(r'^cover/(?P<id>.*)/$', index_cover, name='index_cover'),
-    url(r'^autocomplete/(?P<row>.*)/$', index_autocomplete, name='index_autocomplete'),
+#    url(r'^collection/$', index_collection, name='index_collection'),
+#    url(r'^search/artist/letter/(?P<artist>.*)/$', search_artist_letter, name='search_artist_letter'),
+#    url(r'^search/all/(?P<search>.*)/$', search, name='search'),
+#    url(r'^search/advanced/$', search_advanced, name='search_advanced'),
+#    url(r'^search/autocomplete/(?P<row>.*)/$', search_autocomplete, name='search_autocomplete'),
+#    url(r'^song/meta/(?P<id>.*)/$', song_meta, name='song_meta'),
+    url(r'^song/download/(?P<id>.*)/$', song_download, name='song_download'),
+#    url(r'^song/scrobble/(?P<id>.*)/$', song_scrobble, name='song_scrobble'),
+#    url(r'^song/cover/(?P<id>.*)/$', song_cover, name='song_cover'),
     
     # Ajax playlist requests
-    url(r'^playlist/save/(?P<playlistName>.*)/$', playlist_save, name='playlist_save'),
-    url(r'^playlist/exists/(?P<playlistName>.*)/$', playlist_exists, name='playlist_exists'),
-    url(r'^playlist/name/(?P<playlistId>.*)/$', playlist_name, name='playlist_name'),
-    url(r'^playlist/open/(?P<playlistId>.*)/$', playlist_open, name='playlist_open'),
-    url(r'^playlist/delete/(?P<playlistId>.*)/$', playlist_delete, name='playlist_delete'),
-    url(r'^playlist/rename/(?P<oldName>.*)/(?P<newName>.*)/$', playlist_rename, name='playlist_rename'),
-    url(r'^playlist/list/$', playlist_list, name='playlist_list'),
+#    url(r'^playlist/save/(?P<playlistName>.*)/$', playlist_save, name='playlist_save'),
+#    url(r'^playlist/exists/(?P<playlistName>.*)/$', playlist_exists, name='playlist_exists'),
+#    url(r'^playlist/name/(?P<playlistId>.*)/$', playlist_name, name='playlist_name'),
+#    url(r'^playlist/open/(?P<playlistId>.*)/$', playlist_open, name='playlist_open'),
+#    url(r'^playlist/delete/(?P<playlistId>.*)/$', playlist_delete, name='playlist_delete'),
+#    url(r'^playlist/rename/(?P<oldName>.*)/(?P<newName>.*)/$', playlist_rename, name='playlist_rename'),
+#    url(r'^playlist/list/$', playlist_list, name='playlist_list'),
+    
+    # Ampache XML API
+    url(r'^server/xml.server.php$', xml_api, name='xml_api'),
     
     # Other sites
     url(r'^profile/$', profile, name='profile'),
     url(r'^about/$', 'django.views.generic.simple.direct_to_template', 
-        {'template': 'about.html', 'extra_context': {'version': settings.LAUDIO_VERSION}}, name='about'),
+        {
+            'template': 'about.html', 
+            'extra_context': { 'version': django_settings.LAUDIO_VERSION }
+        }
+        , name='about'),
     url(r'^chat/$', 'django.views.generic.simple.direct_to_template', 
         {'template': 'chat.html'}, name='chat'),
     url(r'^login/', 'django.contrib.auth.views.login', 

@@ -1,0 +1,13 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    {% for a in artists %}
+        <artist id={{ a.id }}>
+            <name>{{ a.name }}</name>
+            <albums>{{  a.album_set|length }}</albums>
+            <songs>{{ a.album_set.song_set|length }}</songs>
+            <preciserating>0</preciserating>
+            <rating>0</rating>
+        </artist>
+    {% endfor %}
+{% endblock %}

@@ -24,7 +24,10 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.core.servers.basehttp import FileWrapper
+from django.template import RequestContext
 
+# Laudio imports
+from laudio.inc.config import LaudioConfig
 
 """Keep your usefull tools here
 """
@@ -38,24 +41,8 @@ def render(request, tpl, tplvars={}):
 
     """
     tplvars.update(csrf(request))
-    # check config vars
-    try:
-        config = Settings.objects.get(pk=1)
-        tplvars["audio_debug"] = config.debugAudio
-        if request.user.is_authenticated():
-            tplvars["auto_load"] = request.user.get_profile().showLib
-            tplvars["hide_playlist"] = request.user.get_profile().hidePlaylist
-            tplvars["hide_sidebar"] = request.user.get_profile().hideSidebar
-        else:
-            tplvars["auto_load"] = config.showLib
-            tplvars["hide_playlist"] = config.hidePlaylist
-            tplvars["hide_sidebar"] = config.hideSidebar
-    except Settings.DoesNotExist, AttributeError:
-        tplvars["audio_debug"] = False 
-        tplvars["auto_load"] = False 
-        tplvars["hide_playlist"] = False 
-        tplvars["hide_sidebar"] = False 
-
+    # pass config vars
+    tplvars["config"] = LaudioConfig()
     return render_to_response(tpl, tplvars,
                                context_instance=RequestContext(request))
                                

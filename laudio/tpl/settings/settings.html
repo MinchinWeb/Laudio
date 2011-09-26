@@ -57,7 +57,7 @@
     <h1>Usermanagement</h1>
     <fieldset>
         <legend>Utils</legend>
-        <a id="adduser" href="{% url laudio.views.laudio_settings_new_user %}">Add a new user</a>
+        <a id="adduser" href="{% url player:settings_user_new %}">Add a new user</a>
     </fieldset>
     <h2>Users</h2>
     <p>Please add a superuser if you plan to share your music with other
@@ -78,8 +78,8 @@
             <a class="closeduser" onclick="return false;" href="#">Disabled</a>
         {% endif %}
         
-        <a class="edituser" href="{% url laudio.views.laudio_settings %}edituser/{{ user.id }}/">Edit</a>
-        <a class="deleteuser" href="{% url laudio.views.laudio_settings %}deleteuser/{{ user.id }}/">Delete</a>
+        <a class="edituser" href="{% url player:settings_user_edit user.id }/">Edit</a>
+        <a class="deleteuser" href="{% url player:settins_user_delete user.id %}/">Delete</a>
     </fieldset>
     {% endfor %}
     <p style="height: 175px;"></p>

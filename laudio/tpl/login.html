@@ -11,7 +11,7 @@
     <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
-    <form method="post" action="{% url django.contrib.auth.views.login %}">
+    <form method="post" action="{% url player:login %}">
         <fieldset>
         <legend>Login</legend>
         {% csrf_token %}

@@ -20,7 +20,7 @@
  */
 
 $(document).ready(function() { 
-    soundManager.url = '{% url laudio.views.laudio_index %}media/js/soundmanager/swf/';
+    soundManager.url = '{{ STATIC_URL }}js/soundmanager/swf/';
     soundManager.useHTML5Audio = true;
     soundManager.flashVersion = 8;
     soundManager.debugFlash = true;
@@ -149,7 +149,7 @@ function collection_context_menu(){
                     var id = row_to_id(this.id);
                     play_song(id, this.id);
                 },
-                icon: "{% url laudio.views.laudio_index %}media/style/img/play_small.png",
+                icon: "{{ STATIC_URL }}style/img/play_small.png",
             }
                         
         }, $.contextMenu.separator, 
@@ -187,7 +187,7 @@ function collection_context_menu(){
                     playlist_context_menu();
                     db("playlistIdCounter", idrow);
                 },
-                icon: "{% url laudio.views.laudio_index %}media/style/img/add_small.png",
+                icon: "{{ STATIC_URL }}style/img/add_small.png",
             }
                         
         }, 
@@ -196,10 +196,10 @@ function collection_context_menu(){
                 onclick: function(menuItem, menu) {
                     $(".selected").each( function(){
                         var id = row_to_id( $(this).attr("id") );
-                        window.open("{% url laudio.views.laudio_index %}song_download/" + id + "/");
+                        window.open("{% url player:song_download %}" + id + "/");
                     });
                 },
-                icon: "{% url laudio.views.laudio_index %}media/style/img/download_small.png",
+                icon: "{{ STATIC_URL }}style/img/download_small.png",
             }
         }, 
         

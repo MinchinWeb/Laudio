@@ -1,0 +1,16 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    {% for a in albums %}
+        <album id="{{ a.id }}">
+            <name>{{ a.name }}</name>
+            <artist id="{{  a.artist.id }}">{{  a.artist.name }}</albums>
+            <year>{{ a.date|date:"Y" }}</year>
+            <tracks>{{ a.song_set|length }}</tracks>
+            <disk>1</disk>
+            <art></art>
+            <preciserating>0</preciserating>
+            <rating>0</rating>
+        </album>
+    {% endfor %}
+{% endblock %}
