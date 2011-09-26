@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
@@ -53,19 +53,19 @@ def check_login(authLevel):
             config = LaudioConfig()
             requireLogin = config.requireLogin
 
-            """Sites marked with admin are required to log in regardless
-            if requireLogin is set"""
+            # Sites marked with admin are required to log in regardless
+            # if requireLogin is set
             if requireLogin or authLevel == "admin":
                 request = args[0]
                 user = request.user
-                """Check if the user is admin or normal user and
-                is authorized"""
+                # Check if the user is admin or normal user and
+                # is authorized
                 if authLevel == "admin":
                     if user.is_superuser:
                         authorized = True
                     else: 
-                        """Check if there is any superuser at all, if not
-                        allow everyone to access the admin settings"""
+                        # Check if there is any superuser at all, if not
+                        # allow everyone to access the admin settings
                         superusers = User.objects.filter(is_superuser=1).count()
                         if superusers == 0:
                             return view(*args, **kwargs)

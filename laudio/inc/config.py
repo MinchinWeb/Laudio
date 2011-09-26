@@ -52,6 +52,7 @@ class LaudioConfig(object):
             self.hidePlaylist = config.getboolean("settings", "hide_playlist")
             self.hideSidebar = config.getboolean("settings", "hide_sidebar")
             self.version = config.get("settings", "version")
+            self.xmlAPIAuth = config.getboolean("settings", "xml_auth")
         except ConfigParser.NoSectionError:
             # write default values
             self.collectionPath = ""
@@ -60,6 +61,7 @@ class LaudioConfig(object):
             self.debug = False
             self.hidePlaylist = False
             self.hideSidebar = False
+            self.xmlAPIAuth = False
             self.version = settings.LAUDIO_VERSION
             self.save()
 
@@ -75,6 +77,7 @@ class LaudioConfig(object):
         config.set("settings", "hide_playlist", str(self.hidePlaylist))
         config.set("settings", "hide_sidebar", str(self.hideSidebar))
         config.set("settings", "version", self.version)
+        config.set("settings", "xml_auth", str(self.xmlAPIAuth))
         with open(self.configFilePath, 'wb') as confFile:
             config.write(confFile)
 

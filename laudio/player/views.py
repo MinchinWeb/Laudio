@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
@@ -83,11 +83,6 @@ def index(request):
                                             }
                     )
                                 
-
-def about(request):
-    """A plain about site"""
-    return render(request, 'about.html', {"version": settings.LAUDIO_VERSION })
-    
     
 @check_login("admin")
 def settings(request):
@@ -199,6 +194,7 @@ def settings_user_edit(request, userid):
 @check_login("admin")
 def settings_user_delete(request, userid):
     """Deletes a user by userid"""
+    # FIXME: possible csrf vulnerability
     user = User.objects.get(pk=userid)
     user.delete()
     return HttpResponseRedirect( reverse ("laudio.views.laudio_settings") )
@@ -210,7 +206,6 @@ def profile(request):
     user = request.user
     
     if request.method == 'POST':
-        
         userform = UserEditProfileForm(request.POST)
         profileform = UserProfileForm(request.POST)
         
