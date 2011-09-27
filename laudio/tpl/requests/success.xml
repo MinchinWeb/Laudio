@@ -1,0 +1,8 @@
+{% extends 'requests/root.xml' %}
+
+{% block content %}
+    <sucess>
+        <status>{{ success }}</status>
+        <msg>{{ msg }}</msg>
+    </success>
+{% endblock %}
