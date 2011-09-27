@@ -75,7 +75,7 @@ def settings_db_scan(request):
     config = LaudioConfig()
     progress = ScanProgressor()
     if not os.access(DATABASES['default']['NAME'], os.W_OK):
-        msg = _("No write access to database: %(path)s" % {"path": settings.DATABASES['default']['NAME'])
+        msg = _("No write access to database: %(path)s") % {"path": settings.DATABASES['default']['NAME']}
         success = 0
     # check if scan is running
     elif progressor.isScanning():
