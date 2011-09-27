@@ -20,13 +20,16 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
 import datetime
+import os
 
 class Song (object):
 
     def __init__(self, path):
         self.path = path
         self.date = 0
+        self.size = os.path.getsize(self.path) 
 
     def setDatetime(self):
         """Converts the year to a datetime object

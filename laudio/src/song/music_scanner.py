@@ -141,7 +141,7 @@ class MusicScanner (object):
 
                         # Now set song metadata
                         for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
-                                     'length', 'date', 'path'):
+                                     'length', 'size', 'date', 'path'):
                             setattr( song, attr, getattr(musicFile, attr) )
                         song.lastmodified = lastModified
                         song.album = album
@@ -183,7 +183,7 @@ class MusicScanner (object):
                     # Now set song metadata
                     song = Song()
                     for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
-                                 'length', 'date', 'path'):
+                                 'length', 'date', 'path', 'size'):
                         setattr( song, attr, getattr(musicFile, attr) )
                     
                     song.lastmodified = lastModified
