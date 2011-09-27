@@ -34,6 +34,7 @@ from laudio.src.song.formats.mp3 import MP3Song
 from laudio.player.models import Song, Artist, Album, Genre
 from laudio.inc.debugger import LaudioDebugger
 from laudio.inc.config import LaudioConfig
+from laudio.inc.scan_progress import ScanProgressor
 
 
 class MusicScanner (object):
@@ -64,12 +65,13 @@ class MusicScanner (object):
         self.noRights = []
         self._debugger = LaudioDebugger()
         self.debug = config.debug 
+        self.scanLog = ScanProgressor()
 
 
     def scan(self):
         """ Scans a directory recursively for ogg files """
         # reset count
-        self._updateScanCount(True)
+        self.scanLog.reset()
         # scan all files
         fileList = []
         for root, directories, files in os.walk(self.musicDir):
@@ -79,26 +81,21 @@ class MusicScanner (object):
                     fileList.append( os.path.join( root, name ) )
         # add a new scan entry
         self.total = len(fileList)
+        self.scanLog.setTotal(self.total)
         if self.debug:
-            self._debug("Begin Scan")
+            self._debugger.log("Music Scanner", "Begin scan")
         # now add the files to the db
         for name in fileList:
             # TODO: check for ogg audio in the file rather then extension
             #       possible ogv files could be falsy indexed by this
             # ogg vorbis
             if name.lower().endswith(".ogg") or name.lower().endswith(".oga"):
-                if self.debug:
-                    self._debug("Scanned %s" % name)
                 self._addSong( OGGSong(name) )
-                self._updateScanCount()
             # mp3
             if name.lower().endswith(".mp3"):
-                if self.debug:
-                    self._debug("Scanned %s" % name)
                 self._addSong( MP3Song(name) )
-                self._updateScanCount()
         if self.debug:
-            self._debug("Finished Scan")
+            self._debugger.log("Music Scanner", "Finished scan")
         
 
     def _addSong(self, musicFile):
@@ -108,6 +105,8 @@ class MusicScanner (object):
         musicFile -- The song object
 
         """
+        self.scanLog.updateScannedTracks()
+        
         try:
             try:
                 # check if the unique path exists in the db
@@ -150,7 +149,7 @@ class MusicScanner (object):
                         song.genre = genre
                         song.save()
                         self.modified += 1
-                        self._debug("modified %s in the db" % musicFile.path)
+                        self._debugger.log("Music Scanner", "modified %s in the db" % musicFile.path)
                     # broken ogg file
                     except mutagen.oggvorbis.OggVorbisHeaderError:
                         self.broken.append(musicFile.path)
@@ -177,7 +176,7 @@ class MusicScanner (object):
                                                   artist=artist,
                                                   date=musicFile.date)
                     except Album.DoesNotExist:
-                        album= Album(name=musicFile.album,
+                        album = Album(name=musicFile.album,
                                      artist=artist
                                      date=musicFile.date)
                         album.save()
@@ -193,31 +192,10 @@ class MusicScanner (object):
                     song.genre = genre
                     song.save()
                     self.added += 1
-                    self._debug("added %s to the db" % musicFile.path)
+                    self._debugger.log("Music Scanner", "added %s to the db" % musicFile.path)
                 # broken ogg file
                 except mutagen.oggvorbis.OggVorbisHeaderError:
                     self.broken.append(musicFile.path)
         except IOError:
             self.noRights.append(musicFile.path)
-
-
-    def _debug(self, msg):
-        """If no debug log exists, we make a new one"""
-        self._debugger.log("Music Scanner", msg)
-
-
-    def _updateScanCount(self, reset=False):
-        """Updates values in the scan log"""
-        if reset == True:
-            f = open(settings.SCAN_LOG, 'w')
-            f.write( '%s %s' % (0, 1) )
-            f.close()
-        else:
-            self.scanned += 1
-            # open file only for every ten songs
-            if self.scanned % 10 == 0:
-                f = open(settings.SCAN_LOG, 'w')
-                f.write( '%s %s' % (self.scanned, self.total) )
-                f.close()
-
 
