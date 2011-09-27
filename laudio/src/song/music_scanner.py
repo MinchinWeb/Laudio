@@ -70,8 +70,6 @@ class MusicScanner (object):
 
     def scan(self):
         """ Scans a directory recursively for ogg files """
-        # reset count
-        self.scanLog.reset()
         # scan all files
         fileList = []
         for root, directories, files in os.walk(self.musicDir):
@@ -80,8 +78,7 @@ class MusicScanner (object):
                                                  or name.lower().endswith("mp3"):
                     fileList.append( os.path.join( root, name ) )
         # add a new scan entry
-        self.total = len(fileList)
-        self.scanLog.setTotal(self.total)
+        self.scanLog.setTotal(len(fileList))
         if self.debug:
             self._debugger.log("Music Scanner", "Begin scan")
         # now add the files to the db
@@ -96,6 +93,8 @@ class MusicScanner (object):
                 self._addSong( MP3Song(name) )
         if self.debug:
             self._debugger.log("Music Scanner", "Finished scan")
+        # reset count after finish
+        self.scanLog.reset()
         
 
     def _addSong(self, musicFile):

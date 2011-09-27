@@ -27,14 +27,13 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 # Laudio imports 
-from laudio.inc.shortcuts import render
-from laudio.inc.debugger import LaudioDebugger
 import laudio.src.song.scrobbler as scrobbler
 from laudio.src.song.coverfetcher import CoverFetcher
+from laudio.inc.shortcuts import render
+from laudio.inc.debugger import LaudioDebugger
 from laudio.inc.decorators import check_login
 from laudio.inc.config import LaudioConfig
 from laudio.inc.scan_progress import ScanProgressor
-from laudio.player.models import *
 
 
 

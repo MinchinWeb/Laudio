@@ -89,7 +89,7 @@ def index(request):
                                 
     
 @check_login("admin")
-def settings(request):
+def laudio_settings(request):
     """Site where the configuration happens"""
     # Check if there are any superusers, otherwise redirect them
     # to the settings page to create one

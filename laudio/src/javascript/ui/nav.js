@@ -74,7 +74,7 @@ $(document).ready(function() {
         
         // first we get the data via db because some data is not written
         // in the sidebar how its written in the db
-        $.getJSON("{% url laudio.views.laudio_index %}song_data/" + songId + "/", function(json){
+        $.getJSON("{% url player:index %}song_data/" + songId + "/", function(json){
             
             // then we start a search
             var args = [];
@@ -155,7 +155,7 @@ $(document).ready(function() {
                     var genre = encodeURIComponent($("#advSearch tr:eq(3) input").val());
                     
                     var row = inputId.replace("search", "");
-                    var url = "{% url laudio.views.laudio_index %}advautocomplete/" + row + "/";
+                    var url = "{% url player:index %}advautocomplete/" + row + "/";
                     url += "?title=" + title;
                     url += "&artist=" + artist;
                     url += "&album=" + album;

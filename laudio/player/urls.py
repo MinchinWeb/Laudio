@@ -21,28 +21,29 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Django imports
-from django.conf import settings as django_settings
+from django.conf import settings 
 from django.conf.urls.defaults import *
 
 # Laudio imports
 from laudio.player.views import *
 from laudio.player.xml_api import *
-#from laudio.player.ajax import *
+from laudio.player.ajax import *
 
 urlpatterns = patterns('',
     
+    url(r'^$', index, name='index'),
+    
     # Settings
-    url(r'^settings/$', settings, name='settings'),
+    url(r'^settings/$', laudio_settings, name='settings'),
     url(r'^settings/user/new/$', settings_user_new, name='settings_user_new'),
     url(r'^settings/user/delete/(?P<userid>.*)/$', settings_user_delete, name='settings_user_delete'),
     url(r'^settings/user/edit/(?P<userid>.*)/$', settings_user_edit, name='settings_user_edit'),
     # Ajax requests
     #url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
     #url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
-    #url(r'^settings/db/scan/info/$',settings_db_scan_info, name='settings_db_scan_info'),
+    #url(r'^settings/db/scan/info/$', settings_db_scan_info, name='settings_db_scan_info'),
     
     # Index view
-    url(r'^$', index, name='index'),
     # Ajax requests for index view 
 #    url(r'^collection/$', index_collection, name='index_collection'),
 #    url(r'^search/artist/letter/(?P<artist>.*)/$', search_artist_letter, name='search_artist_letter'),
@@ -71,7 +72,7 @@ urlpatterns = patterns('',
     url(r'^about/$', 'django.views.generic.simple.direct_to_template', 
         {
             'template': 'about.html', 
-            'extra_context': { 'version': django_settings.LAUDIO_VERSION }
+            'extra_context': { 'version': settings.LAUDIO_VERSION }
         }
         , name='about'),
     url(r'^chat/$', 'django.views.generic.simple.direct_to_template', 
