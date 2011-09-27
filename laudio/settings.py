@@ -198,7 +198,7 @@ DEBUG_LOG = "/var/log/laudio/debug.log"
 SCAN_LOG = "/var/log/laudio/scan.log"
 
 # Change this for changing the version in the about page
-LAUDIO_VERSION = "0.5.2.1"
+LAUDIO_VERSION = "0.6.0.0"
 
 # API key for last.fm, needed for scrobbling
 LAST_FM_API_KEY = "a1d1111ab0b08262e6d7484cc5dc949a"
