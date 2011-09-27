@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -17,7 +18,7 @@
         {% else %}
             <script src="{{ STATIC_URL }}js/soundmanager/script/soundmanager2-nodebug-jsmin.js" type="text/javascript" charset="utf-8"></script>
         {% endif %}
-        <script type="text/javascript" charset="utf-8">{{ js|safe }}</script>
+        {% block javascript %}{% endblock %}
         <link rel="icon" type="image/png" href="{{ STATIC_URL }}style/img/favicon.png?" />
         {% block head %}{% endblock %}
     </head>
@@ -27,17 +28,17 @@
     
         <div id="nav">
             <ul>
-                <li><a href="{% url player:index %}" {% block nav_index %}{% endblock %}>Music</a></li>
+                <li><a href="{% url player:index %}" {% block nav_index %}{% endblock %}>{% blocktrans %}Music{% endblocktrans %}</a></li>
                 {% block nav %}{% endblock %}
-                <li><a href="{% url player:settings %}" {% block nav_settings %}{% endblock %}>Settings</a></li>
+                <li><a href="{% url player:settings %}" {% block nav_settings %}{% endblock %}>{% blocktrans %}Settings{% endblocktrans %}</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url player:profile %}" {% block nav_profile %}{% endblock %}>Profile</a></li>
-                    <li><a href="{% url player:logout %}">Logout</a></li>
+                    <li><a href="{% url player:profile %}" {% block nav_profile %}{% endblock %}>{% blocktrans %}Profile{% endblocktrans %}</a></li>
+                    <li><a href="{% url player:logout %}">{% blocktrans %}Logout{% endblocktrans %}</a></li>
                 {% else %}
-                    <li><a href="{% url player:login %}?next={% url player:index %}" {% block nav_login %}{% endblock %}>Login</a></li>
+                    <li><a href="{% url player:login %}?next={% url player:index %}" {% block nav_login %}{% endblock %}>{% blocktrans %}Login{% endblocktrans %}</a></li>
                 {% endif %}
-                <li><a href="{% url player:chat %}" {% block nav_chat %}{% endblock %}>Chat</a></li>
-                <li><a href="{% url player:about %}" {% block nav_about %}{% endblock %}>About</a></li>
+                <li><a href="{% url player:chat %}" {% block nav_chat %}{% endblock %}>{% blocktrans %}Chat{% endblocktrans %}</a></li>
+                <li><a href="{% url player:about %}" {% block nav_about %}{% endblock %}>{% blocktrans %}About{% endblocktrans %}</a></li>
             </ul>
         </div>
 

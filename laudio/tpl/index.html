@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}LAudio - Local Music Collection{% endblock %}
+{% block title %}{% blocktrans %}Laudio - Local Music Collection{% endblocktrans %}{% endblock %}
 
 {% block search %}
     {% include "inc/search.html" %}
@@ -8,36 +9,40 @@
 
 {% block nav_index %}class="visible"{% endblock %}
 
+{% block javascript %}
+    <script type="text/javascript" charset="utf-8" src="{% url player:javascript "library" %}"></script>
+{% endblock %}
+
 {% block nav %}
-    <li><a href="#" onclick="return false;" id="sidebarLink">Sidebar</a></li>
-    <li><a href="#" onclick="return false;" id="playlistLink">Playlist</a></li>
+    <li><a href="#" onclick="return false;" id="sidebarLink">{% blocktrans %}Sidebar{% endblocktrans %}</a></li>
+    <li><a href="#" onclick="return false;" id="playlistLink">{% blocktrans %}Playlist{% endblocktrans %}</a></li>
 {% endblock %}
 
 {% block content %}
 <div id="contentHeader">
 
-    <div id="sidebarHeader" {% if hide_sidebar %}style="display: none;"{% endif %}>Information</div>
+    <div id="sidebarHeader" {% if hide_sidebar %}style="display: none;"{% endif %}>{% blocktrans %}Information{% endblocktrans %}</div>
     <div id="playlistHeader" {% if hide_playlist %}style="display: none;"{% endif %}><span id="playlistName"></span>
         
         <ul class="headerMenu" id="playlistSongMenu">
             {% if user.is_authenticated %}
-                <li><a href="#" id="savePlaylist" onclick="return false;">Save</a></li>
-                <li><a href="#" id="openPlaylist" onclick="return false;">Lists</a></li>
+                <li><a href="#" id="savePlaylist" onclick="return false;">{% blocktrans %}Save{% endblocktrans %}</a></li>
+                <li><a href="#" id="openPlaylist" onclick="return false;">{% blocktrans %}Lists{% endblocktrans %}</a></li>
             {% endif %}
         </ul>
         <ul class="headerMenu" id="playlistPlaylistMenu">
-            <li><a href="#" id="cancelPlaylist" onclick="return false;">Cancel</a></li>
+            <li><a href="#" id="cancelPlaylist" onclick="return false;">{% blocktrans %}Cancel{% endblocktrans %}</a></li>
         </ul>
     </div>
 
     <div class="header">
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th class="collNr"><a href="#">Nr</a></th>
-                <th class="collTitle"><a href="#">Title</a></th>
-                <th class="collArtist"><a href="#">Artist</a></th>
-                <th class="collAlbum"><a href="#">Album</a></th>
-                <th class="collGenre"><a href="#">Genre</a></th>
+                <th class="collNr"><a href="#">{% blocktrans %}Nr{% endblocktrans %}</a></th>
+                <th class="collTitle"><a href="#">{% blocktrans %}Title{% endblocktrans %}</a></th>
+                <th class="collArtist"><a href="#">{% blocktrans %}Artist{% endblocktrans %}</a></th>
+                <th class="collAlbum"><a href="#">{% blocktrans %}Album{% endblocktrans %}</a></th>
+                <th class="collGenre"><a href="#">{% blocktrans %}Genre{% endblocktrans %}</a></th>
             </tr>
         </table>
     </div>
@@ -48,49 +53,49 @@
 <div id="sidebar" {% if hide_sidebar %}style="display: none;"{% endif %}>
     <div id="currentSong">
         <p id="cover"><img src="{{ STATIC_URL }}style/img/nocover.png" alt="cover" title="no cover"/></p>
-        <h1>Now Playing</h1>
+        <h1>{% blocktrans %}Now Playing{% endblocktrans %}</h1>
         <table id="songinfo" cellpadding="0" cellspacing="0">
             <tr id="title" class="line1">
-                <th>Title</th>
+                <th>{% blocktrans %}Title{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="length" class="line2">
-                <th>Length</th>
+                <th>{% blocktrans %}Length{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="tracknr" class="line1">
-                <th>Tracknr.</th>
+                <th>{% blocktrans %}Tracknr{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="artist" class="line2">
-                <th>Artist</th>
+                <th>{% blocktrans %}Artist{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="album" class="line1">
-                <th>Album</th>
+                <th>{% blocktrans %}Album{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="date" class="line2">
-                <th>Date</th>
+                <th>{% blocktrans %}Year{% endblocktrans %}</th>
                 <td></td>
             </tr>    
             <tr id="genre" class="line1">
-                <th>Genre</th>
+                <th>{% blocktrans %}Genre{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="codec" class="line2">
-                <th>Codec</th>
+                <th>{% blocktrans %}Codec{% endblocktrans %}</th>
                 <td></td>
             </tr>
             <tr id="bitrate" class="line1">
-                <th>Bitrate</th>
+                <th>{% blocktrans %}Bitrate{% endblocktrans %}</th>
                 <td></td>
             </tr>
         </table>
-        <h1>Database</h1>
+        <h1>{% blocktrans %}Database{% endblocktrans %}</h1>
         <table id="database" cellpadding="0" cellspacing="0">
             <tr class="line1">
-                <th>Songs</th>
+                <th>{% blocktrans %}Songs{% endblocktrans %}</th>
                 <td>{{ numberOfSongs }}</td>
             </tr>
             <tr class="line2">
@@ -102,15 +107,15 @@
                 <td>{{ numberOfOggs }}</td>
             </tr>
             <tr class="line1">
-                <th>Hours</th>
+                <th>{% blocktrans %}Hours{% endblocktrans %}</th>
                 <td>{{ numberOfHours }}</td>
             </tr>
             <tr class="line2">
-                <th>Days</th>
+                <th>{% blocktrans %}Days{% endblocktrans %}</th>
                 <td>{{ numberOfDays }}</td>
             </tr>
             <tr class="line1">
-                <th>Weeks</th>
+                <th>{% blocktrans %}Weeks{% endblocktrans %}</th>
                 <td>{{ numberOfWeeks }}</td>
             </tr>
         </table>
@@ -131,10 +136,10 @@
             </tr>
             <tr>
                 <td>
-                    <a href="#" onclick="cancel_playlist(); return false;">No</a>
+                    <a href="#" onclick="cancel_playlist(); return false;">{% blocktrans %}No{% endblocktrans %}</a>
                 </td>
                 <td>
-                    <a href="#" id="confirmYes" onclick="return false;">Yes</a>
+                    <a href="#" id="confirmYes" onclick="return false;">{% blocktrans %}Yes{% endblocktrans %}</a>
                 </td>
             </tr>
         </tbody>
@@ -143,14 +148,14 @@
     <table id="playlistSaveDialogue" class="playlistAction" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
-                <th colspan="2">Enter a name</th>
+                <th colspan="2">{% blocktrans %}Enter a name{% endblocktrans %}</th>
             </tr>
             <tr>
                 <td>
                     <input type="text" name="name" maxlength="249" />
                 </td>
                 <td>
-                    <a href="#" id="savePlaylistButton" onclick="return false;">Save</a>
+                    <a href="#" id="savePlaylistButton" onclick="return false;">{% blocktrans %}Save{% endblocktrans %}</a>
                 </td>
         </tbody>
     </table>
@@ -165,7 +170,7 @@
                     <input type="text" name="name" maxlength="249" />
                 </td>
                 <td>
-                    <a href="#" id="renamePlaylistButton" onclick="return false;">Save</a>
+                    <a href="#" id="renamePlaylistButton" onclick="return false;">{% blocktrans %}Save{% endblocktrans %}</a>
                 </td>
         </tbody>
     </table>
@@ -183,19 +188,19 @@
     <table id="collection" cellpadding="0" cellspacing="0">   
         <thead style="display: none;">
             <tr>
-                <th>Nr</th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Genre</th>
+                <th>{% blocktrans %}Nr{% endblocktrans %}</th>
+                <th>{% blocktrans %}Title{% endblocktrans %}</th>
+                <th>{% blocktrans %}Artist{% endblocktrans %}</th>
+                <th>{% blocktrans %}Album{% endblocktrans %}</th>
+                <th>{% blocktrans %}Genre{% endblocktrans %}</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><div id="hint">To load your music simply enter something in the search
+                <td><div id="hint">{% blocktrans %}To load your music simply enter something in the search
             field or hit the "Artists" section in the navigation. You can change this behaviour 
             by setting the "Show all songs on startup" 
-            in the settings menu.
+            in the settings menu.{% endblocktrans %}
             </div></td>
             </tr>
         </tbody>

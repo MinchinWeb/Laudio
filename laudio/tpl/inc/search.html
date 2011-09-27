@@ -1,12 +1,14 @@
+{% load i18n %}
+
 <div id="alphab">
     <ul>
-        <li><a href="#">Artists</a></li>
+        <li><a href="#">{% trans "Artists" %}</a></li>
     </ul>
 </div>
 
 <div id="characters">
     <ul>
-        <li><a href="#">All</a></li>
+        <li><a href="#">{% trans "All" %}</a></li>
         <li><a href="#">a</a></li>
         <li><a href="#">b</a></li>
         <li><a href="#">c</a></li>
@@ -68,7 +70,7 @@
                 <th>Genre</th><td><input name="genre" id="searchgenre" type="text"/></td>
             </tr>
             <tr>
-                <th></th><td><input class="button" id="searchButton" type="button" value="search" /></td>
+                <th></th><td><input class="button" id="searchButton" type="button" value="{% trans "Search" %}" /></td>
             </tr>
         </table>
     </form>
@@ -77,7 +79,7 @@
 <div id="searchButtons">
     <form action="." method="get">
         <p>
-            <input class="button" id="moreButton" type="button" value="more" />
+            <input class="button" id="moreButton" type="button" value="{% trans "More" %}" />
         </p>
     </form>
 </div>  

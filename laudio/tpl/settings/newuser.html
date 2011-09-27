@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %} 
 
-{% block title %}LAudio - Add a new user{% endblock %}
+{% block title %}{% blocktrans %}Laudio - Add a new user{% endblocktrans %}{% endblock %}
 
 {% block nav_settings %}class="visible"{% endblock %}
 
@@ -9,14 +10,14 @@
 
 <div id="settings">
     {% if not user.is_superuser %}
-        <h1>Create a superuser</h1>
+        <h1>{% blocktrans %}Create a superuser{% endblocktrans %}</h1>
     {% else %}
-        <h1>Add a new user</h1>
+        <h1>{% blocktrans %}Add a new user{% endblocktrans %}</h1>
     {% endif %}
     <form method="post" action=".">
         {% csrf_token %}
         <fieldset>
-            <legend>User</legend>
+            <legend>{% blocktrans %}User{% endblocktrans %}</legend>
             <table>
                 
                 {% for field in userform %}
@@ -38,7 +39,7 @@
                 {% endfor %}
                 
                 <tr>
-                    <th>Password</th>
+                    <th>{% blocktrans %}Password{% endblocktrans %}</th>
                     <td><input name="password" type="password" /></td>
                 </tr>
 
@@ -59,7 +60,7 @@
 
                 <tr>
                     <th></th>
-                    <td><input name="submit" class="submit" type="submit" value="save" /></td>
+                    <td><input name="submit" class="submit" type="submit" value="{% trans "save" %}" /></td>
                 </tr>
             </table>
         </fieldset>

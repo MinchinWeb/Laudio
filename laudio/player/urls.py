@@ -31,8 +31,10 @@ from laudio.player.ajax import *
 
 urlpatterns = patterns('',
     
+    # Index view
     url(r'^$', index, name='index'),
-    
+    url(r'^javascript/(?P<view>\w+)/$', javascript, name='javascript'),
+
     # Settings
     url(r'^settings/$', laudio_settings, name='settings'),
     url(r'^settings/user/new/$', settings_user_new, name='settings_user_new'),
@@ -43,7 +45,6 @@ urlpatterns = patterns('',
     url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
     url(r'^settings/db/scan/info/$', settings_db_scan_info, name='settings_db_scan_info'),
     
-    # Index view
     # Ajax requests for index view 
 #    url(r'^collection/$', index_collection, name='index_collection'),
 #    url(r'^search/artist/letter/(?P<artist>.*)/$', search_artist_letter, name='search_artist_letter'),

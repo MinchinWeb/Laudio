@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}LAudio - Profile{% endblock %}
+{% block title %}{% blocktrans %}Laudio - Profile{% endblocktrans %}{% endblock %}
 
 {% block nav_profile %}class="visible"{% endblock %}
 
 
 {% block content %}
 <div id="settings">
-    <h1>Profile</h1>
+    <h1>{% blocktrans %}Profile{% endblocktrans %}</h1>
     <form method="post" action=".">
         {% csrf_token %}
         <fieldset>
-            <legend>Profile</legend>
+            <legend>{% blocktrans %}Profile{% endblocktrans %}</legend>
             <table>
                 
                 {% for field in userform %}
                 <tr>
                     <th>
                         {{ field.label_tag }}
-                        {% if field.field.required %}<sup class="required">*</sup>{% endif%}<br />
+                        {% if field.field.required %}<span class="required">*</span>{% endif%}<br />
                         <span class="help_text">{{ field.help_text }}</span>
                     </th>
                     <td>{{ field }}</td>
@@ -29,7 +30,7 @@
                 {% endfor %}
                 
                 <tr>
-                    <th>Password</th>
+                    <th>{% blocktrans %}Password{% endblocktrans %}</th>
                     <td><input name="password" type="password" /></td>
                 </tr>
 
@@ -39,7 +40,7 @@
                     <th>
                         {{ field.label_tag }}
                         {% if field.field.required %}<sup class="required">*</sup>{% endif%}<br />
-                        <span class="help_text">{{ field.help_text }}</span>
+                        <sup class="help_text">{{ field.help_text }}</sup>
                     </th>
                     <td>{{ field }}</td>
                     {% if field.errors %}
@@ -50,7 +51,7 @@
 
                 <tr>
                     <th></th>
-                    <td><input name="submit" class="submit" type="submit" value="save" /></td>
+                    <td><input name="submit" class="submit" type="submit" value="{% trans "save" %}" /></td>
                 </tr>
             </table>
         </fieldset>

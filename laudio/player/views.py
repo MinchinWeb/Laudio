@@ -63,9 +63,6 @@ def index(request):
         return HttpResponseRedirect( reverse("player:settings_user_new") )
 
     config = LaudioConfig()
-    # get javascript
-    # js = JavaScript("library", request)
-    js = ""
     
     # get number of songs
     count = Song.objects.aggregate( Sum("length") )
@@ -77,7 +74,6 @@ def index(request):
     weeks = int( days / 7 )
     
     return render(request, 'index.html', { 
-                                            'js': js, 
                                             'numberOfSongs': songs,
                                             'numberOfMp3s': mp3s,
                                             'numberOfOggs': oggs,
@@ -120,15 +116,12 @@ def laudio_settings(request):
         }
         settingsForm = SettingsForm(default_data)
             
-    # js = JavaScript("settings", request)
-    js = ""
     users = User.objects.all()
 
     return render(request, 'settings/settings.html', { 
                                                 "collection": config.collectionPath,  
                                                 "settingsForm": settingsForm,
                                                 "users": users,
-                                                "js": js, 
                                             }
                  )
                      
@@ -240,6 +233,15 @@ def profile(request):
                                              "profileform": profileForm
                                           }
                             )
+
+
+def javascript(request, view):
+    """
+    This view generates JavaScript according to the passed view
+    """
+    js = JavaScript(request, view)
+    return HttpResponse(js)
+
 
 def song_download(request):
     return HttpResponse("hi")

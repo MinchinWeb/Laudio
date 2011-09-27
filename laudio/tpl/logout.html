@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}LAudio - Logout{% endblock %}
+{% block title %}{% blocktrans %}Laudio - Logout{% endblocktrans %}{% endblock %}
 
 {% block nav_login %}class="visible"{% endblock %}
 
@@ -8,7 +9,8 @@
 {% block content %}
 <div id="settings">
 
-    <p>You've successfully been logged out! <a href="{% url player:index %}">Back to Index</a></p>
+    <p>{% blocktrans %}You've successfully been logged out!{% endblocktrans %} 
+    <a href="{% url player:index %}">{% blocktrans %}Back to Index{% endblocktrans %}</a></p>
 
 </div>
 {% endblock %}
