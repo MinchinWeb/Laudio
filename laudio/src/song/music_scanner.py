@@ -198,3 +198,12 @@ class MusicScanner (object):
         except IOError:
             self.noRights.append(musicFile.path)
 
+
+    def rmNonExist():
+        """Removes tracks from the database which are
+        not on the drive any more"""
+        songs = Song.objects.all()
+        for song in songs:
+            if not os.path.exists(song.path):
+                song.delete()
+                self._debugger.log("Music Scanner", "Removed %s from db: file does \                                    not exist any more" % song.path)

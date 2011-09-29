@@ -42,6 +42,7 @@ urlpatterns = patterns('',
     url(r'^settings/user/edit/(?P<userid>.*)/$', settings_user_edit, name='settings_user_edit'),
     # Ajax requests
     url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
+    url(r'^settings/db/rm/nonexist/$', settings_db_rm_nonexist, name='settings_db_rm_nonexist'),
     url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
     url(r'^settings/db/scan/info/$', settings_db_scan_info, name='settings_db_scan_info'),
     

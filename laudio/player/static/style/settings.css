@@ -107,6 +107,10 @@
     background-image: url("img/scan.png");
 }
 
+#recheckfiles {
+    background-image: url("img/recheckdb.png");
+}
+
 #adduser {
     background-image: url("img/add_user.png");
 }

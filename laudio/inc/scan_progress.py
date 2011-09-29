@@ -64,11 +64,18 @@ class ScanProgressor(object):
         """
         Returns true if scanning is active
         """
-        scanned, total = self.getScannedTracks()
-        if scanned == 0 and total == 0:
-            return False
-        else:
-            return True
+        
+        # TODO: is this really a good way to check if scanning is done?
+        # For instance when the program is killed the file with tracks
+        # and its content will still remain and prevent future scan
+        # This should be implement with checking for a running process
+        # rather than a file
+        return False
+        #scanned, total = self.getScannedTracks()
+        #if scanned == 0 and total == 0:
+        #    return False
+        #else:
+        #    return True
 
 
     def _flush(reset=False):

@@ -70,6 +70,21 @@ def settings_db_scan_info(request):
                                                           "total": total })
 
 @check_login("admin")
+def settings_db_rm_nonexist(request):
+    """Remove non existent files from the db"""
+    config = LaudioConfig()
+    scanner = MusicScanner()
+    debug = LaudioDebugger()  
+    debug.log("Settings", "Atempting to delete non existent tracks from the database")
+    scanner.rmNonExist()
+    return render(request, 'requests/success.xml', { 
+                    "msg": _("Deleted non existent tracks in the database"), 
+                    "success": 1 
+                 })
+
+
+
+@check_login("admin")
 def settings_db_scan(request):
     """Scan the files in the collection"""
     config = LaudioConfig()
