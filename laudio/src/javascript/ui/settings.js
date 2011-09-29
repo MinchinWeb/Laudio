@@ -97,10 +97,10 @@ $(document).ready(function() {
 var settings = {
 
     config : {
-        scanUpdInterval = 5000,
-        scannedTotal = "#total",
-        scannedScanned = "#scanned",
-        progressbar = $(".percentage canvas")[0]
+        scanUpdInterval : 5000,
+        scannedTotal : "#total",
+        scannedScanned : "#scanned",
+        progressbar : $(".percentage canvas")[0]
 
     },
     
@@ -135,7 +135,7 @@ var settings = {
      * Claers the progress bar
      */
     _clear_loaded : function(){
-        $(settings.config.scannedScanned.html(0);
+        $(settings.config.scannedScanned).html(0);
         $(settings.config.scannedTotal).html("");
         var ctx = settings.config.progressbar.getContext("2d");
         ctx.clearRect(0,0, 300 ,24);
