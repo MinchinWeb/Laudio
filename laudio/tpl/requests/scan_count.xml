@@ -1,8 +1,0 @@
-{% extends 'requests/root.xml' %}
-
-{% block content %}
-    <scancount>
-        <scanned>{{ scanned }}</scanned>
-        <total>{{ total }}</total>
-    </scancount>
-{% endblock %}

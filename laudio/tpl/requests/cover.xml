@@ -1,8 +1,0 @@
-{% extends 'requests/root.xml' %}
-
-{% block content %}
-    <cover>
-        <path>{{ coverpath }}</path>
-        <album>{{ album }}</album>
-    </cover>
-{% endblock %}
