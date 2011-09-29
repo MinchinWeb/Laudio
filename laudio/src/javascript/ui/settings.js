@@ -93,41 +93,52 @@ $(document).ready(function() {
 
 });
 
-/*
- * Start querying the db
- */
-function query_start(){
-    db("timer", setInterval( "update_percentage()", 5000 ) );    
-}
 
-/*
- * Clears the loaded data
- * 
- */
-function clear_loaded(){
-    $("#scanned").html(0);
-    $("#total").html("");
-    var $canvas = $(".percentage canvas");
-    var ctx = $canvas[0].getContext("2d");
-    ctx.clearRect(0,0, 300 ,24);
-}
+var settings = {
 
-/*
- * Sets the percentage of the canvas while querying the db
- * 
- */
-function update_percentage(){
-    // get the percentage from the db
-    $.getJSON("{% url player:settings_db_scan_info %}", function(json){
-        $("#scanned").html(json.scanned + "/");
-        $("#total").html(json.total);
-        var percent = json.scanned / json.total;
-        var width = Math.floor(percent * 300);
-        var $canvas = $(".percentage canvas");
-        var ctx = $canvas[0].getContext("2d");
+    config : {
+        scanUpdInterval = 5000,
+        scannedTotal = "#total",
+        scannedScanned = "#scanned",
+        progressbar = $(".percentage canvas")[0]
+
+    },
+    
+
+   progress_query_init : function(){
+        db("timer", setInterval( settings._update_percentage(), 
+            settings.config.scanUpdInterval ) );    
+   },
+
+    /**
+     * Updates the progressbar by the queried value
+     * Is being started by scan_start
+     */
+    _update_percentage : function(){
+        $.getJSON("{% url player:settings_db_scan_info %}", function(json){
+            $(settings.config.scannedScanned).html(json.scanned + "/");
+            $(settings.config.scannedTotal).html(json.total);
+            if(json.scanned !== 0){
+                var percent = json.scanned / json.total;
+                var width = Math.floor(percent * 300);
+                var ctx = settings.config.progressbar.getContext("2d");
+                ctx.clearRect(0,0, 300 ,24);
+                // fill loaded bar
+                ctx.fillStyle = "#333";
+                ctx.fillRect(0,0, width ,24);
+            }
+        }); 
+    },
+
+    
+    /**
+     * Claers the progress bar
+     */
+    _clear_loaded : function(){
+        $(settings.config.scannedScanned.html(0);
+        $(settings.config.scannedTotal).html("");
+        var ctx = settings.config.progressbar.getContext("2d");
         ctx.clearRect(0,0, 300 ,24);
-        // fill loaded bar
-        ctx.fillStyle = "#333";
-        ctx.fillRect(0,0, width ,24);
-    }); 
+    }
+
 }

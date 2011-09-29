@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load i18n %} 
+
+{% block title %}{% blocktrans %}Laudio - Settings{% endblocktrans %}{% endblock %}
+
+{% block nav_settings %}class="visible"{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" charset="utf-8" src="{% url player:javascript "settings" %}"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<div id="settings">
+    
+    <h1>{% blocktrans %}Setttings{% endblocktrans %}</h1>
+
+
+    <fieldset>
+        <legend>{% blocktrans %}Utils{% endblocktrans %}</legend>
+        <a href="#" id="scancoll">{% blocktrans %}Scan collection{% endblocktrans %}</a>
+        <a href="#" id="resetcoll">{% blocktrans %}Reset songs and playlists{% endblocktrans %}</a>
+        <a href="#" id="recheckfiles">{% blocktrans %}Remove nonexistent tracks from database{% endblocktrans %}</a>
+    </fieldset>
+    
+    <div class="small_loading" id="scaninfo">
+        <p>{% blocktrans %}Scanning songs, please wait: {% endblocktrans %}<span id="scanned">0</span><span id="total"></span></p>
+        <p class="percentage"><canvas height="24" width="300"></p>
+    </div>
+    
+    <div class="small_loading" id="deleteinfo">
+        <p>{% blocktrans %}Deleting database, please wait.{% endblocktrans %}</p>
+    </div>
+    
+    <div id="popup">{% blocktrans %}Error While Scanning/Deleting: Maybe the server isn't reachable{% endblocktrans %}</div>
+    <p style="clear: both;"></p>
+    
+    <form method="post" action=".">
+        {% csrf_token %}
+        <fieldset>
+            <legend>{% blocktrans %}Settings{% endblocktrans %}</legend>
+            <table cellspacing="0">
+                {% for field in settingsForm %}
+                <tr>
+                    <th>
+                        {{ field.label_tag }}
+                        {% if field.field.required %}<sup class="required">*</sup>{% endif%}<br />
+                        <span class="help_text">{{ field.help_text }}</span>
+                    </th>
+                    <td>{{ field }}</td>
+                    {% if field.errors %}
+                        <td class="errors">{{ field.errors }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th></th>
+                    <td><input class="submit" type="submit" value="{% trans "save" %}" /></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+    
+    
+    <h1>{% blocktrans %}Usermanagement{% endblocktrans %}</h1>
+    
+    <fieldset>
+        <legend>{% blocktrans %}Utils{% endblocktrans %}</legend>
+        <a id="adduser" href="{% url player:settings_user_new %}">{% blocktrans %}Add a new user{% endblocktrans %}</a>
+    </fieldset>
+    
+    <h2>{% blocktrans %}Users{% endblocktrans %}</h2>
+    
+    <p>{% blocktrans %}Please add a superuser if you plan to share your music with other
+    people! If a superuser exists, only he can change the settings.{% endblocktrans %}</p>
+    
+    {% for user in users %}
+    <fieldset>
+        <legend>{{ user.username }}</legend>
+        
+        {% if user.is_superuser %}
+            <a class="superuser" onclick="return false;" href="#">{% blocktrans %}Superuser{% endblocktrans %}</a>
+        {% else %}
+            <a class="user" onclick="return false;" href="#">{% blocktrans %}User{% endblocktrans %}</a>
+        {% endif %}
+        
+        {% if user.is_active %}
+            <a class="activeuser" onclick="return false;" href="#">{% blocktrans %}Active{% endblocktrans %}</a>
+        {% else %}
+            <a class="closeduser" onclick="return false;" href="#">{% blocktrans %}Disabled{% endblocktrans %}</a>
+        {% endif %}
+        
+        <a class="edituser" href="{% url player:settings_user_edit user.id %}">{% blocktrans %}Edit{% endblocktrans %}</a>
+        <a class="deleteuser" href="{% url player:settings_user_delete user.id %}">{% blocktrans %}Delete{% endblocktrans %}</a>
+    </fieldset>
+    {% endfor %}
+    
+    <p style="height: 175px;"></p>
+</div>
+{% endblock %}

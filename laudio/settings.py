@@ -33,7 +33,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-AUTH_PROFILE_MODULE = 'laudio.UserProfile'
+AUTH_PROFILE_MODULE = 'player.UserProfile'
 
 DATABASES = {
     'default': {

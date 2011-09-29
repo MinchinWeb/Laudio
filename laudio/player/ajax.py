@@ -55,7 +55,7 @@ def settings_db_reset(request):
     
     debug.log("Settings", "Deleted playlist and songs")
     
-    return render(request, 'requests/success.xml', { 
+    return render(request, 'requests/success.json', { 
                     "msg": _("Deleted all Playlists and songs"), 
                     "success": 1 
                  })
@@ -66,7 +66,7 @@ def settings_db_scan_info(request):
     """gets the last scan entry and the scan values"""
     progress = ScanProgressor()
     scanned, total = progress.getScannedTracks()
-    return render(request, 'requests/scan_count.xml', {"scanned": scanned,
+    return render(request, 'requests/scan_count.json', {"scanned": scanned,
                                                           "total": total })
 
 @check_login("admin")
@@ -77,7 +77,7 @@ def settings_db_rm_nonexist(request):
     debug = LaudioDebugger()  
     debug.log("Settings", "Atempting to delete non existent tracks from the database")
     scanner.rmNonExist()
-    return render(request, 'requests/success.xml', { 
+    return render(request, 'requests/success.json', { 
                     "msg": _("Deleted non existent tracks in the database"), 
                     "success": 1 
                  })
@@ -107,7 +107,7 @@ def settings_db_scan(request):
         for file in scanner.noRights:
             msg += _("The file: %(path)s is not accessible due to filerights") % {"path": file} 
         success = 1
-    return render(request, 'requests/success.xml', { "msg": msg, "success": success })
+    return render(request, 'requests/success.json', { "msg": msg, "success": success })
 
 
 

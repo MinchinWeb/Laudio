@@ -43,7 +43,7 @@ from django.core.urlresolvers import reverse
 from laudio.inc.shortcuts import render
 import laudio.src.song.scrobbler as scrobbler
 from laudio.src.song.coverfetcher import CoverFetcher
-# from laudio.src.javascript import JavaScript
+from laudio.src.javascript import JavaScript
 from laudio.inc.decorators import check_login
 from laudio.inc.config import LaudioConfig
 from laudio.player.models import *
@@ -118,7 +118,7 @@ def laudio_settings(request):
             
     users = User.objects.all()
 
-    return render(request, 'settings/settings.html', { 
+    return render(request, 'settings.html', { 
                                                 "collection": config.collectionPath,  
                                                 "settingsForm": settingsForm,
                                                 "users": users,
@@ -239,7 +239,7 @@ def javascript(request, view):
     """
     This view generates JavaScript according to the passed view
     """
-    js = JavaScript(request, view)
+    js = JavaScript(request, view) 
     return HttpResponse(js)
 
 

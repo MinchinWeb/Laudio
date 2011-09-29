@@ -10,6 +10,11 @@
 {% block nav_index %}class="visible"{% endblock %}
 
 {% block javascript %}
+    {% if audio_debug %}
+        <script src="{{ STATIC_URL }}js/soundmanager/script/soundmanager2-jsmin.js" type="text/javascript" charset="utf-8"></script>
+    {% else %}
+        <script src="{{ STATIC_URL }}js/soundmanager/script/soundmanager2-nodebug-jsmin.js" type="text/javascript" charset="utf-8"></script>
+    {% endif %}
     <script type="text/javascript" charset="utf-8" src="{% url player:javascript "library" %}"></script>
 {% endblock %}
 

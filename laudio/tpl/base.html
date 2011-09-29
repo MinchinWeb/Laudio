@@ -13,11 +13,6 @@
         <script src="{{ STATIC_URL }}js/jquery-ui-1.8.9.custom.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="{{ STATIC_URL }}js/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="{{ STATIC_URL }}js/jquery.contextmenu.js" type="text/javascript" charset="utf-8"></script>
-        {% if audio_debug %}
-            <script src="{{ STATIC_URL }}js/soundmanager/script/soundmanager2-jsmin.js" type="text/javascript" charset="utf-8"></script>
-        {% else %}
-            <script src="{{ STATIC_URL }}js/soundmanager/script/soundmanager2-nodebug-jsmin.js" type="text/javascript" charset="utf-8"></script>
-        {% endif %}
         {% block javascript %}{% endblock %}
         <link rel="icon" type="image/png" href="{{ STATIC_URL }}style/img/favicon.png?" />
         {% block head %}{% endblock %}

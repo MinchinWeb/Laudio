@@ -35,11 +35,12 @@ class JavaScript(object):
     """This class is for enabling django template vars and template syntax
     in javascript files and manipulating the js for different views"""
     
-    def __init__(self, view, request):
+    def __init__(self, request, view):
         """First we set the functions and files we have to include for
         the view we serve
         
         Keyword arguments:
+        request -- The django request object
         view -- can be: "library", "settings" or "playlist"; sets javascript
                 according to those views
         
