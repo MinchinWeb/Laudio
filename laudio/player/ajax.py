@@ -51,9 +51,10 @@ def settings_db_reset(request):
     #       deleted and which are left
     debug = LaudioDebugger()
     debug.log("Settings", "Attempting to delete playlists and songs")
-
-    Song.objects.all().delete()
-    Playlist.objects.all().delete()
+    
+    config = LaudioConfig()
+    scanner = MusicScanner(config.collectionPath)
+    scanner.reset()
     
     debug.log("Settings", "Deleted playlist and songs")
     
@@ -75,7 +76,7 @@ def settings_db_scan_info(request):
 def settings_db_rm_nonexist(request):
     """Remove non existent files from the db"""
     config = LaudioConfig()
-    scanner = MusicScanner()
+    scanner = MusicScanner(config.collectionPath)
     debug = LaudioDebugger()  
     debug.log("Settings", "Atempting to delete non existent tracks from the database")
     scanner.rmNonExist()
@@ -83,7 +84,6 @@ def settings_db_rm_nonexist(request):
                     "msg": _("Deleted non existent tracks in the database"), 
                     "success": 1 
                  })
-
 
 
 @check_login("admin")
@@ -101,13 +101,13 @@ def settings_db_scan(request):
     else:
         scanner = MusicScanner(config.collectionPath)
         scanner.scan()
-        msg = _("Scanned %(number)i files") % {"number": scanner.scanned}
-        msg += _("Updated %(number)i files") % {"number": scanner.modified}
-        msg += _("Added %(number)i files") % {"number": scanner.added}
+        msg = _("Scanned %(number)i files. ") % {"number": scanner.scanned}
+        msg += _("Updated %(number)i files. ") % {"number": scanner.modified}
+        msg += _("Added %(number)i files. ") % {"number": scanner.added}
         for file in scanner.broken:
-            msg += _("The file: %(path)s is broken") % {"path": file}
+            msg += _("The file: %(path)s is broken. ") % {"path": file}
         for file in scanner.noRights:
-            msg += _("The file: %(path)s is not accessible due to filerights") % {"path": file} 
+            msg += _("The file: %(path)s is not accessible due to filerights. ") % {"path": file} 
         success = 1
     return render(request, 'requests/success.json', { "msg": msg, "success": success })
 

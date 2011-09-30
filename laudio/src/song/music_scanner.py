@@ -31,7 +31,7 @@ from django.conf import settings
 # Laudio imports
 from laudio.src.song.formats.ogg import OGGSong
 from laudio.src.song.formats.mp3 import MP3Song
-from laudio.player.models import Song, Artist, Album, Genre
+from laudio.player.models import * 
 from laudio.inc.debugger import LaudioDebugger
 from laudio.inc.config import LaudioConfig
 from laudio.inc.scan_progress import ScanProgressor
@@ -64,7 +64,6 @@ class MusicScanner(object):
         self.broken = []
         self.noRights = []
         self._debugger = LaudioDebugger()
-        self.debug = config.debug 
         self.scanLog = ScanProgressor()
 
 
@@ -79,8 +78,7 @@ class MusicScanner(object):
                     fileList.append( os.path.join( root, name ) )
         # add a new scan entry
         self.scanLog.setTotal(len(fileList))
-        if self.debug:
-            self._debugger.log("Music Scanner", "Begin scan")
+        self._debugger.log("Music Scanner", "Begin scan")
         # now add the files to the db
         for name in fileList:
             # TODO: check for ogg audio in the file rather then extension
@@ -94,8 +92,7 @@ class MusicScanner(object):
             # mp3
             if name.lower().endswith(".mp3"):
                 self._addSong( MP3Song(name) )
-        if self.debug:
-            self._debugger.log("Music Scanner", "Finished scan")
+        self._debugger.log("Music Scanner", "Finished scan")
         # reset count after finish
         self.scanLog.reset()
         
@@ -108,12 +105,11 @@ class MusicScanner(object):
 
         """
         self.scanLog.updateScannedTracks()
-        lastModified = datetime.datetime.now()
         try:
             # check if the unique path exists in the db
             song = Song.objects.get(path=musicFile.path)
             # if last modified date changed, update the songdata
-            if song.lastmodified != lastModified:
+            if song.lastmodified != musicFile.lastModified:
                 # Get artist 
                 try:
                     artist = Artist.objects.get(name=musicFile.artist)
@@ -181,7 +177,7 @@ class MusicScanner(object):
                          'length', 'date', 'path', 'size'):
                 setattr( song, attr, getattr(musicFile, attr) )
             
-            song.lastmodified = lastModified
+            song.lastmodified = musicFile.lastModified 
             song.album = album
             song.genre = genre
             song.save()
@@ -191,7 +187,7 @@ class MusicScanner(object):
             self.noRights.append(musicFile.path)
 
 
-    def rmNonExist():
+    def rmNonExist(self):
         """Removes tracks from the database which are
         not on the drive any more"""
         songs = Song.objects.all()
@@ -200,3 +196,19 @@ class MusicScanner(object):
                 song.delete()
                 self._debugger.log("Music Scanner", "Removed %s from db: file does \
                                     not exist any more" % song.path)
+
+    def reset(self):
+        """Removes all scanned entries from the db
+        """
+        d = LaudioDebugger()
+        # Song.objects.all().delete() causes database errors
+        for item in Song.objects.all():
+            item.delete()
+        for item in Artist.objects.all():
+            item.delete()
+        for item in Genre.objects.all():
+            item.delete()
+        for item in Album.objects.all():
+            item.delete()
+        for item in Playlist.objects.all():
+            item.delete()

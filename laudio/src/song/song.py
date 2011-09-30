@@ -31,6 +31,8 @@ class Song(object):
         self.path = path
         self.date = 0
         self.size = os.path.getsize(self.path) 
+        fstat = os.stat(path)
+        self.lastModified = datetime.datetime.fromtimestamp(fstat.st_mtime)
 
 
     def setDatetime(self):
@@ -39,6 +41,10 @@ class Song(object):
         # extract date via regex
         regex = r"^(\d{1,4})-?.*"
         year = re.search(regex, self.date)
-        if year:
-            self.date = datetime.datetime(int(year.group(1)), 1, 1)
-
+        # too many possible insertions allow weird dates, so we just
+        # try to skip those weird ones by setting nothing
+        try:
+            if year:
+                self.date = datetime.datetime(int(year.group(1)), 1, 1)
+        except ValueError:
+            self.date = ''

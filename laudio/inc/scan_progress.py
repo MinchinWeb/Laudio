@@ -98,7 +98,7 @@ class ScanProgressor(object):
         Resets the scanned tracks file by setting the values
         to 0
         """
-        self.flush(True)
+        self._flush(True)
         
 
     def getScannedTracks(self):

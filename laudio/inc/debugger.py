@@ -26,6 +26,9 @@ import datetime
 # Django imports
 from django.conf import settings
 
+# Laudio imports
+from laudio.inc.config import LaudioConfig
+
 
 class LaudioDebugger(object):
     """
@@ -39,7 +42,9 @@ class LaudioDebugger(object):
         logFilePath -- The path to the debug logfile
         """
         self.logFilePath = logFilePath
-        self._log = [] 
+        self._log = []
+        config = LaudioConfig()
+        self.debug = config.debug
 
 
     def log(self, part, msg, flush=True):
@@ -53,9 +58,10 @@ class LaudioDebugger(object):
                  the internal flush method will be called and 
                  logs are written to the logfile
         """
-        self._log.append( (datetime.datetime.now(), msg, part) ) 
-        if flush:
-            self.flush()
+        if self.debug:
+            self._log.append( (datetime.datetime.now(), msg, part) ) 
+            if flush:
+                self.flush()
 
 
     def flush(self):
