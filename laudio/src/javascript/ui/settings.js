@@ -21,75 +21,9 @@
 
 $(document).ready(function() { 
 
-    /** 
-     * This function resets the db when you click on it
-     */
-    $("#resetcoll").click(function() {
-        // if popup is visible do nothing
-        if( $("#popup").css("display") === "block" || 
-            $(".small_loading").css("display") === "block" ){
-            return;
-        }
-
-        // first we unbind any previously attached events
-        $("#site").unbind("click");
-        $("#deleteinfo").fadeIn("slow");
-        
-        // execute the ajax query which deletes the db
-        $("#popup").load("{% url player:settings_db_reset %}", function (){ 
-            $("#deleteinfo").fadeOut("slow", function() {
-                $("#popup").slideDown("slow");
-            });
-            
-            // add a fine animation to fade out the popup
-            $("#site").bind("click", function() {
-                $("#popup").slideUp("slow");
-            });
-
-        });     
-          
-    });
-    
-
-    /**
-     * When you click on scan Collection this function gets executed
-     * and starts a collection scan
-     */
-    $("#scancoll").click(function() {
-        // if popup is visible do nothing
-        if( $("#popup").css("display") === "block" || 
-            $(".small_loading").css("display") === "block" ){
-            return;
-        }
-        // first we unbind any previously attached events
-        $("#site").unbind("click");
-        $("#scaninfo").fadeIn("slow");
-        
-        // delete previous values
-        clear_loaded();
-        
-        // wait 2 secs then set db querying
-        timeout = setTimeout("query_start()",2000);
-        
-        // execute the ajax query which scans the collection
-        $("#popup").load("{% url player:settings_db_scan %}", function (){ 
-            $("#scaninfo").fadeOut("slow", function() {
-                $("#popup").slideDown("slow");
-                clearTimeout(timeout);
-                clearInterval( db("timer", false) );
-            });
-            
-            
-            // add a fine animation to fade out the popup
-            $("#site").bind("click", function() {
-                $("#popup").slideUp("slow");
-            });
-            
-        });
-        
-          
-   
-    });
+    $("#resetcoll").click(function() { settings.reset(); });
+    $("#scancoll").click(function() { settings.scan(); });
+    $("#recheckfiles").click(function() { settings.recheck(); });
 
 });
 
@@ -100,15 +34,92 @@ var settings = {
         scanUpdInterval : 5000,
         scannedTotal : "#total",
         scannedScanned : "#scanned",
-        progressbar : $(".percentage canvas")[0]
+        popup : "#popup",
+        scaninfo : "#scaninfo",
+        delinfo : "#deleteinfo",
+        progressbar : function(){ return $(".percentage canvas")[0] }
 
     },
-    
 
-   progress_query_init : function(){
-        db("timer", setInterval( settings._update_percentage(), 
+
+    /**
+     * Calls the reset db url
+     */
+    reset : function(){
+         // if popup is visible do nothing
+        if( $(settings.config.popup).css("display") === "block" || 
+            $(".small_loading").css("display") === "block" ){
+            return;
+        }
+
+        // first we unbind any previously attached events
+        $("#site").unbind("click");
+        $(settings.config.delinfo).fadeIn("slow");
+        
+        // execute the ajax query which deletes the db
+        $(settings.config.popup).load("{% url player:settings_db_reset %}", function (){ 
+            $(settings.config.delinfo).fadeOut("slow", function() {
+                $(settings.config.popup).slideDown("slow");
+            });
+            
+            // add a fine animation to fade out the popup
+            $("#site").bind("click", function() {
+                $(settings.config.popup).slideUp("slow");
+            });
+
+        });     
+    },
+     
+
+    recheck : function(){
+
+    },
+
+
+    /**
+     * This function is called when the scan is being started
+     */
+    scan : function(){
+        // if popup is visible do nothing
+        if( $(settings.config.popup).css("display") === "block" || 
+            $(".small_loading").css("display") === "block" ){
+            return;
+        }
+        // first we unbind any previously attached events
+        $("#site").unbind("click");
+        $(settings.config.scaninfo).fadeIn("slow");
+        
+        // delete previous values
+        settings._clear_loaded();
+        
+        // wait 2 secs then set db querying
+        timeout = setTimeout(function(){ settings.progress_query_init();} , 2000);
+        
+        // execute the ajax query which scans the collection
+        $(settings.config.popup).load("{% url player:settings_db_scan %}", function (){ 
+            $(settings.config.scaninfo).fadeOut("slow", function() {
+                $(settings.config.popup).slideDown("slow");
+                clearTimeout(timeout);
+                clearInterval( db("timer", false) );
+            });
+            
+            // add a fine animation to fade out the popup
+            $("#site").bind("click", function() {
+                $(settings.config.popup).slideUp("slow");
+            });
+            
+        });
+        
+    },
+
+
+    /**
+     * Starts querying the server for scanning progress
+     */
+    progress_query_init : function(){
+        db("timer", setInterval( function(){ settings._update_percentage(); }, 
             settings.config.scanUpdInterval ) );    
-   },
+    },
 
     /**
      * Updates the progressbar by the queried value
@@ -121,7 +132,7 @@ var settings = {
             if(json.scanned !== 0){
                 var percent = json.scanned / json.total;
                 var width = Math.floor(percent * 300);
-                var ctx = settings.config.progressbar.getContext("2d");
+                var ctx = settings.config.progressbar().getContext("2d");
                 ctx.clearRect(0,0, 300 ,24);
                 // fill loaded bar
                 ctx.fillStyle = "#333";
@@ -137,7 +148,7 @@ var settings = {
     _clear_loaded : function(){
         $(settings.config.scannedScanned).html(0);
         $(settings.config.scannedTotal).html("");
-        var ctx = settings.config.progressbar.getContext("2d");
+        var ctx = settings.config.progressbar().getContext("2d");
         ctx.clearRect(0,0, 300 ,24);
     }
 
