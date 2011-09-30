@@ -39,7 +39,7 @@ class ScanProgressor(object):
         self.scanned = 0
 
 
-    def setTotal(total=0):
+    def setTotal(self, total=0):
         """
         Sets the total count
 
@@ -50,7 +50,7 @@ class ScanProgressor(object):
         self.total = total
 
 
-    def updateScannedTracks(by=1, offset=10):
+    def updateScannedTracks(self, by=1, offset=10):
         """
         Increments the number of scanned tracks by a certain number
         and writes them to a file determined by the given offset
@@ -60,7 +60,7 @@ class ScanProgressor(object):
             self._flush()
 
 
-    def isScanning():
+    def isScanning(self):
         """
         Returns true if scanning is active
         """
@@ -78,7 +78,7 @@ class ScanProgressor(object):
         #    return True
 
 
-    def _flush(reset=False):
+    def _flush(self, reset=False):
         """
         Writes the current values into the log file
         
@@ -93,7 +93,7 @@ class ScanProgressor(object):
             l.write( "%s %s" % (self.scanned, self.total) )
 
 
-    def reset():
+    def reset(self):
         """
         Resets the scanned tracks file by setting the values
         to 0

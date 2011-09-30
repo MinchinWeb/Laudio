@@ -33,7 +33,7 @@ class OGGSong (Song):
         Keyword arguments:
         path -- the full path to the song
         """
-        super(path)
+        super(OGGSong, self).__init__(path)
         self.codec = "ogg"
         self.song = OggVorbis(self.path)
         for key in ('title', 'artist', 'album', 'genre', 'date'):

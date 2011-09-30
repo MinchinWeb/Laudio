@@ -39,7 +39,8 @@ class LaudioDebugger(object):
         logFilePath -- The path to the debug logfile
         """
         self.logFilePath = logFilePath
-        self.log = [] 
+        self._log = [] 
+
 
     def log(self, part, msg, flush=True):
         """Logs a msg but doesnt write it into the log
@@ -52,14 +53,15 @@ class LaudioDebugger(object):
                  the internal flush method will be called and 
                  logs are written to the logfile
         """
-        self.log.append( (datetime.datetime.now(), msg, part) ) 
+        self._log.append( (datetime.datetime.now(), msg, part) ) 
         if flush:
             self.flush()
+
 
     def flush(self):
         """Flushes all logs to the debug log file
         """
         with( open(self.logFilePath, "a+") ) as log:
-            for value in self.log:
+            for value in self._log:
                 log.write("%s %s: %s \n" % (value[0], value[1], value[2]))
-        self.log = []
+        self._log = []

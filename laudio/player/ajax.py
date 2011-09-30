@@ -36,6 +36,7 @@ from laudio.src.song.coverfetcher import CoverFetcher
 from laudio.inc.decorators import check_login
 from laudio.inc.config import LaudioConfig
 from laudio.inc.scan_progress import ScanProgressor
+from laudio.src.song.music_scanner import MusicScanner
 from laudio.player.models import *
 
 
@@ -90,11 +91,11 @@ def settings_db_scan(request):
     """Scan the files in the collection"""
     config = LaudioConfig()
     progress = ScanProgressor()
-    if not os.access(DATABASES['default']['NAME'], os.W_OK):
+    if not os.access(settings.DATABASES['default']['NAME'], os.W_OK):
         msg = _("No write access to database: %(path)s") % {"path": settings.DATABASES['default']['NAME']}
         success = 0
     # check if scan is running
-    elif progressor.isScanning():
+    elif progress.isScanning():
         msg = _("Can not run scan because a scan is already being run")
         success = 0
     else:

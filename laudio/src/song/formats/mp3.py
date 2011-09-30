@@ -35,7 +35,7 @@ class MP3Song (Song):
         Keyword arguments:
         path -- the full path to the song
         """
-        super(path)
+        super(MP3Song, self).__init__(path)
         self.codec = "mp3"
         self.song = MP3(self.path)
         try:

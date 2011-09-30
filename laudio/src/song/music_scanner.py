@@ -37,7 +37,7 @@ from laudio.inc.config import LaudioConfig
 from laudio.inc.scan_progress import ScanProgressor
 
 
-class MusicScanner (object):
+class MusicScanner(object):
     """
     Class for scanning the files in your collection
     """
@@ -87,7 +87,10 @@ class MusicScanner (object):
             #       possible ogv files could be falsy indexed by this
             # ogg vorbis
             if name.lower().endswith(".ogg") or name.lower().endswith(".oga"):
-                self._addSong( OGGSong(name) )
+                try:
+                    self._addSong( OGGSong(name) )
+                except mutagen.oggvorbis.OggVorbisHeaderError:
+                    self.broken.append(name)
             # mp3
             if name.lower().endswith(".mp3"):
                 self._addSong( MP3Song(name) )
@@ -105,96 +108,85 @@ class MusicScanner (object):
 
         """
         self.scanLog.updateScannedTracks()
-        
+        lastModified = datetime.datetime.now()
         try:
-            try:
-                # check if the unique path exists in the db
-                song = Song.objects.get(path=musicFile.path)
-                # if last modified date changed, update the songdata
-                lastModified = datetime.datetime.now()
-                if musicFile.lastmodified != lastModified:
-                    try:
-                        # Get artist 
-                        try:
-                            artist = Artist.objects.get(name=musicFile.artist)
-                        except Artist.DoesNotExist:
-                            artist = Artist(name=musicFile.artist)
-                            artist.save()
-
-                        # Get genre
-                        try:
-                            genre = Genre.objects.get(name=musicFile.genre)
-                        except Genre.DoesNotExist:
-                            genre = Genre(name=musicFile.genre)
-                            genre.save()
-
-                        # Get album
-                        try:
-                            album = Album.objects.get(name=musicFile.album,
-                                                      artist=artist,
-                                                      date=musicFile.date)
-                        except Album.DoesNotExist:
-                            album= Album(name=musicFile.album,
-                                         artist=artist,
-                                         date=musicFile.date)
-                            album.save()
-
-                        # Now set song metadata
-                        for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
-                                     'length', 'size', 'date', 'path'):
-                            setattr( song, attr, getattr(musicFile, attr) )
-                        song.lastmodified = lastModified
-                        song.album = album
-                        song.genre = genre
-                        song.save()
-                        self.modified += 1
-                        self._debugger.log("Music Scanner", "modified %s in the db" % musicFile.path)
-                    # broken ogg file
-                    except mutagen.oggvorbis.OggVorbisHeaderError:
-                        self.broken.append(musicFile.path)
-            except Song.DoesNotExist:
-                # if song does not exist, add a new line to the db
+            # check if the unique path exists in the db
+            song = Song.objects.get(path=musicFile.path)
+            # if last modified date changed, update the songdata
+            if song.lastmodified != lastModified:
+                # Get artist 
                 try:
-                    # Get artist 
-                    try:
-                        artist = Artist.objects.get(name=musicFile.artist)
-                    except Artist.DoesNotExist:
-                        artist = Artist(name=musicFile.artist)
-                        artist.save()
+                    artist = Artist.objects.get(name=musicFile.artist)
+                except Artist.DoesNotExist:
+                    artist = Artist(name=musicFile.artist)
+                    artist.save()
 
-                    # Get genre
-                    try:
-                        genre = Genre.objects.get(name=musicFile.genre)
-                    except Genre.DoesNotExist:
-                        genre = Genre(name=musicFile.genre)
-                        genre.save()
+                # Get genre
+                try:
+                    genre = Genre.objects.get(name=musicFile.genre)
+                except Genre.DoesNotExist:
+                    genre = Genre(name=musicFile.genre)
+                    genre.save()
 
-                    # Get album
-                    try:
-                        album = Album.objects.get(name=musicFile.album,
-                                                  artist=artist,
-                                                  date=musicFile.date)
-                    except Album.DoesNotExist:
-                        album = Album(name=musicFile.album,
-                                     artist=artist
-                                     date=musicFile.date)
-                        album.save()
+                # Get album
+                try:
+                    album = Album.objects.get(name=musicFile.album,
+                                              artist=artist,
+                                              date=musicFile.date)
+                except Album.DoesNotExist:
+                    album= Album(name=musicFile.album,
+                                 artist=artist,
+                                 date=musicFile.date)
+                    album.save()
 
-                    # Now set song metadata
-                    song = Song()
-                    for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
-                                 'length', 'date', 'path', 'size'):
-                        setattr( song, attr, getattr(musicFile, attr) )
-                    
-                    song.lastmodified = lastModified
-                    song.album = album
-                    song.genre = genre
-                    song.save()
-                    self.added += 1
-                    self._debugger.log("Music Scanner", "added %s to the db" % musicFile.path)
-                # broken ogg file
-                except mutagen.oggvorbis.OggVorbisHeaderError:
-                    self.broken.append(musicFile.path)
+                # Now set song metadata
+                for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
+                             'length', 'size', 'date', 'path'):
+                    setattr( song, attr, getattr(musicFile, attr) )
+                song.lastmodified = lastModified
+                song.album = album
+                song.genre = genre
+                song.save()
+                self.modified += 1
+                self._debugger.log("Music Scanner", "modified %s in the db" % musicFile.path)
+        except Song.DoesNotExist:
+            # Get artist 
+            try:
+                artist = Artist.objects.get(name=musicFile.artist)
+            except Artist.DoesNotExist:
+                artist = Artist(name=musicFile.artist)
+                artist.save()
+
+            # Get genre
+            try:
+                genre = Genre.objects.get(name=musicFile.genre)
+            except Genre.DoesNotExist:
+                genre = Genre(name=musicFile.genre)
+                genre.save()
+
+            # Get album
+            try:
+                album = Album.objects.get(name=musicFile.album,
+                                          artist=artist,
+                                          date=musicFile.date)
+            except Album.DoesNotExist:
+                album = Album(name=musicFile.album,
+                             artist=artist,
+                             date=musicFile.date)
+                album.save()
+
+            # Now set song metadata
+            song = Song()
+            for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
+                         'length', 'date', 'path', 'size'):
+                setattr( song, attr, getattr(musicFile, attr) )
+            
+            song.lastmodified = lastModified
+            song.album = album
+            song.genre = genre
+            song.save()
+            self.added += 1
+            self._debugger.log("Music Scanner", "added %s to the db" % musicFile.path)
         except IOError:
             self.noRights.append(musicFile.path)
 
@@ -206,4 +198,5 @@ class MusicScanner (object):
         for song in songs:
             if not os.path.exists(song.path):
                 song.delete()
-                self._debugger.log("Music Scanner", "Removed %s from db: file does \                                    not exist any more" % song.path)
+                self._debugger.log("Music Scanner", "Removed %s from db: file does \
+                                    not exist any more" % song.path)

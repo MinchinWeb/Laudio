@@ -23,15 +23,22 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 # System imports
 import datetime
 import os
+import re
 
-class Song (object):
+class Song(object):
 
     def __init__(self, path):
         self.path = path
         self.date = 0
         self.size = os.path.getsize(self.path) 
 
+
     def setDatetime(self):
         """Converts the year to a datetime object
         """
-        self.date = datetime.datetime(self.date, 0, 0)
+        # extract date via regex
+        regex = r"^(\d{1,4})-?.*"
+        year = re.search(regex, self.date)
+        if year:
+            self.date = datetime.datetime(int(year.group(1)), 1, 1)
+
