@@ -1,0 +1,5 @@
+{
+  'path': '{{ coverpath }}',
+  'album': '{{ album }}',
+}
+

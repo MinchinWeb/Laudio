@@ -1,0 +1,17 @@
+{% extends 'install/base.html' %} 
+{% load i18n %}
+
+{% block title %}l-audio setup{% endblock %}
+
+{% block content %}
+    
+    <div id="content">
+        <form action="." method="post">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <p><input type="submit" name="submit" value="{% blocktrans %}save{% endblocktrans %}" /></p>
+        </form>
+    </div>
+{% endblock %}

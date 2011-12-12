@@ -1,0 +1,173 @@
+{% extends 'player/base.html' %} 
+{% load i18n %}
+
+{% block content %}
+    <div id="browser" class="overlay">
+        <div id="browsers">
+            <div id="artist_browser">
+                <table>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="artist_browser">
+                 <table>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table> 
+            </div>
+            <div id="genre_browser">
+                <table>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table> 
+            </div>
+        </div>
+        <div class="overlay_controls">
+            <ul class="horizontal_nav">
+                <li><a href="#" class="button">{% blocktrans %}load{% endblocktrans %}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="settings" class="overlay">
+        <div class="overlay_controls">
+            <ul class="horizontal_nav">
+                <li><a href="#" class="button">{% blocktrans %}save{% endblocktrans %}</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div id="profile" class="overlay"></div>
+    
+    <div id="player">
+        <div id="controls">
+            
+            <div class="control">
+                <a href="#" class="previous"></a> 
+                <a href="#" class="play" id="play_icon"></a>
+                <a href="#" class="next"></a>
+                <a href="#" id="shuffle_icon" class="noshuffle"></a>
+                <a href="#" id="repeat_icon" class="norepeat"></a>
+                <a href="#" class="jumpto"></a>
+            </div>
+            
+            <div id="progress"></div>
+            
+            <div id="progress_sec"></div>
+            
+            
+            <div id="mute" class="control">
+                <a href="#" class="unmuted" id="mute_icon"></a> 
+            </div>
+            
+            <div id="volume_container">
+                <div id="volume"></div>
+            </div>        
+                    
+            <div id="search">
+                <form action="" method="">
+                    <input type="text" placeholder="{% blocktrans %}Enter search{% endblocktrans %}" />
+                </form>
+            </div>
+            
+            
+            
+        </div>
+
+        <div id="titlebar">
+            <div id="sidebar_header">
+                <h1>{% blocktrans %}Sidebar{% endblocktrans %}</h1>
+            </div>
+            
+            <div id="playlist_header">
+                <h1>{% blocktrans %}Playlist{% endblocktrans %}</h1>
+            </div>
+            
+            <div id="songlist_header">
+                <h1>{% blocktrans %}Songs{% endblocktrans %}</h1>
+            </div>
+        </div>
+
+
+        <div id="content">
+        
+            
+            <div id="sidebar">
+                <div id="songcover"></div>
+                
+                <table id="songdata">
+                    <tr>
+                        <th>{% blocktrans %}Title{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Duration{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Number{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Artist{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Album{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Date{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Genre{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Codec{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Bitrate{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                </table>
+                                    
+                <table id="databasedata">
+                    <tr>
+                        <th>{% blocktrans %}Songs{% endblocktrans %}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>{% blocktrans %}Days{% endblocktrans %}</th>
+                        <td><td>
+                    </tr>
+                    <tr>
+                        <th>Vorbis</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>MP3</th>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div id="playlist">
+                <table>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            
+            <div id="songlist">
+                <table>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

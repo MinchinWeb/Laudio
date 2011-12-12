@@ -1,4 +1,21 @@
 #!/bin/bash
+# Laudio - A webbased musicplayer
+# 
+# Copyright (C) 2010 Bernhard Posselt, bernhard.posselt@gmx.at
+# 
+# Laudio is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+# 
+# Laudio is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
+
 
 # general constants
 INSTALL_DIR="/usr/share/laudio"
@@ -7,6 +24,8 @@ CREATE_DIRS=(   "/usr/share/laudio"
                 "/var/lib/laudio" 
                 "/var/log/laudio"
                 "/etc/laudio"
+                "/etc/laudio/apache"
+                "/etc/laudio/lighttpd"
         )
 DATABASE_FILE="/var/lib/laudio/laudio.db"
 
@@ -44,13 +63,14 @@ case "$DISTRO" in
         apt-get install python-lxml python-django python-mutagen apache2 sqlite3 libapache2-mod-wsgi python-pysqlite2
         echo "Setting up Apache"
         APACHE=$STANDARD_HTTP_USER
-        mv laudio_apache.conf /etc/apache2/conf.d/
         echo "Removing previous installations"
         for elem in ${CREATE_DIRS[@]}; do
             if [[ -e $elem ]]; then
                 rm -r $elem
             fi
         done
+        mv -r dist/server_cfg/* /etc/laudio
+        ln -s /etc/laudio/apache/laudio.conf /etc/apache2/conf.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
         for elem in ${CREATE_DIRS[@]}; do
             if ! [[ -e $elem ]]; then
@@ -80,7 +100,6 @@ case "$DISTRO" in
         pacman -S extra/django extra/python-lxml extra/mutagen extra/apache extra/python-pysqlite core/sqlite3 extra/mod_wsgi
         echo "Setting up Apache"  
         APACHE=$ARCH_HTTP_USER
-        mv laudio_apache.conf /etc/httpd/conf/extra/
         # check if the entry is already there
         conf=`grep -e laudio_apache.conf /etc/httpd/conf/httpd.conf`
         if [ "$conf" = "" ]; then
@@ -97,6 +116,8 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
+        mv -r dist/server_cfg/* /etc/laudio
+        ln -s /etc/laudio/apache/laudio.conf /etc/httpd/conf/extra/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
         for elem in ${CREATE_DIRS[@]}; do
             if ! [[ -e $elem ]]; then
@@ -128,13 +149,14 @@ case "$DISTRO" in
         emerge -av dev-python/django dev-python/lxml media-libs/mutagen dev-python/pysqlite dev-db/sqlite www-apache/mod_wsgi www-servers/apache
         echo "Setting up Apache"
         APACHE=$STANDARD_HTTP_USER
-        mv laudio_apache.conf /etc/apache2/vhosts.d/
         echo "Removing previous installations"
         for elem in ${CREATE_DIRS[@]}; do
             if [[ -e $elem ]]; then
                 rm -r $elem
             fi
         done
+        mv -r dist/server_cfg/* /etc/laudio
+        ln -s /etc/laudio/apache/laudio.conf /etc/apache2/vhosts.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
         for elem in ${CREATE_DIRS[@]}; do
             if ! [[ -e $elem ]]; then

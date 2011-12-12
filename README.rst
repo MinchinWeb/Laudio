@@ -1,109 +1,96 @@
-==============================================
- LAudio - A webbased audioplayer for your LAN
-==============================================
+===============================
+ l-audio - An HTML5 audioplayer
+===============================
 
 .. image::  https://dl.dropbox.com/u/15205713/screenshot_v05_small.png
 
 :Version: 0.6.0.0
 :Keywords: python, jquery, django, web, html5, audio, player, javascript, last.fm, libre.fm, json, mp3, ogg, vorbis
 
-Laudio is a webbased player which takes advantage of the HTML5 audio
-element to play its music.
-Its aim is to replace DAAP which is currently broken in the all major GNOME
-audio players.
+l-audio is a webbased player which takes advantage of the HTML5 audio element to 
+play its music. Its aim is to provide a better interface than its competitor
+Ampache.
 
-Laudio is based on the Python Framework Django and uses Apache as server.
+l-audio is based on the Python Framework Django and uses Apache as server.
 Installed on the machine where your music collection resides, it can be accessed
 in the whole network. By forwarding Port 80 on your router,
 even your friends can listen to it over the Internet.
 
 Get a live preview on http://laudio-player.org/
 
-Installing Laudio
-=================
-Ubuntu Maverick
----------------
-Download the deb package laudio-0.4-maverick.deb from 
-https://github.com/Raydiation/Laudio/downloads
-
-Or 
-
-Add the PPA to your sources::
-
-    $ sudo apt-add-repository ppa:bernhard-posselt/laudio-ppa
-
-Then update and install it::
-
-    $ sudo apt-get update
-    $ sudo apt-get install laudio
-
-Your Laudio installation is now up and running at http://localhost/laudio
-
-
-Debian Squeeze
---------------
-Download the deb package laudio-0.4-squeeze.deb
-from https://github.com/Raydiation/Laudio/downloads
-
-
-
-Other
------
-
-Download the source as tar.gz from the `Download Page`_ and extract it to your
-personal directory. Fire up a terminal and type in::
-
-    $ cd Laudio*
-
-to get into the directory. Proceed with ``Installation other``
-
-Installation other
-------------------
-
-This is different from Distribution to Distribution so i wrote a script for the
-main Distributions ``Ubuntu``, ``Gentoo`` and ``Arch Linux``
-
-``Please read it, it hasnt been tested thouroughly!!!``
-
-To run it type::
-
-    $ sudo /bin/bash setup.sh
-
-Your Laudio installation is now up and running at http://localhost/laudio
-
-.. _`Download Page`: http://github.com/Raydiation/Laudio/downloads
-.. _`Ampache`: http://ampache.org/
-
-Developement Versions
----------------------
-
-You can install the newest dev version from our PPA:
-
-Add the PPA to your sources::
-
-    $ sudo apt-add-repository ppa:bernhard-posselt/laudio-ppa
-
-Then update and install it::
-
-    $ sudo apt-get update
-    $ sudo apt-get install laudio-git
-
-Your Laudio installation is now up and running at http://localhost/laudio
+Installing 
+==========
 
 Git
 ---
 To get the unstable trunk fire up your console and change to the path where you
 want the source to be downloaded. Then type in::
 
-    $ git clone git://github.com/Raydiation/Laudio.git
-    $ cd Laudio*
+    $ git clone git@github.com:Raydiation/l-audio-dev.git
+    $ cd l-audio-dev*
+    $ sudo /bin/bash setup.sh
+    
+Security
+========
+To only allow access from apache to your music directory please change the 
+/etc/laudio/apache/laudio.conf::
+    
+    <Directory />
 
-to get into the directory. Proceed with ``Installation other``
+to::
+    
+    <Directory /your/music/directory/>
+
+
 
 FAQ
 ===
 
-Which Browsers does Laudio support?
+How can i use l-audio with lighttpd?
+------------------------------------
+TBD
+
+How can i use l-audio with mysql?
+---------------------------------
+First of all, you need python-mysql, depending on your distro the package can
+be named ``python-mysql`` or ``mysql-python``. Then you have to change the 
+/usr/share/laudio/laudio/settings.py from::
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': LAUDIO_SQLITE_PATH,    # Or path to database file if using sqlite3.
+            #'USER': '',                      # Not used with sqlite3.
+            #'PASSWORD': '',                  # Not used with sqlite3.
+            #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.  
+        }
+    }
+
+to::
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'mysql_database',    # Or path to database file if using sqlite3.
+            'USER': 'mysql_user',                      # Not used with sqlite3.
+            'PASSWORD': 'mysql_password',                  # Not used with sqlite3.
+            'HOST': 'mysql_host',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': 'mysql_port',                      # Set to empty string for default. Not used with sqlite3.  
+        }
+    }
+    
+Then you have to recreat the database::
+
+    python /usr/share/laudio/laudio/manage.py syncdb --noinput
+    
+And restart your webserver::
+
+    /etc/init.d/apache2 restart
+
+The same procedure basically applies to other databases like oracle and postgresql.
+
+Which Browsers does l-audio support?
 -----------------------------------
 Depends wether you want to use MP3 or OGG VORBIS
 
@@ -123,13 +110,14 @@ How can i change the URL under which Laudio is being run
 If you want to let Laudio run under a different URL then localhost/laudio, like
 localhost/audio for instance, you can now easily adjust it.
 
-Open the laudio_apache.conf in the Apache config folder and change the two lines to::
+Open the /etc/laudio/apache/laudio.conf and change the two lines to::
 
-    Alias /audio/media/ /usr/share/laudio/media/
-    WSGIScriptAlias /audio /usr/share/laudio/media/django.wsgi
+    Alias /audio/static/ /usr/share/laudio/laudio/static/
+    WSGIScriptAlias /audio /usr/share/laudio/laudio/static/django.wsgi
 
 Finally restart your Apache webserver.
 
+    sudo /etc/init.d/apache2 restart
 
 
 

@@ -1,0 +1,55 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        
+        <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/normalize.css" type="text/css" media="all" charset="utf-8" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/jquery-ui.css" type="text/css" media="all" charset="utf-8" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/jquery.contextmenu.css" type="text/css" media="all" charset="utf-8" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{{ THEME }}/style.css" type="text/css" media="all" charset="utf-8" />
+
+        <script src="{{ STATIC_URL }}js/lib/jquery/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery/jquery-ui-1.8.16.custom.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery/jquery.contextmenu.js" type="text/javascript" charset="utf-8"></script>
+
+        {% if config.debug %}
+            <script src="{{ STATIC_URL }}js/lib/soundmanager/script/soundmanager2-jsmin.js" type="text/javascript" charset="utf-8"></script>
+        {% else %}
+            <script src="{{ STATIC_URL }}js/lib/soundmanager/script/soundmanager2-nodebug-jsmin.js" type="text/javascript" charset="utf-8"></script>
+        {% endif %}      
+        <script src="{% url player:javascript 'inc' %}" type="text/javascript" charset="utf-8"></script>  
+        <script src="{% url player:javascript 'player' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% url player:javascript 'main' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% url player:javascript 'ui' %}" type="text/javascript" charset="utf-8"></script>
+
+        
+        <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon.png?" />
+    </head>
+
+    <body>
+        <div id="site">
+            
+            <nav>
+                <ul class="horizontal_nav">
+                    <li><a href="#" class="main">l-audio</a></li>
+                    <li><a href="#" class="active" id="sidebar_link">{% blocktrans %}Sidebar{% endblocktrans %}</a></li>
+                    <li><a href="#" class="active" id="playlist_link">{% blocktrans %}Playlist{% endblocktrans %}</a></li>
+                    <li><a href="#" id="browser_link">{% blocktrans %}Browse{% endblocktrans %}</a></li>
+                </ul>
+                
+                <ul id="login" class="horizontal_nav">
+                    <li><a href="#" id="profile_link">{% blocktrans %}profile{% endblocktrans %}</a></li>
+                    <li><a href="#" id="settings_link">{% blocktrans %}settings{% endblocktrans %}</a></li>
+                    <li><a href="">{% blocktrans %}logout{% endblocktrans %}</a></li>
+                </ul>
+            
+            </nav>
+            
+            {% block content %}{% endblock %}
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,9 @@
+{
+  'numberOfSongs': {{ numberOfSongs }},
+  'numberOfMp3s': {{ numberOfMp3s }},
+  'numberOfOggs': {{ numberOfOggs }},
+  'numberOfHours': {{ numberOfHours }},
+  'numberOfDays': {{ numberOfDays }},
+  'numberOfWeeks': {{ numberOfWeeks }},
+}
+

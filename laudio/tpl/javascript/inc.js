@@ -1,0 +1,83 @@
+/**
+ * Laudio - A webbased musicplayer
+ *
+ * Copyright (C) 2010 Bernhard Posselt, bernhard.posselt@gmx.at
+ *
+ * Laudio is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Laudio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+ 
+/**
+ * Converts a song id to the tr id, e.g. 1 to row1
+ * @param Integer id: The songid
+ * @param Boolean hash: If true a # is written before the row
+ *
+ * @return: The id for the row
+ */
+function id_to_row(id, hash){
+    if(hash){
+        return '#row' + id;
+    } else {
+        return 'row' + id;
+    }
+}
+
+/**
+ * Converts a song id to the tr id, e.g. 1 to plrow1
+ * @param Integer id: The songid
+ * @param Boolean hash: If true a # is written before the row
+ *
+ * @return: The id for the row
+ */
+function id_to_plrow(id, hash){
+    if(hash){
+        return '#plrow' + id;
+    } else {
+        return 'plrow' + id;
+    }
+}
+
+
+/**
+ * Same as id_to_row except the other way round, e.g. row1 to 1
+ * @param String id: The rowid
+ *
+ * @return: The songid
+ */
+function row_to_id(row){
+    return parseInt( row.replace('row', '') );
+}
+
+/**
+ * Same as id_to_row except the other way round, e.g. plrow1 to 1
+ * @param String id: The plrow
+ *
+ * @return: The songid
+ */
+function plrow_to_id(row){
+    return parseInt( row.replace('plrow', '') );
+}
+
+/**
+ * Decodes HTML Entities
+ * @param string str: string which you want to decode
+ * @return string: the decoded string
+ */
+function decode_html_entities(str) {
+    var text=document.createElement('textarea');
+    text.innerHTML = str;
+    return text.value;
+    text.parentNode.removeChild(text);
+}

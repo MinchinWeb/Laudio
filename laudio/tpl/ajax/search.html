@@ -1,0 +1,13 @@
+{% for song in songs %}
+    <tr id="row{{ song.id|escape }}" 
+        class="{% cycle 'line1' 'line2' %}" 
+        onclick="select_lines(this);"
+        ondblclick="play_row(this);">
+        <td class="collNr">{{ song.tracknumber }}</td>
+        <td class="collTitle">{{ song.title }}</td>
+        <td class="collArtist">{{ song.artist }}</td>
+        <td class="collAlbum">{{ song.album }}</td>
+        <td class="collGenre">{{ song.genre }}</td>
+    </tr>
+{% endfor %}
+

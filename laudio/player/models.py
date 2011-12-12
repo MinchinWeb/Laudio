@@ -26,9 +26,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+
 class Artist(models.Model):
-    name = models.CharField(_("Artist"), max_length=150)
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    name = models.CharField(_('Artist'), max_length=150)
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):
         return self.name
@@ -36,46 +37,46 @@ class Artist(models.Model):
 
 class Album(models.Model):
     artist = models.ForeignKey(Artist)
-    name = models.CharField(_("Album"), max_length=150)
-    date = models.CharField(_("Year"), max_length=100);
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    name = models.CharField(_('Album'), max_length=150)
+    date = models.CharField(_('Year'), max_length=100);
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):
         return self.name
 
 
 class Genre(models.Model):
-    name = models.CharField(_("Genre"), max_length=150)
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    name = models.CharField(_('Genre'), max_length=150)
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):
         return self.name
 
 
 class Song(models.Model):
-    title = models.CharField(_("Title"), max_length=250)
+    title = models.CharField(_('Title'), max_length=250)
     album = models.ForeignKey(Album)
     genre = models.ForeignKey(Genre)
-    codec = models.CharField(_("Codec"), max_length=10)
-    tracknumber = models.IntegerField(_("Tracknumber"))
-    path = models.FilePathField(_("Path"))
-    lastmodified = models.DateTimeField(_("Last metadata change"))
-    added =  models.DateTimeField(_("Added"), auto_now_add=True)
-    length = models.IntegerField(_("Length"))
-    bitrate = models.CharField(_("Bitrate"), max_length=100);
-    size = models.IntegerField(_("Size"));
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    codec = models.CharField(_('Codec'), max_length=10)
+    tracknumber = models.IntegerField(_('Tracknumber'))
+    path = models.FilePathField(_('Path'))
+    lastmodified = models.DateTimeField(_('Last metadata change'))
+    added =  models.DateTimeField(_('Added'), auto_now_add=True)
+    length = models.IntegerField(_('Length'))
+    bitrate = models.CharField(_('Bitrate'), max_length=100);
+    size = models.IntegerField(_('Size'));
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):
         return self.title
 
 
 class Playlist(models.Model):
-    name = models.CharField(_("Playlist"), max_length=250)
-    added = models.IntegerField(_("Added"))
-    songs = models.ManyToManyField(Song, through="PlaylistEntry")
+    name = models.CharField(_('Playlist'), max_length=250)
+    added = models.IntegerField(_('Added'))
+    songs = models.ManyToManyField(Song, through='PlaylistEntry')
     user = models.ForeignKey(User)
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):
         return self.name
@@ -84,29 +85,29 @@ class Playlist(models.Model):
 class PlaylistEntry(models.Model):
     playlist = models.ForeignKey(Playlist)
     song = models.ForeignKey(Song)
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
 
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
-    modified = models.DateTimeField(_("Modified"), auto_now=True)
-    lastFMName = models.CharField(_("last.fm username"), max_length=100, blank=True)
-    lastFMPass = models.CharField(_("last.fm password"), max_length=100, blank=True)
-    lastFMSubmit = models.BooleanField(_("Scrobble last.fm"), 
-        help_text=_("Activate this if you want to submit your played tracks \
-                    to your last.fm account"))
-    libreFMName = models.CharField(_("libre.fm username"), max_length=100, blank=True)
-    libreFMPass = models.CharField(_("libre.fm password"), max_length=100, blank=True)
-    libreFMSubmit = models.BooleanField(_("Scrobble libre.fm"),
-        help_text=_("Activate this if you want to submit your played tracks \
-                    to your libre.fm account"))
-    showLib = models.BooleanField(_("Show all songs on startup"), 
-                help_text=_("This displays your whole collection automatically on startup. \
+    modified = models.DateTimeField(_('Modified'), auto_now=True)
+    lastFMName = models.CharField(_('last.fm username'), max_length=100, blank=True)
+    lastFMPass = models.CharField(_('last.fm password'), max_length=100, blank=True)
+    lastFMSubmit = models.BooleanField(_('Scrobble last.fm'), 
+        help_text=_('Activate this if you want to submit your played tracks \
+                    to your last.fm account'))
+    libreFMName = models.CharField(_('libre.fm username'), max_length=100, blank=True)
+    libreFMPass = models.CharField(_('libre.fm password'), max_length=100, blank=True)
+    libreFMSubmit = models.BooleanField(_('Scrobble libre.fm'),
+        help_text=_('Activate this if you want to submit your played tracks \
+                    to your libre.fm account'))
+    showLib = models.BooleanField(_('Show all songs on startup'), 
+                help_text=_('This displays your whole collection automatically on startup. \
                             Be carefull with bigger collections as it may impact your \
-                            browser's speed"))
-    hidePlaylist = models.BooleanField(_("Hide playlist by default"), help_text=_("Automatically \
+                            browser\'s speed'))
+    hidePlaylist = models.BooleanField(_('Hide playlist by default'), help_text=_('Automatically \
                     hides the playlist in the Collection view so you have \
-                    to click playlist to view it"))
-    hideSidebar = models.BooleanField(_("Hide sidebar by default"), help_text=_("Automatically \
+                    to click playlist to view it'))
+    hideSidebar = models.BooleanField(_('Hide sidebar by default'), help_text=_('Automatically \
                     hides the sidebar in the Collection view so you have \
-                    to click sidebar to view it"))
+                    to click sidebar to view it'))

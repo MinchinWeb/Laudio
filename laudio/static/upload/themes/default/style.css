@@ -1,0 +1,510 @@
+/**
+ * Laudio - A webbased musicplayer
+ *
+ * Copyright (C) 2010 Bernhard Posselt, bernhard.posselt@gmx.at
+ *
+ * Laudio is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Laudio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+
+/**
+ * Palette: http://www.colourlovers.com/palette/444487/Curiosity_Killed
+ */
+
+
+@font-face {
+    font-family: dejavusans;
+    src: url('font/DejaVuSansCondensed.ttf');
+}
+
+@font-face {
+    font-family: dejavusans;
+    font-weight: bold;
+    src: url('font/DejaVuSans-Bold.ttf');
+}
+
+html, body {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+#site {
+    min-height: 100%;
+    height: 100%;
+}
+
+a.button {
+    height: 32px;
+    line-height: 32px;
+    margin: 0 3px;
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    float: left;
+    text-decoration: none;
+    color: #222;
+    background-color: #f5f5f5;
+}
+    
+    a.button:active {
+        margin-top: 1px;
+    }
+            
+    a.button:hover {
+        background-color: #99173C;
+        color: #ddd;
+    }
+
+ul.horizontal_nav {
+    margin: 0;
+    padding: 0;
+}
+
+    ul.horizontal_nav li {
+        display: inline-block;
+        float: left;
+    }
+
+/**
+ * Navigation
+ */
+nav {
+    width: 100%;
+    height: 35px;
+    background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    font-family: dejavusans;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    border-bottom: 4px solid #99173C;
+}
+
+    nav ul#login {
+        float: right;
+    }
+    
+        nav ul#login li a {
+            font-size: 10pt;
+        }
+
+
+            nav ul li a {
+                color: #ccc;
+                text-decoration: none;
+                line-height: 35px;
+                font-size: 12pt;
+                float: left;
+                padding: 0 10px;
+            }
+
+                nav ul li a:hover {
+                    color: #ddd;
+                    background-color: #99173C;
+                }
+                
+                nav ul li a.main {
+                    color: #ddd;
+                    font-size: 14pt;
+                    padding: 0 20px;
+                }
+                
+                nav ul li a.main:hover {
+                    background-color: transparent;
+                }   
+
+                nav ul li a.active {
+                    color: #ddd;
+                    background-color: #99173C;
+                }
+/**
+ * Wrapper
+ */
+#player {
+    height: 100%;
+}
+
+/**
+ * Overlays
+ */
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 39px;
+    left: 0;
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(255,255,255, 0.9);
+    display: none; 
+}
+
+    .overlay .overlay_controls {
+        position: absolute;
+        z-index: 3;
+        bottom: 40px;
+        left: 0;
+        border-top: 1px solid #ccc;
+        height: 40px;
+        width: 100%;
+        background-color: #DCE9BE; 
+    }
+
+    .overlay .overlay_controls .horizontal_nav {
+        float: right;
+        margin: 5px 15px 0 0;
+    }
+
+#browser #browsers {
+    float: left;
+    width: 30%;
+    margin: 10px;
+    border: 1px solid #ccc;
+    height: 20%;
+    overflow: auto;
+}
+
+    #browser #browsers table {
+
+    }
+/**
+ * Controls
+ */
+#controls {
+    width: 100%;
+    height: 45px;
+    padding-top: 11px;
+    background-color: #f5f5f5;
+    position: fixed;
+    z-index: 1;
+    top: 39px;
+    left: 0px;
+}
+    
+    #controls .control {
+        float: left;
+        margin-left: 15px;
+    }
+
+        #controls .control a {
+            height: 32px;
+            width: 32px;
+            margin: 0 5px;
+            line-height: 32px;
+            float: left;
+            background-repeat: no-repeat;
+        }
+    
+            #controls .control a:active {
+                margin-top: 1px;
+            }
+            
+            #controls .control a:hover {
+                background-color: #DCE9BE;
+            }
+    
+    #controls .control .play {
+        margin: 0;
+        background-image: url('img/play.png');
+    }
+    
+    #controls .control .pause {
+        margin: 0;
+        background-image: url('img/pause.png');
+    }
+    
+    #controls .control .previous {
+        margin: 0;
+        background-image: url('img/previous.png');
+    }
+
+    #controls .control .next {
+        margin: 0;
+        background-image: url('img/next.png');
+    }
+    
+    #controls .control .unmuted {
+        margin: 0;
+        background-image: url('img/unmuted.png');
+    }
+
+    #controls .control .quiet {
+        margin: 0;
+        background-image: url('img/quiet.png');
+    }
+
+    #controls .control .louder {
+        margin: 0;
+        background-image: url('img/louder.png');
+    }
+    
+    #controls .control .muted {
+        margin: 0;
+        background-image: url('img/muted.png');
+    }
+    
+    #controls .control .jumpto {
+        background-image: url('img/jumpto.png');
+    }
+    
+    #controls .control .shuffle {
+        background-image: url('img/shuffle.png');
+    }
+    
+    #controls .control .noshuffle {
+        background-image: url('img/noshuffle.png');
+    }
+    
+    #controls .control .repeat {
+        background-image: url('img/repeat.png');
+    }
+    
+    #controls .control .repeatall {
+        background-image: url('img/repeatall.png');
+    }
+    
+    #controls .control .norepeat {
+        background-image: url('img/norepeat.png');
+    }
+
+    #controls #progress {
+        float: left;
+        width: 150px;
+        margin: 9px 0 0 20px;
+        border: 1px solid #ccc;
+        line-height: 32px;
+    }
+        
+    #controls #progress_sec {
+        float: left;
+        display: inline-block;
+        line-height: 34px;
+        margin: 0 0 0 25px;
+        width: 100px;
+        color: #222;
+    }
+
+    
+    #controls #search {
+        float: right;
+        height: 45px;
+        width: 270px;
+    }
+    
+        #controls #search input {
+            font-family: dejavusans;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            height: 26px;
+            padding: 1px 5px; 
+            margin-top: 3px;
+            width: 258px;
+        }
+        
+    #controls #mute {
+        float: right;
+        margin-right: 15px;
+    }
+
+    #volume_container {
+        position: absolute;
+        top: 43px;
+        right: 14px;
+        width: 32px;
+        z-index: 3;
+        background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        padding: 16px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        display: none;
+    }
+
+    #volume {
+        margin: auto;
+        height: 120px;
+        width: 16px;
+    }
+
+         #volume .ui-slider-handle {
+            width: 14px;
+        }
+
+/**
+ * titlebar
+ */
+#titlebar {
+    position: absolute;
+    z-index: 0;
+    top: 94px;
+    left: 0px;
+    height: 22px;
+    width: 100%;
+    /*
+    background-color: #DCE9BE; 
+    color: #222;
+    */
+    background-color: rgb(46,38,51); 
+    color: #ddd;
+
+    /*
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    */
+/*
+    background-color: #99173C;
+    color: #ddd;
+*/
+}
+
+    #titlebar h1 {
+        font-family: dejavusans;
+        font-size: 10pt;
+        line-height: 22px;
+        height: 22px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    #titlebar #sidebar_header {
+        width: 300px;
+        height: 100%;
+        float: left;
+    }
+
+    #titlebar #playlist_header {
+        width: 340px;
+        height: 100%;
+        float: left;
+    }
+
+    #titlebar #songlist_header {
+        height: 100%;
+    }
+
+/**
+ * Content
+ */
+#content {
+    width: 100%;
+    height: 100%;
+    padding-top: 116px;
+    font-family: dejavusans;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/**
+ * Sidebar
+ */
+#sidebar {
+    width: 300px;
+    height: 100%;
+    float: left;
+    min-height: 100%;
+    background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+    border-right: 1px solid #ccc;
+}
+
+    #sidebar #songcover {
+        width: 300px;
+        height: 300px;
+        background-image: url('img/nocover.png');
+        background-repeat: no-repeat;
+        background-size: 300px 300px;
+        float: left;
+    }
+ 
+    #sidebar table {
+        margin: 30px 0 0 20px;
+    }
+    
+        #sidebar table th {
+            text-align: right;
+            color: #555152;
+            font-weight: normal;
+            width: 70px;
+        }
+        
+        #sidebar table td {
+            padding-left: 10px;
+            color: #ccc;
+        }
+        
+
+/**
+ * Playlist
+ */
+#playlist {
+    overflow-y: auto;
+    width: 340px;
+    min-height: 100%;
+    float: left;
+    overflow-y: auto;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+}
+
+    #songlist table, #playlist table {
+        width: 100%;
+    }
+
+        #songlist table tr:hover, #playlist table tr:hover {
+            background-color: #DCE9BE;
+            cursor: pointer;
+        }
+    
+            #songlist table .active, #playlist table .active {
+                background-color: #DCE9BE !important;
+            }
+            
+            #songlist table .selected, #playlist table .selected {
+                background-color: #DCE9BE !important;
+            }
+            
+            #songlist table .line1, #playlist table .line1 {
+                background-color: #f6f6f6;
+            }
+        
+            #songlist table .line2, #playlist table .line2 {
+            }
+            
+            #songlist table td, #playlist table td {
+                padding: 2px 0 2px 15px;
+            }
+
+
+
+/**
+ * Songlist
+ */
+#songlist {
+    height: 100%;
+    overflow: auto;
+}
+

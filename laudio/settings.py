@@ -20,10 +20,28 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-# imports
+# Base imports
 import os.path
 
+# Laudio imports
+from src.inc.config import LaudioConfig
 
+# laudio config vars
+LAUDIO_CFG = {
+    'MAIN_CFG': '/etc/laudio/laudio.cfg',
+    'APACHE_CFG': '/etc/laudio/apache/laudio.conf',
+    'LIGHTTPD_CFG': '/etc/laudio/lighttpd/laudio.conf',    
+}
+CONF = LaudioConfig(LAUDIO_CFG)
+LAUDIO_URL = CONF.url
+LAUDIO_SQLITE_PATH = '/var/lib/laudio/laudio.db'
+DEBUG_LOG = '/var/log/laudio/debug.log'
+SCAN_LOG = '/var/log/laudio/scan.log'
+LAUDIO_VERSION = '0.6.0.0'
+LAST_FM_API_KEY = 'a1d1111ab0b08262e6d7484cc5dc949a'
+
+
+# django configuration
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -38,16 +56,11 @@ AUTH_PROFILE_MODULE = 'player.UserProfile'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/var/lib/laudio/laudio.db',    # Or path to database file if using sqlite3.
-        
-        # Uncomment the following lines if you want to use a different
-        # database such as mysql
-
+        'NAME': LAUDIO_SQLITE_PATH,    # Or path to database file if using sqlite3.
         #'USER': '',                      # Not used with sqlite3.
         #'PASSWORD': '',                  # Not used with sqlite3.
         #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        
+        #'PORT': '',                      # Set to empty string for default. Not used with sqlite3.  
     }
 }
 
@@ -77,35 +90,34 @@ USE_L10N = True
 # Shortcut for the installation directory
 INSTALL_DIR = os.path.dirname( os.path.abspath(__file__) )
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
-
-
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
+# in apps' 'static/' subdirectories and in STATICFILES_DIRS.
+# Example: '/home/media/media.lawrence.com/static/'
 STATIC_ROOT = os.path.join( INSTALL_DIR, 'static/')
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+# Example: 'http://media.lawrence.com/static/'
+STATIC_URL = LAUDIO_URL + '/static/'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: '/home/media/media.lawrence.com/media/'
+MEDIA_ROOT = os.path.join( STATIC_ROOT, '/upload/')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: 'http://media.lawrence.com/media/', 'http://example.com/media/'
+MEDIA_URL = STATIC_URL + 'upload/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+# Examples: 'http://foo.com/static/admin/', '/static/admin/'.
+ADMIN_MEDIA_PREFIX =  LAUDIO_URL + '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join( INSTALL_DIR, 'player/static/'),
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Put strings here, like '/home/html/static' or 'C:/www/django/static'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
@@ -140,7 +152,7 @@ ROOT_URLCONF = 'laudio.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(INSTALL_DIR, 'tpl'),
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like '/home/html/django_templates' or 'C:/www/django/templates'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
@@ -154,10 +166,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'laudio',
     'laudio.player',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -183,22 +191,3 @@ LOGGING = {
     }
 }
 
-########################
-# laudio specific values
-
-# file for storing configuration
-LAUDIO_CFG = "/etc/laudio/laudio.cfg"
-
-# The file where debug information is being stored in
-DEBUG_LOG = "/var/log/laudio/debug.log"
-
-# This file is used for logging already scanned file, necessary for
-# displaying the progressbar.
-# TODO: implement a more elegant solution
-SCAN_LOG = "/var/log/laudio/scan.log"
-
-# Change this for changing the version in the about page
-LAUDIO_VERSION = "0.6.0.0"
-
-# API key for last.fm, needed for scrobbling
-LAST_FM_API_KEY = "a1d1111ab0b08262e6d7484cc5dc949a"

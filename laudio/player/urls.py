@@ -24,64 +24,28 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 from django.conf import settings 
 from django.conf.urls.defaults import *
 
-# Laudio imports
-from laudio.player.views import *
-from laudio.player.xml_api import *
-from laudio.player.ajax import *
+# main views
+urlpatterns = patterns('laudio.player.views.player',
+    url(r'^$', 'index', name='index'),
+    url(r'^setup/$', 'setup', name='setup'),
+    url(r'javascript/(?P<src>\w+)/$', 'javascript', name='javascript'),
+)
 
-urlpatterns = patterns('',
-    
-    # Index view
-    url(r'^$', index, name='index'),
-    url(r'^javascript/(?P<view>\w+)/$', javascript, name='javascript'),
-
-    # Settings
-    url(r'^settings/$', laudio_settings, name='settings'),
-    url(r'^settings/user/new/$', settings_user_new, name='settings_user_new'),
-    url(r'^settings/user/delete/(?P<userid>.*)/$', settings_user_delete, name='settings_user_delete'),
-    url(r'^settings/user/edit/(?P<userid>.*)/$', settings_user_edit, name='settings_user_edit'),
-    # Ajax requests
-    url(r'^settings/db/reset/$', settings_db_reset, name='settings_db_reset'),
-    url(r'^settings/db/rm/nonexist/$', settings_db_rm_nonexist, name='settings_db_rm_nonexist'),
-    url(r'^settings/db/scan/$', settings_db_scan, name='settings_db_scan'),
-    url(r'^settings/db/scan/info/$', settings_db_scan_info, name='settings_db_scan_info'),
-    
-    # Ajax requests for index view 
-#    url(r'^collection/$', index_collection, name='index_collection'),
-#    url(r'^search/artist/letter/(?P<artist>.*)/$', search_artist_letter, name='search_artist_letter'),
-#    url(r'^search/all/(?P<search>.*)/$', search, name='search'),
-#    url(r'^search/advanced/$', search_advanced, name='search_advanced'),
-#    url(r'^search/autocomplete/(?P<row>.*)/$', search_autocomplete, name='search_autocomplete'),
-#    url(r'^song/meta/(?P<id>.*)/$', song_meta, name='song_meta'),
-    url(r'^song/download/(?P<id>.*)/$', song_download, name='song_download'),
-#    url(r'^song/scrobble/(?P<id>.*)/$', song_scrobble, name='song_scrobble'),
-#    url(r'^song/cover/(?P<id>.*)/$', song_cover, name='song_cover'),
-    
-    # Ajax playlist requests
-#    url(r'^playlist/save/(?P<playlistName>.*)/$', playlist_save, name='playlist_save'),
-#    url(r'^playlist/exists/(?P<playlistName>.*)/$', playlist_exists, name='playlist_exists'),
-#    url(r'^playlist/name/(?P<playlistId>.*)/$', playlist_name, name='playlist_name'),
-#    url(r'^playlist/open/(?P<playlistId>.*)/$', playlist_open, name='playlist_open'),
-#    url(r'^playlist/delete/(?P<playlistId>.*)/$', playlist_delete, name='playlist_delete'),
-#    url(r'^playlist/rename/(?P<oldName>.*)/(?P<newName>.*)/$', playlist_rename, name='playlist_rename'),
-#    url(r'^playlist/list/$', playlist_list, name='playlist_list'),
-    
-    # Ampache XML API
-    url(r'^server/xml.server.php$', xml_api, name='xml_api'),
-    
-    # Other sites
-    url(r'^profile/$', profile, name='profile'),
-    url(r'^about/$', 'django.views.generic.simple.direct_to_template', 
-        {
-            'template': 'about.html', 
-            'extra_context': { 'version': settings.LAUDIO_VERSION }
-        }
-        , name='about'),
-    url(r'^chat/$', 'django.views.generic.simple.direct_to_template', 
-        {'template': 'chat.html'}, name='chat'),
-    url(r'^login/', 'django.contrib.auth.views.login', 
-        {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', 
-        {'template_name': 'logout.html'}, name='logout'),
-
+# ajax views
+urlpatterns += patterns('laudio.player.views.ajax', 
+    # scan
+    url(r'^ajax/scan/$', 'ajax_scan', name='ajax_scan'),
+    url(r'^ajax/scan/progress/$', 'ajax_scan_progress', name='ajax_scan_progress'),
+    # database
+    url(r'^ajax/db/reset/$', 'ajax_db_reset', name='ajax_db_reset'),
+    url(r'^ajax/db/rmnonexist/$', 'ajax_db_rmnonexist', name='ajax_db_rmnonexist'),
+    url(r'^ajax/db/statistics/$', 'ajax_db_statistics', name='ajax_db_statistics'),
+    # search
+    url(r'^ajax/search/$', 'ajax_search', name='ajax_search'),
+    # song data
+    url(r'^ajax/song/data/$', 'ajax_song_data', name='ajax_song_data'),
+    url(r'^ajax/song/file/$', 'ajax_song_file', name='ajax_song_file'),
+    url(r'^ajax/song/download/$', 'ajax_song_download', name='ajax_song_download'),
+    url(r'^ajax/song/scrobble/$', 'ajax_song_scrobble', name='ajax_song_scrobble'),
+    url(r'^ajax/song/cover/(?P<id>\d+)/$', 'ajax_song_cover', name='ajax_song_cover'),
 )
