@@ -119,7 +119,7 @@ License: GPL-2 or other
 
 Files: laudio/static/js/lib/jquery/jquery-ui-1.8.16.custom.min.js
        laudio/static/style/lib/jquery-ui.css
-       laudio/static/style/lib/images/*
+       laudio/static/style/lib/images/ui-*
 Copyright:
   (c) 2008 Paul Bakaus (ui.jquery.com)
   Brandon Aaron
@@ -160,6 +160,7 @@ License: GPL-2 or other
     
 Files: laudio/static/js/lib/jquery/jquery.contextmenu.js
        laudio/static/style/lib/jquery.contextmenu.css
+       laudio/static/style/lib/images/cmenu-*
 Copyright: (c) 2008 Matt Kruse <javascripttoolbox.com>
 License: GPL-3 or other
     This program is free software; you can redistribute it and/or modify
