@@ -94,5 +94,7 @@ def javascript(request, src):
         tpl = 'javascript/player.js'
     elif src == 'inc':
         tpl = 'javascript/inc.js'
-
+    elif src == 'playlist':
+        tpl = 'javascript/playlist.js'
+        
     return render(request, tpl)
