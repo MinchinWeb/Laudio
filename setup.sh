@@ -69,7 +69,7 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv -r dist/server_cfg/* /etc/laudio
+        mv dist/server_cfg/* /etc/laudio
         ln -s /etc/laudio/apache/laudio.conf /etc/apache2/conf.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
         for elem in ${CREATE_DIRS[@]}; do
@@ -116,7 +116,7 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv -r dist/server_cfg/* /etc/laudio
+        mv dist/server_cfg/* /etc/laudio
         ln -s /etc/laudio/apache/laudio.conf /etc/httpd/conf/extra/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
         for elem in ${CREATE_DIRS[@]}; do
@@ -155,7 +155,7 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv -r dist/server_cfg/* /etc/laudio
+        mv dist/server_cfg/* /etc/laudio
         ln -s /etc/laudio/apache/laudio.conf /etc/apache2/vhosts.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
         for elem in ${CREATE_DIRS[@]}; do
