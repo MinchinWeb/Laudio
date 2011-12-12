@@ -49,3 +49,13 @@ urlpatterns += patterns('laudio.player.views.ajax',
     url(r'^ajax/song/scrobble/$', 'ajax_song_scrobble', name='ajax_song_scrobble'),
     url(r'^ajax/song/cover/(?P<id>\d+)/$', 'ajax_song_cover', name='ajax_song_cover'),
 )
+
+# settings/config views
+urlpatterns += patterns('laudio.player.views.config',
+
+)
+
+# xml views
+urlpatterns += patterns('laudio.player.views.xml',
+
+)
