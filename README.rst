@@ -26,8 +26,8 @@ Git
 To get the unstable trunk fire up your console and change to the path where you
 want the source to be downloaded. Then type in::
 
-    $ git clone git@github.com:Raydiation/l-audio-dev.git
-    $ cd l-audio-dev*
+    $ git clone git@github.com:Raydiation/Laudio.git
+    $ cd Laudio*
     $ sudo /bin/bash setup.sh
     
 Security
