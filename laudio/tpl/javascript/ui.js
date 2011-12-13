@@ -21,7 +21,6 @@
 
 
 $(document).ready(function () {
-
     "use strict";
 
     var player,

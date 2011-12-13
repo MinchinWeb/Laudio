@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
- 
+
 /**
  * Converts a song id to the tr id, e.g. 1 to row1
  * @param Integer id: The songid
@@ -26,8 +26,8 @@
  *
  * @return: The id for the row
  */
-function id_to_row(id, hash){
-    if(hash){
+function id_to_row(id, hash) {
+    if (hash) {
         return '#row' + id;
     } else {
         return 'row' + id;
@@ -41,8 +41,8 @@ function id_to_row(id, hash){
  *
  * @return: The id for the row
  */
-function id_to_plrow(id, hash){
-    if(hash){
+function id_to_plrow(id, hash) {
+    if (hash) {
         return '#plrow' + id;
     } else {
         return 'plrow' + id;
@@ -56,8 +56,8 @@ function id_to_plrow(id, hash){
  *
  * @return: The songid
  */
-function row_to_id(row){
-    return parseInt( row.replace('row', '') );
+function row_to_id(row) {
+    return parseInt(row.replace('row', ''));
 }
 
 /**
@@ -66,8 +66,8 @@ function row_to_id(row){
  *
  * @return: The songid
  */
-function plrow_to_id(row){
-    return parseInt( row.replace('plrow', '') );
+function plrow_to_id(row) {
+    return parseInt(row.replace('plrow', ''));
 }
 
 /**
@@ -76,7 +76,7 @@ function plrow_to_id(row){
  * @return string: the decoded string
  */
 function decode_html_entities(str) {
-    var text=document.createElement('textarea');
+    var text = document.createElement('textarea');
     text.innerHTML = str;
     return text.value;
     text.parentNode.removeChild(text);

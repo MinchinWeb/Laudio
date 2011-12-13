@@ -19,7 +19,6 @@
  *
  */
 
-"use strict";
 
 /**
  * Enable jquery for csrf protection
