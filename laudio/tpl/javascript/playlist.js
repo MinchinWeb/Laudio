@@ -25,7 +25,7 @@
 /**
  * The playlist class which is used to handle everything playlist related
  */
-function Playlist(){
+function Playlist() {
 
 }
 
@@ -34,6 +34,6 @@ function Playlist(){
  *
  * @param name: The name of the playlist
  */
-Player.prototype.save = function(name){
+Player.prototype.save = function (name) {
 
 }
