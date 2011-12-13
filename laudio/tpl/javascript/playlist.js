@@ -20,6 +20,7 @@
  *
  */
 
+"use strict";
 
 /**
  * The playlist class which is used to handle everything playlist related

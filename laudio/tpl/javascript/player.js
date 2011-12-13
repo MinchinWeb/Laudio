@@ -20,6 +20,7 @@
  *
  */
 
+"use strict";
 
 /**
  * The player class which handles playing music and the music logic
