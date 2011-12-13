@@ -81,7 +81,7 @@ $(document).ready(function () {
     $('#volume').slider('option', 'min', 0);
     $('#volume').slider('option', 'max', 100);
     $('#volume').slider('value', 100);
-    $('#volume').bind('slidechange', function (event, ui) {
+    $('#volume').bind('slide', function (event, ui) {
         player.set_volume($('#volume').slider('value'));
     });
     $('#mute').hover(function () {
