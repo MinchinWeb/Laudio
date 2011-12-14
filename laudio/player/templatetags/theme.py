@@ -19,17 +19,20 @@ You should have received a copy of the GNU General Public License
 along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-from laudio.src.inc.shortcuts import render as csrf_render
 
-def config_settings(request):
-    """The settings view
-    """
-    ctx = {}
-    return csrf_render(request, 'player/settings.html', ctx)
-    
-    
-def config_profile(request):
-    """The profile view
-    """    
-    ctx = {}
-    return csrf_render(request, 'player/profile.html', ctx)
+# Django imports
+from django import template 
+
+register = template.Library()
+
+@register.simple_tag
+def theme(user):
+    # standard theme
+    theme_name = 'default'
+    if user.is_authenticated():
+        user_theme = user.get_profile().theme
+        if user_theme != '':
+            theme_name = user_theme
+    return theme_name
+
+

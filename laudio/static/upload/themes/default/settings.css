@@ -19,38 +19,12 @@
  *
  */
 
-
-#site {
-    min-height: 100%;
-    height: 100%;
-    background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-}
-
-
-h1 {
-    margin: 0;
-    padding: 0;
-    font-family: dejavusans;
-    color: #ddd;
-    font-weight: normal;
-} 
-
-
-/**
- * Content
- */
 #content {
-    height: 600px;
-    width: 1200px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -300px 0 0 -600px; 
-    background-color: #ddd;
-    border-radius: 8px;
-    border: 1px solid #333;
+    width: 100%;
+    height: 100%;
+    padding-top: 39px;
+    font-family: dejavusans;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }

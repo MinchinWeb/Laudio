@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load theme %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        
+        <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/normalize.css" type="text/css" media="all" charset="utf-8" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/jquery-ui.css" type="text/css" media="all" charset="utf-8" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/main.css" type="text/css" media="all" charset="utf-8" />
+        
+        <script src="{{ STATIC_URL }}js/lib/jquery/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{{ STATIC_URL }}js/lib/jquery/jquery-ui-1.8.16.custom.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="{% url player:javascript 'main' %}" type="text/javascript" charset="utf-8"></script>
+
+        {% block header %}{% endblock %}
+        
+        <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon.png?" />
+    </head>
+
+    <body>
+        <div id="site">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

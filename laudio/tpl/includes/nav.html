@@ -1,0 +1,19 @@
+{% load i18n %}
+<nav>
+    <ul class="horizontal_nav">
+        <li><a href="{% url player:index %}" class="main">l-audio</a></li>
+        <li><a href="#" class="active" id="sidebar_link">{% blocktrans %}Sidebar{% endblocktrans %}</a></li>
+        <li><a href="#" class="active" id="playlist_link">{% blocktrans %}Playlist{% endblocktrans %}</a></li>
+        <li><a href="#" id="browser_link">{% blocktrans %}Browse{% endblocktrans %}</a></li>
+    </ul>
+                
+    <ul id="login" class="horizontal_nav">
+       {% if user.is_authenticated %}
+          <li><a href="{% url player:logout %}">{% blocktrans %}logout{% endblocktrans %}</a></li>
+          <li><a href="{% url player:profile %}" id="profile_link" {{ nav_profile }}>{% blocktrans %}profile{% endblocktrans %}</a></li>
+          <li><a href="{% url player:settings %}" id="settings_link" {{ nav_settings }}>{% blocktrans %}settings{% endblocktrans %}</a></li>
+       {% else %}
+          <li><a href="{% url player:login %}" {{ nav_login }}>{% blocktrans %}login{% endblocktrans %}</a></li>
+       {% endif %}
+    </ul>
+</nav>

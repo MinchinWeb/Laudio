@@ -20,11 +20,16 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
+import os
+
 # Django imports
+from django.conf import settings 
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+
 
 
 class Artist(models.Model):
@@ -88,6 +93,12 @@ class PlaylistEntry(models.Model):
     modified = models.DateTimeField(_('Modified'), auto_now=True)
 
 
+THEMES = []
+for theme in os.listdir( os.path.join(settings.MEDIA_ROOT, 'themes/') ):
+    THEMES.append(
+        (theme, theme)
+        )
+
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     modified = models.DateTimeField(_('Modified'), auto_now=True)
@@ -111,3 +122,4 @@ class UserProfile(models.Model):
     hideSidebar = models.BooleanField(_('Hide sidebar by default'), help_text=_('Automatically \
                     hides the sidebar in the Collection view so you have \
                     to click sidebar to view it'))
+    theme = models.CharField(_('l-audio theme'), max_length=100, choices=THEMES)

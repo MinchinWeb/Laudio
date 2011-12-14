@@ -1,10 +1,19 @@
-{% extends 'install/base.html' %} 
+{% extends 'base.html' %} 
 {% load i18n %}
+{% load theme %}
 
 {% block title %}l-audio setup{% endblock %}
 
+{% block header %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/main.css" type="text/css" media="all" charset="utf-8" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/setup.css" type="text/css" media="all" charset="utf-8" />
+{% endblock %}
+
+
 {% block content %}
-    
+    <div id="header">
+        <h1>{% blocktrans %}Welcome to l-audio{% endblocktrans %}</h1>
+    </div>
     <div id="content">
         <form action="." method="post">
             {% csrf_token %}

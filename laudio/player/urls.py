@@ -29,6 +29,7 @@ urlpatterns = patterns('laudio.player.views.player',
     url(r'^$', 'index', name='index'),
     url(r'^setup/$', 'setup', name='setup'),
     url(r'javascript/(?P<src>\w+)/$', 'javascript', name='javascript'),
+
 )
 
 # ajax views
@@ -52,10 +53,19 @@ urlpatterns += patterns('laudio.player.views.ajax',
 
 # settings/config views
 urlpatterns += patterns('laudio.player.views.config',
-
+    # settings and profile
+    url(r'^config/settings/$', 'config_settings', name='config_settings'),
+    url(r'^config/profile/$', 'config_profile', name='config_profile'),
 )
 
 # xml views
 urlpatterns += patterns('laudio.player.views.xml',
 
 )
+
+# built in views
+urlpatterns += patterns('django.contrib.auth.views',
+    url(r'^login/$', 'login', {'template_name': 'config/login.html'}, name='login'),
+    url(r'^logout/$', 'logout', name='logout'),
+)
+

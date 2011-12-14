@@ -98,3 +98,6 @@ def javascript(request, src):
         tpl = 'javascript/playlist.js'
         
     return render(request, tpl)
+
+
+
