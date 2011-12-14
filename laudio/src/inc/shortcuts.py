@@ -44,8 +44,6 @@ def render(request, tpl, tplvars={}):
     tplvars.update(csrf(request))
     # pass config vars
     tplvars['config'] = LaudioConfig(settings.LAUDIO_CFG)
-    # FIXME: get theme from database
-    tplvars['THEME'] = 'default'
     return render_to_response(tpl, tplvars,
                                context_instance=RequestContext(request))
                                

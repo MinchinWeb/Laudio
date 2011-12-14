@@ -56,6 +56,9 @@ urlpatterns += patterns('laudio.player.views.config',
     # settings and profile
     url(r'^config/settings/$', 'config_settings', name='config_settings'),
     url(r'^config/profile/$', 'config_profile', name='config_profile'),
+    url(r'^config/settings/new/user/(?P<userid>\d+)/', 'config_settings_new_user', name='config_settings_new_user'),
+    url(r'^config/settings/edit/user/(?P<userid>\d+)/', 'config_settings_edit_user', name='config_settings_edit_user'),
+    url(r'^config/settings/delete/user/(?P<userid>\d+)/', 'config_settings_delete_user', name='config_settings_delete_user'),
 )
 
 # xml views

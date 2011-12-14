@@ -28,6 +28,7 @@ import time
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404
 from django.db.models import Q, Count, Sum
+from django.views.decorators.http import require_POST, require_GET
 
 # Project imports
 from laudio.player.models import Song
@@ -39,6 +40,7 @@ from laudio.src.inc.scan_progress import ScanProgressor
 from laudio.src.inc.shortcuts import send_file, download_file
 
 
+@require_GET
 def ajax_search(request):
     """
     Searches the database for a simple request
@@ -66,23 +68,22 @@ def ajax_search(request):
 
 
 @check_login('admin')
+@require_POST
 def ajax_scan(request):
     """
     Starts a music scan
     """
-    if request.method == 'POST':
-        scanner = MusicScanner()
-        scanner.scan()
-        ctx = {
-            'scanned': scanner.scanned,
-            'added': scanner.added,
-            'modified': scanner.modified,
-            'broken': scanner.broken,
-            'no_rights': scanner.noRights
-        }
-        return render(request, 'ajax/scan.json', ctx)
-    else:
-        raise Http404
+    scanner = MusicScanner()
+    scanner.scan()
+    ctx = {
+        'scanned': scanner.scanned,
+        'added': scanner.added,
+        'modified': scanner.modified,
+        'broken': scanner.broken,
+        'no_rights': scanner.noRights
+    }
+    return render(request, 'ajax/scan.json', ctx)
+
     
 
 @check_login('admin')
@@ -100,38 +101,33 @@ def ajax_scan_progress(request):
 
 
 @check_login('admin')
+@require_POST
 def ajax_db_reset(request):
     """
     Deletes all songs form the database
     """
-    if request.method == 'POST':
-        scanner = MusicScanner()
-        scanner.reset()
-        ctx = {
-            'msg': 'Reseted the database, deleted all songs and playlists',
-            'success': 1,
-        }
-        return render(request, 'ajax/success.json', ctx)
-    else:
-        raise Http404
+    scanner = MusicScanner()
+    scanner.reset()
+    ctx = {
+        'msg': 'Reseted the database, deleted all songs and playlists',
+        'success': 1,
+    }
+    return render(request, 'ajax/success.json', ctx)
  
 
 @check_login('admin')
+@require_POST
 def ajax_db_rmnonexist(request):
     """
     Removes all nonexistent songentries from the database
     """
-    if request.method == 'POST':
-        scanner = MusicScanner()
-        scanner.rmNonExist()
-        ctx = {
-            'msg': 'Removed all nonexistent files from the database',
-            'success': 1,
-        }
-        return render(request, 'ajax/success.json', ctx)
-    else:
-        raise Http404
-    
+    scanner = MusicScanner()
+    scanner.rmNonExist()
+    ctx = {
+        'msg': 'Removed all nonexistent files from the database',
+        'success': 1,
+    }
+    return render(request, 'ajax/success.json', ctx)
 
 
 @check_login('user')
@@ -176,65 +172,64 @@ def ajax_song_data(request):
 
 
 @check_login('user')
+@require_POST
 def ajax_song_scrobble(request):
     """
     Returns details about one song
     """
-    if request.method == 'POST':
-        id = int(request.POST.get('id', ''))
-        song = get_object_or_404(Song, id=id)
-        msg = ""
-        
-        # if user is logged in submit stats
-        if request.user.is_authenticated():
-            now = int( time.mktime(datetime.datetime.now().timetuple()) )
-            userprofile = request.user.get_profile()
-            # check for last.fm scrobbling
-            try:
-                if request.user.get_profile().lastFMSubmit:
-                    if userprofile.lastFMName != "" and userprofile.lastFMPass != "":
-                        scrobbler.login(userprofile.lastFMName,
-                                        userprofile.lastFMPass,
-                                        service="lastfm"
-                                        )
-                        scrobbler.submit(song.artist, song.title, now, source='P',
-                                        length=song.length)
-                        scrobbler.flush()
-                        msg += "Scroblled song to lastfm! "
-                        success = 1
-            # if something bad happens, just ignore it
-            except (scrobbler.BackendError, scrobbler.AuthError,
-                    scrobbler.PostError, scrobbler.SessionError,
-                    scrobbler.ProtocolError):
-                success = 0
-                
-            # check for libre.fm scrobbling
-            try:
-                if request.user.get_profile().libreFMSubmit:
-                    if userprofile.libreFMName != "" and userprofile.libreFMPass != "":
-                        scrobbler.login(userprofile.libreFMName,
-                                        userprofile.libreFMPass,
-                                        service="librefm"
-                                        )
-                        scrobbler.submit(song.artist, song.title, now, source='P',
-                                        length=song.length)
-                        scrobbler.flush()
-                        msg += "Scroblled song to librefm!"
-                        success = 1
-            except (scrobbler.BackendError, scrobbler.AuthError,
-                    scrobbler.PostError, scrobbler.SessionError,
-                    scrobbler.ProtocolError):
-                success = 0
-        ctx = {
-            'msg': msg,
-            'success': success,
-        }
-        return render(request, 'ajax/success.html', ctx)
-    else:
-        raise Http404
+    id = int(request.POST.get('id', ''))
+    song = get_object_or_404(Song, id=id)
+    msg = ""
+    
+    # if user is logged in submit stats
+    if request.user.is_authenticated():
+        now = int( time.mktime(datetime.datetime.now().timetuple()) )
+        userprofile = request.user.get_profile()
+        # check for last.fm scrobbling
+        try:
+            if request.user.get_profile().lastFMSubmit:
+                if userprofile.lastFMName != "" and userprofile.lastFMPass != "":
+                    scrobbler.login(userprofile.lastFMName,
+                                    userprofile.lastFMPass,
+                                    service="lastfm"
+                                    )
+                    scrobbler.submit(song.artist, song.title, now, source='P',
+                                    length=song.length)
+                    scrobbler.flush()
+                    msg += "Scroblled song to lastfm! "
+                    success = 1
+        # if something bad happens, just ignore it
+        except (scrobbler.BackendError, scrobbler.AuthError,
+                scrobbler.PostError, scrobbler.SessionError,
+                scrobbler.ProtocolError):
+            success = 0
+            
+        # check for libre.fm scrobbling
+        try:
+            if request.user.get_profile().libreFMSubmit:
+                if userprofile.libreFMName != "" and userprofile.libreFMPass != "":
+                    scrobbler.login(userprofile.libreFMName,
+                                    userprofile.libreFMPass,
+                                    service="librefm"
+                                    )
+                    scrobbler.submit(song.artist, song.title, now, source='P',
+                                    length=song.length)
+                    scrobbler.flush()
+                    msg += "Scroblled song to librefm!"
+                    success = 1
+        except (scrobbler.BackendError, scrobbler.AuthError,
+                scrobbler.PostError, scrobbler.SessionError,
+                scrobbler.ProtocolError):
+            success = 0
+    ctx = {
+        'msg': msg,
+        'success': success,
+    }
+    return render(request, 'ajax/success.html', ctx)
         
 
 @check_login("user")
+@require_GET
 def ajax_song_cover(request, id):
     """Fetches the URL of albumcover, either locally or from the Internet
 
@@ -252,6 +247,7 @@ def ajax_song_cover(request, id):
 
 
 @check_login('user')
+@require_GET
 def ajax_song_file(request):
     """
     Returns the audio file
@@ -266,6 +262,7 @@ def ajax_song_file(request):
 
 
 @check_login("user")
+@require_GET
 def ajax_song_download(request):
     """
     Returns the audio file

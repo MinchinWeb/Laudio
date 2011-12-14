@@ -19,17 +19,50 @@ You should have received a copy of the GNU General Public License
 along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-from laudio.src.inc.shortcuts import render as csrf_render
 
+# Django imports
+from django.views.decorators.http import require_POST
+
+# Laudio imports
+from laudio.src.inc.shortcuts import render as csrf_render
+from laudio.src.inc.decorators import check_login
+
+@check_login('admin')
 def config_settings(request):
     """The settings view
     """
     ctx = {}
-    return csrf_render(request, 'player/settings.html', ctx)
+    return csrf_render(request, 'config/settings.html', ctx)
+
+
+@check_login('admin')
+def config_settings_new_user(request, userid):
+    """The settings view
+    """
+    ctx = {}
+    return csrf_render(request, 'config/settings_new_user.html', ctx)
     
-    
+
+@check_login('admin')    
+def config_settings_edit_user(request, userid):
+    """The settings view
+    """
+    ctx = {}
+    return csrf_render(request, 'config/settings_edit_user.html', ctx)
+
+
+@check_login('admin')
+@require_POST
+def config_settings_delete_user(request, userid):
+    """The settings view
+    """
+    ctx = {}
+    return csrf_render(request, 'config/settings_delete_user.html', ctx)
+
+
+@check_login('user')
 def config_profile(request):
     """The profile view
     """    
     ctx = {}
-    return csrf_render(request, 'player/profile.html', ctx)
+    return csrf_render(request, 'config/profile.html', ctx)
