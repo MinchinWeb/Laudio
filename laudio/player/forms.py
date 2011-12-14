@@ -30,7 +30,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 # Laudio imports
-from laudio.player.models import UserProfile
+from laudio.player.models import UserProfile, XMLAPIUser
 from laudio.src.inc.config import LaudioConfig
 
 
@@ -42,6 +42,14 @@ class SetupForm(forms.ModelForm):
                    'date_joined', 'groups', 'user_permissions', 'password', 
                    'is_active', 'is_superuser')
 
+
+class XMLAPIUserForm(forms.ModelForm):
+    class Meta:
+        model = XMLAPIUser
+        widgets = {
+            'password': forms.PasswordInput(render_value=False),
+        }
+        
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

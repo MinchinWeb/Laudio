@@ -22,6 +22,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # System imports
 import os
+import hashlib
 
 # Django imports
 from django.conf import settings 
@@ -91,6 +92,15 @@ class PlaylistEntry(models.Model):
     playlist = models.ForeignKey(Playlist)
     song = models.ForeignKey(Song)
     modified = models.DateTimeField(_('Modified'), auto_now=True)
+
+
+class XMLAPIUser(models.Model):
+    name = models.CharField(_('Username'), max_length=250)
+    password = models.CharField(_('Password'), max_length=64)
+
+    set_password(self, password):
+        self.password = hashlib.sha256(password)
+        self.save()
 
 
 # get themes in the themes directory

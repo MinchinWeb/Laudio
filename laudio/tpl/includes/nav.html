@@ -11,6 +11,7 @@
        {% if user.is_authenticated %}
           <li><a href="{% url player:logout %}">{% blocktrans %}logout{% endblocktrans %}</a></li>
           <li><a href="{% url player:profile %}" id="profile_link" {{ nav_profile }}>{% blocktrans %}profile{% endblocktrans %}</a></li>
+          <li><a href="{% url player:profile %}" id="profile_link" {{ nav_profile }}>{% blocktrans %}change password{% endblocktrans %}</a></li>
           <li><a href="{% url player:settings %}" id="settings_link" {{ nav_settings }}>{% blocktrans %}settings{% endblocktrans %}</a></li>
        {% else %}
           <li><a href="{% url player:login %}" {{ nav_login }}>{% blocktrans %}login{% endblocktrans %}</a></li>
