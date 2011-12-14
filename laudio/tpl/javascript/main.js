@@ -19,6 +19,7 @@
  *
  */
 
+
 /**
  * Enable jquery for csrf protection
  */

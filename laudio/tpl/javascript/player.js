@@ -24,7 +24,7 @@
 /**
  * The player class which handles playing music and the music logic
  */
-function Player(){
+function Player() {
     // can be library or playlist
     // this is used to determine wether we have to play the next song in the
     // songlist or the playlist
@@ -40,35 +40,35 @@ function Player(){
     this.shuffle_icon = 'shuffle_icon';
     this.repeat_icon = 'repeat_icon';
     this.context = this.songlist;
-    
+
     // repeat can have 3 modes: 0, 1 and 2
     // 0 is no repeat
     // 1 is repeat current song after finish
     // 2 is repeat all after playlist/songlist has ended
     this.repeat = 0;
-    
+
     // If shuffle is activated
     this.shuffle = false;
-    
+
     // volume can be between 0 and 100
-    this.volume = 100;    
-    
+    this.volume = 100;
+
     // muted value only when no song is playing
     this.muted = false;
-    
+
     // song data
-    this.id = 0
-    this.tracknr = ''
-    this.title = ''
-    this.artist = ''
-    this.album = ''
-    this.genre = ''
-    this.codec = ''
-    this.bitrate = ''
-    this.duration = 0
-    this.date = ''
+    this.id = 0;
+    this.tracknr = '';
+    this.title = '';
+    this.artist = '';
+    this.album = '';
+    this.genre = '';
+    this.codec = '';
+    this.bitrate = '';
+    this.duration = 0;
+    this.date = '';
     this.est_duration = 0;
-    
+
     // soundManager setup
     this.manager = soundManager;
     this.manager.url = '{{ STATIC_URL }}js/lib/soundmanager/swf/';
@@ -80,7 +80,7 @@ function Player(){
     this.manager.allowScriptAccess = 'always';
     this.manager.useFastPolling = false;
     this.manager.preferFlash = false;
-    
+
     // icon presets
     this.update_shuffle_icon();
     this.update_repeat_icon();
@@ -90,12 +90,12 @@ function Player(){
 /**
  * Toggles the play or pause
  */
-Player.prototype.toggle_play_pause = function(){
+Player.prototype.toggle_play_pause = function () {
     // if no song has been played yet, play the first one in the list
-    if(this.id === 0){
+    if (this.id === 0) {
         this.play_next();
     } else {
-        this.manager.togglePause(this.id);    
+        this.manager.togglePause(this.id);
     }
     this.update_play_icon();
 }
@@ -103,11 +103,11 @@ Player.prototype.toggle_play_pause = function(){
 /**
  * Toggles mute
  */
-Player.prototype.toggle_mute = function(){
-    if(this.id !== 0){
+Player.prototype.toggle_mute = function () {
+    if (this.id !== 0) {
         this.manager.toggleMute(this.id);
     }
-    if(this.muted){
+    if (this.muted) {
         this.muted = false;
     } else {
         this.muted = true;
@@ -118,8 +118,8 @@ Player.prototype.toggle_mute = function(){
 /**
  * Toggles shuffle
  */
-Player.prototype.toggle_shuffle = function(){
-    if(this.shuffle){
+Player.prototype.toggle_shuffle = function () {
+    if (this.shuffle) {
         this.shuffle = false;
     } else {
         this.shuffle = true;
@@ -130,7 +130,7 @@ Player.prototype.toggle_shuffle = function(){
 /**
  * Toggles repeat
  */
-Player.prototype.toggle_repeat = function(){
+Player.prototype.toggle_repeat = function () {
     this.repeat += 1;
     this.repeat %= 3;
     this.update_repeat_icon();
@@ -141,23 +141,24 @@ Player.prototype.toggle_repeat = function(){
  *
  * @param row: The row dom object
  */
-Player.prototype.play = function(row){
+Player.prototype.play = function (row) {
     // handle wrong ids
-    if(!row){
+    if (!row) {
         return false;
     }
-    
+
     // get context
+    var queryid;
     this.context = $('').parent().parent().attr("id");
-    if(this.context === this.songlist){
+    if (this.context === this.songlist) {
         this.id = row_to_id(row.id);
-        var queryid = this.id;
+        queryid = this.id;
     } else {
         this.id = plrow_to_id(row.id);
-        var queryid = row.title;
+        queryid = row.title;
     }
-    
-    $.getJSON('{% url player:ajax_song_data %}/', { id: queryid }, function(json){
+
+    $.getJSON('{% url player:ajax_song_data %}/', { id: queryid }, function (json) {
         this.tracknr = json.tracknr;
         this.title = json.title;
         this.artist = json.artist;
@@ -170,42 +171,42 @@ Player.prototype.play = function(row){
 
         // value needed for play
         var self = this;
-        
+
         // play song
         this.manager.createSound({
             id: self.id,
             url: '{% url player:ajax_song_file %}' + '?id=' + self.id,
-            volume: self.volume,
+            volume: self.volume
         });
-        
+
         this.manager.play(this.id, {
-            onfinish: function() {
+            onfinish: function () {
                 self.scrobble(self.id);
                 self.next_song();
                 self.update_play_icon();
             },
-            onpause: function() {
+            onpause: function () {
                 self.update_play_icon();
             },
-            onplay: function() {
+            onplay: function () {
                 self.update_mute_icon();
                 self.update_play_icon();
             },
-            onresume: function() {
+            onresume: function () {
                 self.update_play_icon();
             },
-            whileplaying: function() {
+            whileplaying: function () {
                 // set values
                 var pos = this.position;
-                if(this.isBuffering){
+                if (this.isBuffering) {
                     self.est_dur = this.durationEstimate;
                 } else {
                     self.est_dur = this.duration;
                 }
                 self.update_position(pos, self.est_dur);
-            },
+            }
         });
-        
+
         this.set_sidebar_info();
     });
 }
@@ -215,12 +216,14 @@ Player.prototype.play = function(row){
  * 
  * @return: The id of the row, if no song is found then return false
  */
-Player.prototype._random_row = function(){
-    var entries_len = $('#' + this.context + ' tbody tr').length;
-    if(entries_len === 0){
+Player.prototype.random_row = function () {
+    var random_number,
+        entries_len;
+    entries_len = $('#' + this.context + ' tbody tr').length;
+    if (entries_len === 0) {
         return false;
     } else {
-        var random_number = Math.floor(Math.random() * entriesLen);
+        random_number = Math.floor(Math.random() * entries_len);
         return $('#' + this.context + ' tbody tr:eq(' + random_number + ')').attr('id');
     }
 }
@@ -230,46 +233,46 @@ Player.prototype._random_row = function(){
  * 
  * @return: The id of the row, if no song is next then return false
  */
-Player.prototype.next_row = function(){
+Player.prototype.next_row = function () {
     // return false if there are no songs in the tables
-    if($('#' + this.context + ' tbody tr').length === 0){
+    if ($('#' + this.context + ' tbody tr').length === 0) {
         return false;
     }
-    alert($('#' + this.context + ' tbody tr').length);
     // get the currently playing song
-    if(this.context === this.songlist){
-        var $current_song = $('#' + this.songlist + ' tbody ' + id_to_row(this.id, true))
+    var $current_song;
+    if (this.context === this.songlist) {
+        $current_song = $('#' + this.songlist + ' tbody ' + id_to_row(this.id, true));
     } else {
-        var $current_song = $('#' + this.playlist + ' tbody ' + id_to_plrow(this.id, true))
-    }    
+        $current_song = $('#' + this.playlist + ' tbody ' + id_to_plrow(this.id, true));
+    }
 
     // check if the song is in the current selection
     // if not, return the id of the first song
-    if($current_song.length === 0){
+    if ($current_song.length === 0) {
         return $('#' + this.context + ' tbody tr:first').attr('id');
     }
 
     // if repeat is enabled, return the same id
-    if(this.repeat === 1 && $current_song.length !== 0){
+    if (this.repeat === 1 && $current_song.length !== 0) {
         return $current_song.attr('id');
     }
-    
+
     // if shuffle is enabled return a random row
-    if(this.shuffle){
-        return this._random_row();
+    if (this.shuffle) {
+        return this.random_row();
     }
-    
+
     // If no repeat and shuffle were enabled, just return the next song
-    if($current_song.next().length !== 0){
+    if ($current_song.next().length !== 0) {
         return $current_song.next().attr('id');
-    
+
     // if theres no next song, check for repeat all
     } else {
-        if(this.repeat === 2){
+        if (this.repeat === 2) {
             return $('#' + this.context + ' tbody tr:first').attr('id');
         }
     }
-    
+
     // if theres no next song return false
     return false;
 }
@@ -279,27 +282,28 @@ Player.prototype.next_row = function(){
  * 
  * @return: The id of the row, if no song is previous then return false
  */
-Player.prototype.previous_row = function(){
+Player.prototype.previous_row = function () {
     // return false if there are no songs in the tables
-    if($('#' + this.context + ' tbody tr').length === 0){
+    if ($('#' + this.context + ' tbody tr').length === 0) {
         return false;
     }
-    
+
+    var $current_song;
     // get the currently playing song
-    if(this.context === this.songlist){
-        var $current_song = $('#' + this.songlist + ' tbody ' + id_to_row(this.id, true))
+    if (this.context === this.songlist) {
+        $current_song = $('#' + this.songlist + ' tbody ' + id_to_row(this.id, true));
     } else {
-        var $current_song = $('#' + this.playlist + ' tbody ' + id_to_plrow(this.id, true))
-    }    
-    
+        $current_song = $('#' + this.playlist + ' tbody ' + id_to_plrow(this.id, true));
+    }
+
     // check if the song is in the current selection
     // if not, return the id of the first song
-    if($current_song.length === 0){
+    if ($current_song.length === 0) {
         return $('#' + this.context + ' tbody tr:first').attr('id');
     }
-    
+
     // check if the played song is the first in the list
-    if ($current_song.prev().length !== 0){
+    if ($current_song.prev().length !== 0) {
         return $current_song.prev().attr('id');
     }
 
@@ -310,18 +314,18 @@ Player.prototype.previous_row = function(){
 /**
  * Plays the next song
  */
-Player.prototype.play_next = function(){
-    if(this.next_row() !== false){
-        this.play($('#' + this.next_row())[0])
+Player.prototype.play_next = function () {
+    if (this.next_row() !== false) {
+        this.play($('#' + this.next_row())[0]);
     }
 }
 
 /**
  * Plays the previous song
  */
-Player.prototype.play_previous = function(){
-    if(this.previous_row() !== false){
-        this.play($('#' + this.previous_row())[0]); 
+Player.prototype.play_previous = function () {
+    if (this.previous_row() !== false) {
+        this.play($('#' + this.previous_row())[0]);
     }
 }
 
@@ -330,7 +334,7 @@ Player.prototype.play_previous = function(){
  *
  * @param id: The id of the song, integer
  */
-Player.prototype.scrobble = function(id){
+Player.prototype.scrobble = function (id) {
     $.post('{% url player:ajax_song_scrobble %}', { id: this.id });
 }
 
@@ -339,14 +343,16 @@ Player.prototype.scrobble = function(id){
  *
  * @param id: The id of the song, integer
  */
-Player.prototype.set_sidebar_info = function(id){
+Player.prototype.set_sidebar_info = function (id) {
     // calculate date
-    var mins = Math.floor(this.duration / 60);
-    var secs = this.duration % 60;
-    if(secs < 10){
+    var mins,
+        secs;
+    mins = Math.floor(this.duration / 60);
+    secs = this.duration % 60;
+    if (secs < 10) {
         secs = '0' + secs;
     }
-    
+
     // set values in the sidebar
     $('#' + this.songdata + ' tr:eq(0) td').html(this.title);
     $('#' + this.songdata + ' tr:eq(1) td').html(mins + ':' + secs);
@@ -364,10 +370,10 @@ Player.prototype.set_sidebar_info = function(id){
  *
  * @param value: Value from 0 to 100 
  */
-Player.prototype.set_volume = function(value){
+Player.prototype.set_volume = function (value) {
     this.volume = value;
     this.update_volume_icon();
-    if(this.id !== 0){
+    if (this.id !== 0) {
         this.manager.setVolume(this.id, value);
     }
 }
@@ -377,8 +383,8 @@ Player.prototype.set_volume = function(value){
  *
  * @param position: Value from 0 to 100 
  */
-Player.prototype.set_position = function(position){
-    if(this.id !== 0){
+Player.prototype.set_position = function (position) {
+    if (this.id !== 0) {
         // get 1% of the duration and multiply by value
         var offset = Math.floor(this.est_dur * (position / 100));
         this.manager.setPosition(this.id, offset);
@@ -391,32 +397,38 @@ Player.prototype.set_position = function(position){
  * @param pos: The current position
  * @param dur: The duration
  */
-Player.prototype.update_position = function(pos, dur){
+Player.prototype.update_position = function (pos, dur) {
     dur = Math.floor(dur / 1000);
     pos = Math.floor(pos / 1000);
     // avoid div by 0
-    if(!dur){
+    if (!dur) {
         dur = 1;
     }
-    
+
+    var cmins,
+        csecs,
+        dmins,
+        dsecs,
+        prog,
+        offset;
     // calculate seconds and minutes
-    var cmins = Math.floor(pos / 60);
-    var csecs = pos % 60;
-    if(csecs < 10){
+    cmins = Math.floor(pos / 60);
+    csecs = pos % 60;
+    if (csecs < 10) {
         csecs = '0' + csecs;
     }
-    var dmins = Math.floor(dur / 60);
-    var dsecs = dur % 60;
-    if(dsecs < 10){
+    dmins = Math.floor(dur / 60);
+    dsecs = dur % 60;
+    if (dsecs < 10) {
         dsecs = '0' + dsecs;
     }
-    
+
     // update duration progress caption
-    var prog = cmins + ':' + csecs + ' {% blocktrans %}of{% endblocktrans %} ' + dmins + ':' + dsecs;
+    prog = cmins + ':' + csecs + ' {% blocktrans %}of{% endblocktrans %} ' + dmins + ':' + dsecs;
     $('#' + this.progressbar_sec).html(prog);
-    
+
     // move progressbar
-    var offset = Math.ceil( (100 / dur) * pos);
+    offset = Math.ceil( (100 / dur) * pos);
     $('#' + this.progressbar).slider('value', offset);
 }
 
@@ -425,11 +437,12 @@ Player.prototype.update_position = function(pos, dur){
  *
  * @return: Returns the current id for the playing row
  */
-Player.prototype.current_row_id = function(){
-    if(this.context === this.songlist){
-        var row_id = '#row' + this.id;
+Player.prototype.current_row_id = function () {
+    var row_id;
+    if (this.context === this.songlist) {
+        row_id = '#row' + this.id;
     } else {
-        var row_id = '#plrow' + this.id;
+        row_id = '#plrow' + this.id;
     }
     return $('#' + this.context + ' tbody tr ' + row_id);
 }
@@ -439,7 +452,7 @@ Player.prototype.current_row_id = function(){
  *
  * @return: Returns true if the player is playing a song, otherwise false
  */
-Player.prototype.is_playing = function(){
+Player.prototype.is_playing = function () {
     return !this.manager.getSoundById(this.id).paused;
 }
 
@@ -448,14 +461,14 @@ Player.prototype.is_playing = function(){
  *
  * @return: Returns true if the player is playing a song, otherwise false
  */
-Player.prototype.is_muted = function(){
+Player.prototype.is_muted = function () {
     // guard against no song loaded
-    if(this.id !== 0){
-        if(this.manager.getSoundById(this.id).muted || this.volume === 0 || this.muted){
+    if (this.id !== 0) {
+        if (this.manager.getSoundById(this.id).muted || this.volume === 0 || this.muted) {
             return true;
         }
     } else {
-        if(this.volume === 0 || this.muted){
+        if (this.volume === 0 || this.muted) {
             return true;
         }
     }
@@ -465,9 +478,9 @@ Player.prototype.is_muted = function(){
 /**
  * Updates the playing icon
  */
-Player.prototype.update_play_icon = function(){
-    if(this.id !== 0){
-        if(this.is_playing()){
+Player.prototype.update_play_icon = function () {
+    if (this.id !== 0) {
+        if (this.is_playing()) {
             $('#' + this.play_icon).removeClass('play');
             $('#' + this.play_icon).addClass('pause');
         } else {
@@ -481,12 +494,12 @@ Player.prototype.update_play_icon = function(){
 /**
  * Updates the mute icon
  */
-Player.prototype.update_repeat_icon = function(){
-    if(this.repeat === 0){
+Player.prototype.update_repeat_icon = function () {
+    if (this.repeat === 0) {
         $('#' + this.repeat_icon).removeClass('repeat');
         $('#' + this.repeat_icon).removeClass('repeatall');
         $('#' + this.repeat_icon).addClass('norepeat');
-    } else if(this.repeat === 1) {
+    } else if (this.repeat === 1) {
         $('#' + this.repeat_icon).removeClass('norepeat');
         $('#' + this.repeat_icon).removeClass('repeatall');
         $('#' + this.repeat_icon).addClass('repeat');
@@ -500,8 +513,8 @@ Player.prototype.update_repeat_icon = function(){
 /**
  * Updates the mute icon
  */
-Player.prototype.update_shuffle_icon = function(){
-    if(this.shuffle){
+Player.prototype.update_shuffle_icon = function () {
+    if (this.shuffle) {
         $('#' + this.shuffle_icon).removeClass('noshuffle');
         $('#' + this.shuffle_icon).addClass('shuffle');
     } else {
@@ -513,23 +526,23 @@ Player.prototype.update_shuffle_icon = function(){
 /**
  * Updates the volume icon
  */
-Player.prototype.update_volume_icon = function(){
-    if(this.is_muted()) {
+Player.prototype.update_volume_icon = function () {
+    if (this.is_muted()) {
         $('#' + this.volume_icon).removeClass('quiet');
         $('#' + this.volume_icon).removeClass('louder');
         $('#' + this.volume_icon).removeClass('unmuted');
         $('#' + this.volume_icon).addClass('muted');
-    } else if(this.volume >= 66){
+    } else if (this.volume >= 66) {
         $('#' + this.volume_icon).removeClass('quiet');
         $('#' + this.volume_icon).removeClass('louder');
         $('#' + this.volume_icon).removeClass('muted');
         $('#' + this.volume_icon).addClass('unmuted');
-    } else if(this.volume >= 33) {
+    } else if (this.volume >= 33) {
         $('#' + this.volume_icon).removeClass('quiet');
         $('#' + this.volume_icon).removeClass('muted');
         $('#' + this.volume_icon).removeClass('unmuted');
         $('#' + this.volume_icon).addClass('louder');
-    } else if(this.volume >= 1) {
+    } else if (this.volume >= 1) {
         $('#' + this.volume_icon).removeClass('louder');
         $('#' + this.volume_icon).removeClass('muted');
         $('#' + this.volume_icon).removeClass('unmuted');
