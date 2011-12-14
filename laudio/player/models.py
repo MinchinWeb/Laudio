@@ -93,6 +93,7 @@ class PlaylistEntry(models.Model):
     modified = models.DateTimeField(_('Modified'), auto_now=True)
 
 
+# get themes in the themes directory
 THEMES = []
 for theme in os.listdir( os.path.join(settings.MEDIA_ROOT, 'themes/') ):
     THEMES.append(
@@ -122,4 +123,5 @@ class UserProfile(models.Model):
     hideSidebar = models.BooleanField(_('Hide sidebar by default'), help_text=_('Automatically \
                     hides the sidebar in the Collection view so you have \
                     to click sidebar to view it'))
-    theme = models.CharField(_('l-audio theme'), max_length=100, choices=THEMES)
+    theme = models.CharField(_('l-audio theme'), max_length=100, choices=THEMES, 
+        help_text=_('Choose a custom theme'))

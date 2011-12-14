@@ -37,7 +37,7 @@ def config_settings(request):
 
 @check_login('admin')
 def config_settings_new_user(request, userid):
-    """The settings view
+    """The settings view for creating a new user
     """
     ctx = {}
     return csrf_render(request, 'config/settings_new_user.html', ctx)
@@ -45,7 +45,10 @@ def config_settings_new_user(request, userid):
 
 @check_login('admin')    
 def config_settings_edit_user(request, userid):
-    """The settings view
+    """The settings view for editing a user
+    
+    Keyword arguments:
+    userid -- The id of the user
     """
     ctx = {}
     return csrf_render(request, 'config/settings_edit_user.html', ctx)
@@ -54,7 +57,10 @@ def config_settings_edit_user(request, userid):
 @check_login('admin')
 @require_POST
 def config_settings_delete_user(request, userid):
-    """The settings view
+    """The settings view for deleting a user
+    
+    Keyword arguments:
+    userid -- The id of the user
     """
     ctx = {}
     return csrf_render(request, 'config/settings_delete_user.html', ctx)
