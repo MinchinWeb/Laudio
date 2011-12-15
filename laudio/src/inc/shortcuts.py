@@ -26,6 +26,7 @@ from django.core.context_processors import csrf
 from django.core.servers.basehttp import FileWrapper
 from django.template import RequestContext
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 # Laudio imports
 from laudio.src.inc.config import LaudioConfig
@@ -44,6 +45,7 @@ def render(request, tpl, tplvars={}):
     tplvars.update(csrf(request))
     # pass config vars
     tplvars['config'] = LaudioConfig(settings.LAUDIO_CFG)
+    tplvars['index_view'] = reverse('player:index')
     return render_to_response(tpl, tplvars,
                                context_instance=RequestContext(request))
                                

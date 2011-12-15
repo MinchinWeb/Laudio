@@ -23,6 +23,9 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 # Django imports
 from django import template 
 
+# Laudio imports
+from laudio.player.models import UserProfile
+
 register = template.Library()
 
 @register.simple_tag
@@ -30,9 +33,12 @@ def theme(user):
     # standard theme
     theme_name = 'default'
     if user.is_authenticated():
-        user_theme = user.get_profile().theme
-        if user_theme != '':
-            theme_name = user_theme
+        try:
+            user_theme = user.get_profile().theme
+            if user_theme != '':
+                theme_name = user_theme
+        except UserProfile.DoesNotExist:
+            pass
     return theme_name
 
 

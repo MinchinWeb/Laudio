@@ -72,6 +72,7 @@ urlpatterns += patterns('laudio.player.views.xml',
 # built in views
 urlpatterns += patterns('django.contrib.auth.views',
     url(r'^login/$', 'login', {'template_name': 'config/login.html'}, name='login'),
-    url(r'^logout/$', 'logout', name='logout'),
+    url(r'^logout/$', 'logout', {'next_page': '/'}, name='logout'),
+    url(r'^logout/(?P<next_page>.*)/$', 'logout', name='logout_next'),
 )
 

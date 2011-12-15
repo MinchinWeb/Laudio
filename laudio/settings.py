@@ -191,4 +191,4 @@ LOGGING = {
     }
 }
 
-USER_LOGOUT = 'player:index'
+USER_LOGOUT = 'laudio.player.views.player.index'

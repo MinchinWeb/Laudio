@@ -51,16 +51,6 @@ $(document).ready(function () {
         $('#sidebar_header').toggle('slide');
     });
 
-    $('#profile_link').click(function () {
-        $(this).toggleClass('active');
-        $('#profile').slideToggle();
-    });
-
-    $('#settings_link').click(function () {
-        $(this).toggleClass('active');
-        $('#settings').slideToggle();
-    });
-
 
     /***************************************************************************
      * controls

@@ -64,16 +64,14 @@ def setup(request):
         if request.method == 'POST':
             form = SetupForm(request.POST)
             if form.is_valid():
-                upload = form.save(commit=False)
-                upload.is_active = True
-                upload.is_superuser = True
-                upload.is_staff = True
-                upload.save()
-                # FIXME: check if pass is set correctly
-                User.objects.get(id=upload.id).set_password(request.POST.get('password', ''))
-                return HttpResponseRedirect(revers('player:index'))
+                userform = form.save(commit=False)
+                userform.is_active = True
+                userform.is_superuser = True
+                userform.is_staff = True
+                userform.save()
+                return HttpResponseRedirect(reverse('player:index'))
         ctx = {
-            "form": form,
+            'form': form,
         }
         return csrf_render(request, 'install/index.html', ctx)
     else:

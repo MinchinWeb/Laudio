@@ -35,13 +35,36 @@ from laudio.src.inc.config import LaudioConfig
 
 
 class SetupForm(forms.ModelForm):
-    password = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput) 
+    password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
+    
     class Meta:
         model = User
         exclude = ('first_name', 'last_name', 'is_staff', 'last_login',
                    'date_joined', 'groups', 'user_permissions', 'password', 
                    'is_active', 'is_superuser')
+           
+    def clean_password2(self):
+        """Password confirmation checker
+        """
+        password1 = self.cleaned_data.get("password1", "")
+        password2 = self.cleaned_data["password2"]
+        if password1 != password2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+        return password2
 
+    def save(self, commit=True):
+        """Sets the password for the user on save
+        
+        Keyword arguments:
+        commit -- True if the values should be saved into the db
+        """
+        user = super(SetupForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+        
 
 class XMLAPIUserForm(forms.ModelForm):
     class Meta:
@@ -52,16 +75,48 @@ class XMLAPIUserForm(forms.ModelForm):
         
 
 class UserProfileForm(forms.ModelForm):
+    lastFMPass1 = forms.CharField(label=_('Last.fm Password'), required=True, widget=forms.PasswordInput)
+    lastFMPass2 = forms.CharField(label=_('Confirm Last.fm password'), required=True, widget=forms.PasswordInput)
+    libreFMPass1 = forms.CharField(label=_('Libre.fm Password'), required=True, widget=forms.PasswordInput)
+    libreFMPass2 = forms.CharField(label=_('Confirm Libre.fm password'), required=True, widget=forms.PasswordInput)
+
     class Meta:
         model = UserProfile
-        exclude = ('user')
-        widgets = {
-            'lastFMPass': forms.PasswordInput(render_value=False),
-            'libreFMPass': forms.PasswordInput(render_value=False),
-        }
+        exclude = ('user', 'lastFMPass', 'libreFMPass')
+
+    def clean_lastFMPass2(self):
+        """Password confirmation checker
+        """
+        lastFMPass1 = self.cleaned_data.get("lastFMPass1", "")
+        lastFMPass2 = self.cleaned_data["lastFMPass2"]
+        if lastFMPass1 != lastFMPass2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+
+    def clean_libreFMPass2(self):
+        """Password confirmation checker
+        """
+        libreFMPass1 = self.cleaned_data.get("libreFMPass1", "")
+        libreFMPass2 = self.cleaned_data["libreFMPass2"]
+        if libreFMPass1 != libreFMPass2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+
+    def save(self, commit=True):
+        """Sets the password for the user on save
+        
+        Keyword arguments:
+        commit -- True if the values should be saved into the db
+        """
+        profile = super(UserProfileForm, self).save(commit=False)
+        profile.lastFMPass = self.cleaned_data["lastFMPass1"]
+        profile.libreFMPass = self.cleaned_data["libreFMPass1"]
+        if commit:
+            user.save()
+        return user
 
 
 class UserForm(forms.ModelForm):
+    password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
     is_superuser = forms.BooleanField(label=_('Superuser'),
         help_text=_('Sets if the user is a superuser. If a superuser exists, \
                     only superusers can view the settings dialogue'), required=False)
@@ -69,6 +124,29 @@ class UserForm(forms.ModelForm):
         model = User
         exclude = ('first_name', 'last_name', 'is_staff', 'last_login',
                    'date_joined', 'groups', 'user_permissions', 'password')
+
+    def clean_password2(self):
+        """Password confirmation checker
+        """
+        password1 = self.cleaned_data.get("password1", "")
+        password2 = self.cleaned_data["password2"]
+        if password1 != password2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+        return password2
+
+    def save(self, commit=True):
+        """Sets the password for the user on save
+        
+        Keyword arguments:
+        commit -- True if the values should be saved into the db
+        """
+        user = super(SetupForm, self).save(commit=False)
+        # dont save password if the password field is empty
+        if self.cleaned_data["password1"] != '':
+            user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
 
 class UserEditForm(forms.ModelForm):
