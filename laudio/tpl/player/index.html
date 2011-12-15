@@ -3,8 +3,8 @@
 {% load theme %}
 
 {% block header %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/jquery.contextmenu.css" type="text/css" media="all" charset="utf-8" />
-    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/player.css" type="text/css" media="all" charset="utf-8" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}style/lib/jquery.contextmenu.css" type="text/css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/player.css" type="text/css" media="all" />
     <script src="{{ STATIC_URL }}js/lib/jquery/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ STATIC_URL }}js/lib/jquery/jquery.contextmenu.js" type="text/javascript" charset="utf-8"></script>
         
@@ -30,7 +30,7 @@
                     <tbody></tbody>
                 </table>
             </div>
-            <div id="artist_browser">
+            <div id="album_browser">
                  <table>
                     <tr>
                         <td></td>
@@ -79,8 +79,8 @@
             </div>        
                     
             <div id="search">
-                <form action="" method="">
-                    <input type="text" placeholder="{% blocktrans %}Enter search{% endblocktrans %}" />
+                <form action="." method="get">
+                    <input type="text" name="search" placeholder="{% blocktrans %}Enter search{% endblocktrans %}" />
                 </form>
             </div>
             

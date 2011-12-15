@@ -5,7 +5,7 @@
 {% block title %}l-audio - {% blocktrans %}Login{% endblocktrans %}{% endblock %}
 
 {% block header %}
-    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/settings.css" type="text/css" media="all" charset="utf-8" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/settings.css" type="text/css" media="all" />
     <script src="{% url player:javascript 'settings' %}" type="text/javascript" charset="utf-8"></script>  
 {% endblock %}
 
