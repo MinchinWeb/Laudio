@@ -69,6 +69,7 @@ class SetupForm(forms.ModelForm):
 class XMLAPIUserForm(forms.ModelForm):
     class Meta:
         model = XMLAPIUser
+        exclude = ('modified', 'token', 'last_handshake')
         widgets = {
             'password': forms.PasswordInput(render_value=False),
         }
@@ -110,7 +111,7 @@ class UserProfileForm(forms.ModelForm):
         profile.lastFMPass = self.cleaned_data["lastFMPass1"]
         profile.libreFMPass = self.cleaned_data["libreFMPass1"]
         if commit:
-            user.save()
+            profile.save()
         return user
 
 
@@ -184,12 +185,11 @@ class UserEditForm(forms.ModelForm):
             user.save()
         return user
 
+
 class UserEditProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        exclude = ('first_name', 'last_name', 'is_staff', 'last_login',
-                   'date_joined', 'groups', 'user_permissions', 'password',
-                   'username', 'is_active', 'is_superuser')
+        model = UserProfile
+        exclude = ('user', 'lastFMPass', 'libreFMPass')
 
 
 class SettingsForm(forms.ModelForm):
@@ -207,7 +207,7 @@ class SettingsForm(forms.ModelForm):
     xml_auth = forms.BooleanField(required=False, label=_('Enable Ampache XML API'),
         help_text=_('Enable the XML API to be able to listen to l-audio shares \
                     from other players like Amarok'))
-    token_lifespan = forms.IntegerField(label=_('Lifespan of the Ampache XML API Token'),
+    token_lifespan = forms.IntegerField(label=_('Lifespan of the Ampache XML API Token in Seconds'),
         help_text=_('If the token expires, the application has to reidentify itself. \
                         Too short tokens will cause a lot of identifications, \
                         too long ones will weaken the security.'))
@@ -233,9 +233,9 @@ class SettingsForm(forms.ModelForm):
             
             # check for path existence and access rights
             if not os.access(checkedPath, os.F_OK):
-                raise forms.ValidationError( 'Path %(path)s does not exist!' % {'path': checkedPath} )
+                raise forms.ValidationError( _('Path %(path)s does not exist!') % {'path': checkedPath} )
             if not os.access(checkedPath, os.X_OK):
-                raise forms.ValidationError( 'No access rights for %(path)s!'  % {'path': checkedPath} )
+                raise forms.ValidationError(  _('No access rights for %(path)s!')  % {'path': checkedPath} )
                 
         # now check if we got read rights on the music folder, we could do this
         # recursively to check every folder but that would waste too mucht time
