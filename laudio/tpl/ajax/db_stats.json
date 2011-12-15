@@ -4,6 +4,6 @@
   'numberOfOggs': {{ numberOfOggs }},
   'numberOfHours': {{ numberOfHours }},
   'numberOfDays': {{ numberOfDays }},
-  'numberOfWeeks': {{ numberOfWeeks }},
+  'numberOfWeeks': {{ numberOfWeeks }}
 }
 

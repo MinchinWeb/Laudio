@@ -33,6 +33,7 @@ function Player() {
     this.playlist = 'playlist';
     this.songlist = 'songlist';
     this.songdata = 'songdata';
+    this.databasedata = 'databasedata'
     this.progressbar = 'progress';
     this.progressbar_sec = 'progress_sec';
     this.play_icon = 'play_icon';
@@ -84,6 +85,7 @@ function Player() {
     // icon presets
     this.update_shuffle_icon();
     this.update_repeat_icon();
+    this.set_sidebar_db_info();
 }
 
 
@@ -364,6 +366,23 @@ Player.prototype.set_sidebar_info = function (id) {
     $('#' + this.songdata + ' tr:eq(7) td').html(this.codec);
     $('#' + this.songdata + ' tr:eq(8) td').html(this.bitrate + ' kb/s');
 }
+
+
+/**
+ * Sets the database values of the sidebar
+ */
+Player.prototype.set_sidebar_db_info = function () {
+    $.getJSON('{% url player:ajax_db_statistics %}', {}, function (json) {
+        // set database values in the sidebar
+        alert("hi");
+        alert(json.numberOfSongs);
+        $('#' + this.databasedata + ' tr:eq(0) td').html(json.numberOfSongs);
+        $('#' + this.databasedata + ' tr:eq(1) td').html(json.numberOfDays);
+        $('#' + this.databasedata + ' tr:eq(2) td').html(json.numberOfOggs);
+        $('#' + this.databasedata + ' tr:eq(3) td').html(json.numberOfMp3s);
+    });
+}
+
 
 /**
  * Sets the values for the sidebar

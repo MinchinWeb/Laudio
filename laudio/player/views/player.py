@@ -39,11 +39,11 @@ def index(request):
     Main view for the application
     """
     # check if we have to create a superuser
-    #su_exists = len(User.objects.filter(is_superuser=True))
-    #if not su_exists:
-    #    return HttpResponseRedirect( reverse('player:setup') )
-    #else:
-    #    return player(request)
+    su_exists = len(User.objects.filter(is_superuser=True))
+    if not su_exists:
+        return HttpResponseRedirect( reverse('player:setup') )
+    else:
+        return player(request)
     return player(request)
 
 
