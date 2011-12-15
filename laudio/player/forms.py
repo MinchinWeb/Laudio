@@ -140,7 +140,7 @@ class UserForm(forms.ModelForm):
         Keyword arguments:
         commit -- True if the values should be saved into the db
         """
-        user = super(SetupForm, self).save(commit=False)
+        user = super(UserForm, self).save(commit=False)
         # dont save password if the password field is empty
         if self.cleaned_data["password1"] != '':
             user.set_password(self.cleaned_data["password1"])
@@ -150,6 +150,8 @@ class UserForm(forms.ModelForm):
 
 
 class UserEditForm(forms.ModelForm):
+    password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
     is_superuser = forms.BooleanField(label=_('Superuser'),
         help_text=_('Sets if the user is a superuser. If a superuser exists, \
                     only superusers can view the settings dialogue'))
@@ -158,7 +160,29 @@ class UserEditForm(forms.ModelForm):
         exclude = ('first_name', 'last_name', 'is_staff', 'last_login',
                    'date_joined', 'groups', 'user_permissions', 'password',
                    'username')
+                   
+    def clean_password2(self):
+        """Password confirmation checker
+        """
+        password1 = self.cleaned_data.get("password1", "")
+        password2 = self.cleaned_data["password2"]
+        if password1 != password2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+        return password2
 
+    def save(self, commit=True):
+        """Sets the password for the user on save
+        
+        Keyword arguments:
+        commit -- True if the values should be saved into the db
+        """
+        user = super(UserEditForm, self).save(commit=False)
+        # dont save password if the password field is empty
+        if self.cleaned_data["password1"] != '':
+            user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
 class UserEditProfileForm(forms.ModelForm):
     class Meta:
