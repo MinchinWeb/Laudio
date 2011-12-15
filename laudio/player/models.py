@@ -98,7 +98,7 @@ class XMLAPIUser(models.Model):
     name = models.CharField(_('Username'), max_length=250)
     password = models.CharField(_('Password'), max_length=64)
 
-    set_password(self, password):
+    def set_password(self, password):
         self.password = hashlib.sha256(password)
         self.save()
 
