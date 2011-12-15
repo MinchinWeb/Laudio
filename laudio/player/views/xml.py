@@ -23,6 +23,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 # System imports
 import datetime
 import hashlib
+import time
 
 # Django imports
 from django.db.models import Count, Sum
@@ -130,7 +131,7 @@ def xml_handshake(request):
         return render(request, 'xml/error.xml', ctx)
     
     # if login is ok, generate token and save/update it
-    token = hashlib.sha256( '%s%s' % (datetime.datetime.now(), passphrase) )
+    token = hashlib.sha256( '%i%s' % (time.time(), passphrase) )
     xml_user.last_handshake = datetime.datetime.now()
     xml_user.token = token
     xml_user.save()

@@ -33,7 +33,7 @@ function Player() {
     this.playlist = 'playlist';
     this.songlist = 'songlist';
     this.songdata = 'songdata';
-    this.databasedata = 'databasedata'
+    this.databasedata = 'databasedata';
     this.progressbar = 'progress';
     this.progressbar_sec = 'progress_sec';
     this.play_icon = 'play_icon';
@@ -372,14 +372,13 @@ Player.prototype.set_sidebar_info = function (id) {
  * Sets the database values of the sidebar
  */
 Player.prototype.set_sidebar_db_info = function () {
-    $.getJSON('{% url player:ajax_db_statistics %}', {}, function (json) {
+    var self = this;
+    $.getJSON('{% url player:ajax_db_statistics %}', function (json) {
         // set database values in the sidebar
-        alert("hi");
-        alert(json.numberOfSongs);
-        $('#' + this.databasedata + ' tr:eq(0) td').html(json.numberOfSongs);
-        $('#' + this.databasedata + ' tr:eq(1) td').html(json.numberOfDays);
-        $('#' + this.databasedata + ' tr:eq(2) td').html(json.numberOfOggs);
-        $('#' + this.databasedata + ' tr:eq(3) td').html(json.numberOfMp3s);
+        $('#' + self.databasedata + ' tr:eq(0) td').html(json.numberOfSongs);
+        $('#' + self.databasedata + ' tr:eq(1) td').html(json.numberOfDays);
+        $('#' + self.databasedata + ' tr:eq(2) td').html(json.numberOfOggs);
+        $('#' + self.databasedata + ' tr:eq(3) td').html(json.numberOfMp3s);
     });
 }
 

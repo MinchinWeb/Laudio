@@ -153,7 +153,7 @@ def ajax_db_statistics(request):
         'numberOfDays': days,
         'numberOfWeeks': weeks,
     }
-    return render(request, 'ajax/db_stats.json', ctx)
+    return render(request, 'ajax/db_stats.json', ctx, content_type='application/json')
 
 
 @check_login('user')

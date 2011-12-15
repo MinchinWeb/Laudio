@@ -3,6 +3,6 @@
   "added": {{ added }},
   "modified": {{ modified }},
   "no_rights": [{% for s in no_rights %}'{{ s }}', {% endfor %}],
-  "broken": [{% for s in broken %}'{{ s }}', {% endfor %}],"
+  "broken": [{% for s in broken %}"{{ s }}", {% endfor %}]
 }
 
