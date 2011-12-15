@@ -20,6 +20,9 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
+import urllib, urllib2
+
 # Django imports
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
@@ -77,3 +80,11 @@ def download_file(request, path, content_type):
     filename = os.path.basename(path).replace(' ', '_')
     response['Content-Disposition'] = u'attachment; filename=%s' % filename
     return response
+    
+def get_var(request, name):
+    """Gets and returns a GET variable from the request
+    
+    Keyword arguments:
+    request -- The request
+    """
+    return urllib.unquote_plus(request.GET.get('name', ''))

@@ -207,6 +207,10 @@ class SettingsForm(forms.ModelForm):
     xml_auth = forms.BooleanField(required=False, label=_('Enable Ampache XML API'),
         help_text=_('Enable the XML API to be able to listen to l-audio shares \
                     from other players like Amarok'))
+    token_lifespan = forms.IntegerField(label=_('Lifespan of the Ampache XML API Token'),
+        help_text=_('If the token expires, the application has to reidentify itself. \
+                        Too short tokens will cause a lot of identifications, \
+                        too long ones will weaken the security.'))
     debug = forms.BooleanField(required=False, label=_('Debugging'),
         help_text=_('Activates debugging (Writes detailed logs and activates the \
                     Flash debug pluging)'))
@@ -245,9 +249,10 @@ class SettingsForm(forms.ModelForm):
         """Saves the values into the config file
         """
         config = LaudioConfig(settings.LAUDIO_CFG)
-        config.collection_path = self.cleaned_data['collection_path']
+        config.collectionPath = self.cleaned_data['collection_path']
         config.debug = self.cleaned_data['debug']
-        config.collection_startup = self.cleaned_data['collection_startup']
+        config.collectionStartup = self.cleaned_data['collection_startup']
         config.require_login = self.cleaned_data['require_login']
-        config.xml_auth = self.cleaned_data['xml_auth']
+        config.xmlAuth = self.cleaned_data['xml_auth']
+        config.tokenLifespan = self.cleaned_data['token_lifespan']
         config.save()

@@ -1,0 +1,7 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    {% v t in videos %}
+
+    {% endfor %}
+{% endblock %}

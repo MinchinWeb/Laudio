@@ -56,17 +56,17 @@ urlpatterns += patterns('laudio.player.views.config',
     # settings and profile
     url(r'^config/settings/$', 'config_settings', name='config_settings'),
     url(r'^config/profile/$', 'config_profile', name='config_profile'),
-    url(r'^config/settings/new/user/(?P<userid>\d+)/', 'config_settings_new_user', name='config_settings_new_user'),
-    url(r'^config/settings/edit/user/(?P<userid>\d+)/', 'config_settings_edit_user', name='config_settings_edit_user'),
-    url(r'^config/settings/delete/user/(?P<userid>\d+)/', 'config_settings_delete_user', name='config_settings_delete_user'),
-    url(r'^config/settings/xml/new/user/(?P<userid>\d+)/', 'xml_config_settings_new_user', name='xml_config_settings_new_user'),
-    url(r'^config/settings/xml/edit/user/(?P<userid>\d+)/', 'xml_config_settings_edit_user', name='xml_config_settings_edit_user'),
-    url(r'^config/settings/xml/delete/user/(?P<userid>\d+)/', 'xml_config_settings_delete_user', name='xml_config_settings_delete_user'),
+    url(r'^config/settings/new/user/(?P<userid>\d+)/$', 'config_settings_new_user', name='config_settings_new_user'),
+    url(r'^config/settings/edit/user/(?P<userid>\d+)/$', 'config_settings_edit_user', name='config_settings_edit_user'),
+    url(r'^config/settings/delete/user/(?P<userid>\d+)/$', 'config_settings_delete_user', name='config_settings_delete_user'),
+    url(r'^config/settings/xml/new/user/(?P<userid>\d+)/$', 'xml_config_settings_new_user', name='xml_config_settings_new_user'),
+    url(r'^config/settings/xml/edit/user/(?P<userid>\d+)/$', 'xml_config_settings_edit_user', name='xml_config_settings_edit_user'),
+    url(r'^config/settings/xml/delete/user/(?P<userid>\d+)/$', 'xml_config_settings_delete_user', name='xml_config_settings_delete_user'),
 )
 
 # xml views
 urlpatterns += patterns('laudio.player.views.xml',
-
+    url(r'^server/xml.server.php$', 'xml_api', name='xml_api'),
 )
 
 # built in views

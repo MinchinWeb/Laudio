@@ -1,0 +1,5 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+     <error code="{{ code }}">{{ msg }}</error>
+{% endblock %}

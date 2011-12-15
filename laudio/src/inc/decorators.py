@@ -20,6 +20,9 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
+import time
+
 # Django imports
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -30,12 +33,14 @@ from django.core.urlresolvers import reverse
 
 # Laudio imports
 from laudio.src.inc.config import LaudioConfig
+from laudio.player.models import XMLAPIUser
 
 
 def check_login(authLevel):
     """This decorator checks if the user has to be authenticated and checks
-    if the level is right. Basic usage is
-    
+    if the level is right.
+
+    Usage:
     @login('admin')
     myview(request):
         doSomething()
@@ -48,8 +53,8 @@ def check_login(authLevel):
     def decorator(view):
         
         def wrapper(*args, **kwargs):
-            """get the first argument which is always the request object
-            and check if the user is authenticated"""
+            # get the first argument which is always the request object
+            # and check if the user is authenticated
             config = LaudioConfig(settings.LAUDIO_CFG)
             requireLogin = config.requireLogin
 
@@ -93,3 +98,56 @@ def check_login(authLevel):
     
     return decorator
 
+
+def check_token(argument):
+    """This decorator checks if the token for accessing the xml api is still
+    valid
+    
+    Usage:
+    @check_token
+    myview(request):
+        doSomething()
+        
+    """
+    
+    def decorator(view):
+        
+        def wrapper(*args, **kwargs):
+            # get the first argument which is always the request object
+            # and check if the user is authenticated
+            request = args[0]
+            config = LaudioConfig(settings.LAUDIO_CFG)
+
+            # check if xml api is enabled
+            if not config.xmlAuth:
+                ctx = {
+                    'code': 501,
+                    'msg': 'XML API is not activated'
+                }
+                return render_to_response('xml/error.xml', ctx)
+                
+            # get token
+            token = request.GET.get('auth', '')
+            try:
+                user = XMLAPIUser.objects.get(token=token)
+            except XMLAPIUser.DoesNotExist:
+                ctx = {
+                    'code': 400,
+                    'msg': 'Token is wrong'
+                }
+                return render_to_response('xml/error.xml', ctx)
+
+            # check if the token is still valid
+            last_handshake = user.last_handshake
+            if last_handshake > ( int(time.time()) - config.tokenLifespan ):
+                return view(*args, **kwargs)
+            else:
+                ctx = {
+                    'code': 401,
+                    'msg': 'Token expired'
+                }
+                return render_to_response('xml/error.xml', ctx)
+        
+        return wrapper
+    
+    return decorator

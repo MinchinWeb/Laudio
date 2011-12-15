@@ -21,7 +21,6 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # System imports
-import urllib, urllib2
 import time
 
 # Django imports
@@ -30,14 +29,14 @@ from django.http import HttpResponse, Http404
 from django.db.models import Q, Count, Sum
 from django.views.decorators.http import require_POST, require_GET
 
-# Project imports
+# Laudio imports
 from laudio.player.models import Song
 import laudio.src.scrobbler as scrobbler
 from laudio.src.music_scanner import MusicScanner
 from laudio.src.cover_fetcher import CoverFetcher
 from laudio.src.inc.decorators import check_login
 from laudio.src.inc.scan_progress import ScanProgressor
-from laudio.src.inc.shortcuts import send_file, download_file
+from laudio.src.inc.shortcuts import send_file, download_file, get_var
 
 
 @require_GET
@@ -45,8 +44,7 @@ def ajax_search(request):
     """
     Searches the database for a simple request
     """
-    # TODO: check if we need url unquoting
-    search = request.GET.get('search', '')
+    search = get_var(request, 'search')
     # filter every appropriate column
     songs = Song.objects.filter(
         Q(title__contains=search)|

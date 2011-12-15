@@ -1,0 +1,15 @@
+{% extends 'xml/root.xml' %}
+
+{% block content %}
+    <auth>{{  token }}</auth>
+    <version>{{ version }}</version>
+    <update>{{ update }}</update>
+    <add>{{ add }}</add>
+    <clean>{{ clean }}</clean>
+    <songs>{{ song_num }}</songs>
+    <artists>{{ artist_num }}</artists>
+    <albums>{{ album_num }}</albums>
+    <tags>{{ genre_num }}</tags>
+    <videos>{{ video_num }}</videos>
+    <catalogs>{{ catalog_num }}</catalogs>
+{% endblock %}

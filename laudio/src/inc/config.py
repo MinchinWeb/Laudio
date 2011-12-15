@@ -48,8 +48,9 @@ class LaudioConfig(object):
         self.collectionStartup = False
         self.requireLogin = False
         self.debug = False
-        # web settings
-        self.xmlAPIAuth = False
+        # xml token lifespan in seconds
+        self.tokenLifespan = 60*60*24
+        self.xmlAuth = False
         
         # read in main config
         try:
@@ -78,10 +79,14 @@ class LaudioConfig(object):
                 self.parserError = True
                 
             try:
-                self.xmlAPIAuth = config.getboolean('settings', 'xml_auth')
+                self.tokenLifespan = config.getint('settings', 'token_lifespan')
             except ConfigParser.NoOptionError:
-                self.parserError = True
-        
+                self.parserError = True        
+
+            try:
+                self.xmlAuth = config.getboolean('settings', 'xml_auth')
+            except ConfigParser.NoOptionError:
+                self.parserError = True   
 
         # if there was something wrong with the config or parsing, write default
         # values
@@ -110,42 +115,8 @@ class LaudioConfig(object):
         config.set('settings', 'collection_startup', str(self.collectionStartup))
         config.set('settings', 'require_login', str(self.requireLogin))
         config.set('settings', 'debug', str(self.debug))
-        # web settings
-        config.set('settings', 'xml_auth', str(self.xmlAPIAuth))
+        config.set('settings', 'token_lifespan', str(self.tokenLifespan))
+        config.set('settings', 'xml_auth', str(self.xmlAuth))
         with open(self.mainConfig, 'wb') as confFile:
             config.write(confFile)
-    
-    
-    def save_url(self, url):
-        """Writes a new url to the config file
-    
-        WARNING: the apache config has to be rw thus making the config writeable
-        for httpd which is not a good idea in terms if security. Do not use this
-        method if you dont have to
-        
-        Keyword arguments:
-        url -- The new url path
-        """
-        # check for illegal arguments
-        if not url.startswith('/'):
-            raise ValueError('URL must begin with a slash')
-        
-        if url.endswith('/'):
-            url = url[:-1]
-        
-        data = ''
-        with open(self.apacheConfig, 'r') as configFile:
-            data = configFile.read()
-        
-        # substitue urls in apache config
-        repl = r'\1 %s \3' % url
-        regex = r'(WSGIScriptAlias) (.*) (.*wsgi/django.wsgi)'
-        data = re.sub(regex, repl, data)
-        
-        repl = r'\1 %s/static/ \3' % url
-        regex = r'(Alias) (.*)/ (.*/static/)'
-        data = re.sub(regex, repl, data)
-        
-        with open(self.apacheConfig, 'wb') as configFile:
-            configFile.write(data)
 
