@@ -298,7 +298,7 @@ function search_db(searchterm){
     }
     // Start animation
     $('#songlist table tbody').fadeOut('fast');
-    $('#songlist .loading').fadeIn('slow');
+    $('#songlist .loader').fadeIn('slow');
     
     
     // unbind previous items from context to prevent slowdown
@@ -306,7 +306,7 @@ function search_db(searchterm){
     
     // now that we got the get url, start query
     $('#songlist table tbody').load(url, data, function (){
-        $('#songlist .loading').fadeOut('fast', function(){
+        $('#songlist .loader').fadeOut('fast', function(){
             $('#songlist table tbody').fadeIn('slow');
             // set color to just playing song
             var lastSong = player.id;
