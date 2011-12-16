@@ -30,74 +30,51 @@ from lxml import etree
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
+# Laudio imports
+from laudio.player.models import UserProfile
+from laudio.player.templatetags import theme
 
 class CoverFetcher(object):
     """
     Class for fetching covers from last.fm or harddisk
     """
 
-    def __init__(self, song):
+    def __init__(self, song, request):
         """ Get the cover of a song
 
         Keyword arguments:
-        songpath -- The django model of the song we need. We basically 
-                    only need the the attributes: path, artist and album
+        song -- The django model of the song we want to get the cover from
+        request -- The request object
         """
-        self.artist = song.artist.encode("utf-8")
-        self.album = song.album.encode("utf-8")
-        
+        self.artist = song.artist.encode('utf-8')
+        self.album = song.album.encode('utf-8')
+
         # standardpath, we default to this if no cover is being found
-        self.standardCover = '/laudio/media/style/img/nocover.png'
-        
-        # build the path to the song from audiopath and songdir
-        self.relSongDir = os.path.dirname(song.path)
-        self.songDir = os.path.join(settings.AUDIO_DIR, self.relSongDir)
+        theme = theme(request.user)
+        self.cover = settings.MEDIA_URL + 'theme/' + theme + '/img/nocover.png'
         
     
     def fetch(self):
-        """ Fetches the songcover from different services
-        First it looks locally if images already exists in the folder.
-        Only Images with "cover" or "folder" are taken. If no cover is
-        being found it queries online services and if it doesnt find
-        anything the standardcover is being returned. """
-        # FIXME: we got problems with unicode paths
-        # FIXME: This is broken
-        for file in os.listdir(self.songDir):
-            if file.lower().endswith(".jpg") or file.lower().endswith(".jpeg") or file.lower().endswith(".png"):
-                # check for folder.jpg or cover.jpg which is very common
-                if file.lower().startswith("folder.") or file.lower().startswith("cover."):
-                    relPath = os.path.join(self.relSongDir, file)
-                    mediaPath = '%smedia/audio' % reverse ("laudio.views.laudio_index")
-                    self.cover = os.path.join( mediaPath,  relPath)
-                    return urllib.quote(self.cover)
-
-        # if no file was returned check at last.fm
-        self.cover = self._lastFM()
-        if self.cover is not None:
+        """ Fetches the songcover from different services"""
+        # get cover from last.fm        
+        cover = self._lastFM()
+        if cover is not None:
+            self.cover = cover
             return self.cover
-        
-        # if nothing is found, return standardcover
-        return self.standardCover
         
     
     def _lastFM(self):
-        """ If a song cant be found locally, query last.fm for the cover
-        This method shouldnt be used outside this class
-        
-        returns -- The path/link to the songcover, None if no cover is found
+        """ Fetches and returns the link to the last.fm cover of the song
         """
-        
         data = {}
-        """ The api key which is unique to LAudio
         
-        If you want to implement this for your app you need to register
-        your app at last.fm to tell it with which app you submit/get
-        data
-        """
-        data["api_key"] = settings.LAST_FM_API_KEY
-        data["method"] = "album.getinfo"
-        data["artist"] = self.artist
-        data["album"] = self.album
+        # The api key which is unique to LAudio
+        # If you want to implement this for your app you need to register
+        # your app at last.fm to tell it with which app you submit/get data
+        data['api_key'] = settings.LAST_FM_API_KEY
+        data['method'] = 'album.getinfo'
+        data['artist'] = self.artist
+        data['album'] = self.album
         url_values = urllib.urlencode(data)
         url = 'http://ws.audioscrobbler.com/2.0/'
         full_url = url + '?' + url_values
@@ -105,7 +82,7 @@ class CoverFetcher(object):
         try:
             response = urllib2.urlopen(full_url)
             elements = etree.fromstring(response.read())
-            if elements.get("status") == "ok":
+            if elements.get('status') == 'ok':
                 try:
                     cover = elements.xpath('/lfm/album/image[@size="extralarge"]/text()')[0]
                     return cover

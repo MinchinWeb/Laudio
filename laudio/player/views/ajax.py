@@ -224,10 +224,9 @@ def ajax_song_scrobble(request):
         'success': success,
     }
     return render(request, 'ajax/success.html', ctx)
-        
 
-@check_login("user")
-@require_GET
+
+@check_login('user')
 def ajax_song_cover(request, id):
     """Fetches the URL of albumcover, either locally or from the Internet
 
@@ -235,7 +234,7 @@ def ajax_song_cover(request, id):
     id -- the id of the song we want the cover from
     """
     song = Song.objects.get(id=id)
-    fetcher = CoverFetcher(song)
+    fetcher = CoverFetcher(song, request)
     cover = fetcher.fetch()
     ctx = {
         'coverpath': cover, 
