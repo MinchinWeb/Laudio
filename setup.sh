@@ -60,7 +60,7 @@ case "$DISTRO" in
     0)
         echo "Installing for Ubuntu"
         echo "Installing Dependencies"
-        apt-get install python-lxml python-django python-mutagen apache2 sqlite3 libapache2-mod-wsgi python-pysqlite2
+        apt-get install python-lxml python-django python-mutagen apache2 sqlite3 libapache2-mod-wsgi python-pysqlite2 ttf-dejavu
         echo "Setting up Apache"
         APACHE=$STANDARD_HTTP_USER
         echo "Removing previous installations"
@@ -98,7 +98,7 @@ case "$DISTRO" in
     1)
         echo "Installing for Arch Linux"
         echo "Installing Dependencies"
-        pacman -S extra/django extra/python-lxml extra/mutagen extra/apache extra/python-pysqlite core/sqlite3 extra/mod_wsgi
+        pacman -S django python-lxml mutagen apache python-pysqlite sqlite3 mod_wsgi ttf-dejavu
         echo "Setting up Apache"  
         APACHE=$ARCH_HTTP_USER
         # check if the entry is already there
@@ -148,7 +148,7 @@ case "$DISTRO" in
     2)
         echo "Installing for Gentoo"
         echo "Installing Dependencies"
-        emerge -av dev-python/django dev-python/lxml media-libs/mutagen dev-python/pysqlite dev-db/sqlite www-apache/mod_wsgi www-servers/apache
+        emerge -av dev-python/django dev-python/lxml media-libs/mutagen dev-python/pysqlite dev-db/sqlite www-apache/mod_wsgi www-servers/apache ttf-dejavu
         echo "Setting up Apache"
         APACHE=$STANDARD_HTTP_USER
         echo "Removing previous installations"

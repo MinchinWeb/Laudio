@@ -57,21 +57,28 @@ $(document).ready(function () {
      **************************************************************************/
 
     // progress bar
-    $('#progress').slider();
-    $('#progress').slider('option', 'min', 0);
-    $('#progress').slider('option', 'max', 100);
+    $('#progress').slider({
+        range: 'min',
+        min: 0,
+        max: 100
+    });
     $('#progress').bind('slidestop', function (event, ui) {
         player.set_position($('#progress').slider('value'));
     });
 
 
     // volume bar
-    $('#volume').slider();
-    $('#volume').slider('option', 'orientation', 'vertical');
-    $('#volume').slider('option', 'min', 0);
-    $('#volume').slider('option', 'max', 100);
+    $('#volume').slider({
+        range: 'min',
+        min: 0,
+        max: 100,
+        orientation: 'vertical'
+    });
     $('#volume').slider('value', 100);
     $('#volume').bind('slide', function (event, ui) {
+        player.set_volume($('#volume').slider('value'));
+    });
+    $('#volume').bind('slidechange', function (event, ui) {
         player.set_volume($('#volume').slider('value'));
     });
     $('#mute').hover(function () {

@@ -18,6 +18,17 @@ even your friends can listen to it over the Internet.
 
 Get a live preview on http://laudio-player.org/
 
+Dependencies
+============
+* python-lxml 
+* python-django (1.3)
+* python-mutagen 
+* apache2 
+* sqlite3 
+* libapache2-mod-wsgi 
+* python-pysqlite2 
+* ttf-dejavu
+
 Installing 
 ==========
 

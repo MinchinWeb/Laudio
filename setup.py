@@ -37,6 +37,7 @@ setup(
 	                    'laudio/src/inc', 
 	                'laudio/player', 
 	                    'laudio/player/views',
+	                        'laudio/player/views/templatetags',
 	],
 	package_data = {
 	    '' : [
@@ -59,6 +60,7 @@ setup(
                         'laudio/static/js/lib/soundmanager/swf/*',
 	        'laudio/tpl/*', 
 	            'laudio/tpl/ajax/*',
+	            'laudio/tpl/config/*',
 	            'laudio/tpl/install/*',
 	            'laudio/tpl/javascript/*',
 	            'laudio/tpl/player/*',

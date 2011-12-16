@@ -26,7 +26,6 @@ License: GPL-3+
     "/usr/share/common-licenses/GPL-3".
 
 
-
 Files: laudio/static/js/lib/soundmanager/*
 Copyright: 2007, Scott Schiller (schillmania.com)
 License: BSD
@@ -56,7 +55,6 @@ License: BSD
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-
 Files: laudio/static/js/lib/jquery/jquery.tablesorter.min.js
 Copyright: 2011 Christian Bach <christian@lovepeacenukes.com>
 License: GPL-3 or other
@@ -70,7 +68,6 @@ License: GPL-3 or other
     .
     On Debian GNU/Linux systems, the complete text of the GNU General
     Public License can be found in `/usr/share/common-licenses/GPL-3'
-
 
 
 Files: laudio/src/scrobbler.py
@@ -94,7 +91,6 @@ License: LGPL
     Public License can be found in `/usr/share/common-licenses/LGPL'.
 
 
-
 Files: laudio/static/jquery/jquery-1.7.1.min.js
 Copyright: 2005-2008 by John Resig, Brandon Aaron & Jörn Zaefferer.
     .
@@ -113,8 +109,6 @@ License: GPL-2 or other
     .
     On Debian GNU/Linux systems, the complete text of the GNU General
     Public License can be found in `/usr/share/common-licenses/GPL-2'
-
-
 
 
 Files: laudio/static/js/lib/jquery/jquery-ui-1.8.16.custom.min.js
@@ -175,26 +169,6 @@ License: GPL-3 or other
     Public License can be found in `/usr/share/common-licenses/GPL-2'
 
 
-Files: laudio/static/upload/themes/default/img/loading.gif
-Copyright: 2011 Francesco Balduini <francesco.balduini@gmail.com>
-License: CC-BY-3.0
-    You are free:
-    .
-    * to share – to copy, distribute and transmit the work
-    * to remix – to adapt the work
-    .
-    Under the following conditions:
-    .
-    * attribution – You must attribute the work in the manner specified by the 
-      author or licensor (but not in any way that suggests that they endorse you 
-      or your use of the work).
-    .
-    The Full legalcode is available under 
-    http://creativecommons.org/licenses/by/3.0/legalcode
-
-
-
-
 The Debian packaging is:
 Copyright: 2011 Bernhard Posselt <bernhard.posselt@gmx.at>
 License: GPL-3+
@@ -214,4 +188,3 @@ License: GPL-3+
     On Debian systems, the complete text of the GNU General
     Public License version 3 can be found in 
     "/usr/share/common-licenses/GPL-3".
-

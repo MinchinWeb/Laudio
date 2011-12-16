@@ -91,10 +91,12 @@
         #controls .control a {
             height: 32px;
             width: 32px;
-            margin: 0 5px;
             line-height: 32px;
             float: left;
             background-repeat: no-repeat;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            margin: 0 2px;
         }
     
             #controls .control a:active {
@@ -102,46 +104,39 @@
             }
             
             #controls .control a:hover {
-                background-color: #DCE9BE;
+                background-color: #ececec;
             }
     
     #controls .control .play {
-        margin: 0;
         background-image: url('img/play.png');
     }
     
     #controls .control .pause {
-        margin: 0;
         background-image: url('img/pause.png');
     }
     
     #controls .control .previous {
-        margin: 0;
         background-image: url('img/previous.png');
     }
 
     #controls .control .next {
-        margin: 0;
+        margin-right: 10px;
         background-image: url('img/next.png');
     }
     
     #controls .control .unmuted {
-        margin: 0;
         background-image: url('img/unmuted.png');
     }
 
     #controls .control .quiet {
-        margin: 0;
         background-image: url('img/quiet.png');
     }
 
     #controls .control .louder {
-        margin: 0;
         background-image: url('img/louder.png');
     }
     
     #controls .control .muted {
-        margin: 0;
         background-image: url('img/muted.png');
     }
     
@@ -211,8 +206,8 @@
     #volume_container {
         position: absolute;
         top: 43px;
-        right: 14px;
-        width: 32px;
+        right: 16px;
+        width: 34px;
         z-index: 3;
         background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
         background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
@@ -233,6 +228,7 @@
 
          #volume .ui-slider-handle {
             width: 14px;
+            margin-left: 5px;
         }
 
 /**
@@ -393,5 +389,64 @@
 #songlist {
     height: 100%;
     overflow: auto;
+}
+
+/**
+ * Loader
+ */
+.loader {
+    height: 24px;
+    width: 82px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin: -12px 0 0 -41px;  
+}
+
+    .loader span {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        background-color: #99173C;
+        border-radius: 50px;
+        -webkit-animation: loader 0.45s infinite alternate;
+        -moz-animation: loader 0.45s infinite alternate;
+    }
+    .loader span:nth-of-type(2) {
+        -webkit-animation-delay: 0.15s;
+        -moz-animation-delay: 0.15s;
+    }
+    .loader span:nth-of-type(3) {
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+    }
+
+@-webkit-keyframes loader {
+  0% {
+    width: 15px;
+    height: 15px;
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+    -webkit-transform: translateY(-10px);
+  }
+}
+@-moz-keyframes loader {
+  0% {
+    width: 15px;
+    height: 15px;
+    opacity: 1;
+    -moz-transform: translateY(0);
+  }
+  100% {
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+    -moz-transform: translateY(-10px);
+  }
 }
 

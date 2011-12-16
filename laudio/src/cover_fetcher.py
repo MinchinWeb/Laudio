@@ -51,7 +51,7 @@ class CoverFetcher(object):
 
         # standardpath, we default to this if no cover is being found
         theme = theme(request.user)
-        self.cover = settings.MEDIA_URL + 'theme/' + theme + '/img/nocover.png'
+        self.cover = settings.MEDIA_URL + 'themes/' + theme + '/img/nocover.png'
         
     
     def fetch(self):
