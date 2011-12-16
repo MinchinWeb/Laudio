@@ -31,7 +31,7 @@ from django.contrib.auth import logout, authenticate, login
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.player.forms import SetupForm
 from laudio.src.inc.decorators import check_login
-
+from laudio.player.models import UserProfile
 
 
 def index(request):
@@ -69,6 +69,10 @@ def setup(request):
                 userform.is_superuser = True
                 userform.is_staff = True
                 userform.save()
+                # create a profile
+                profile = UserProfile()
+                profile.user = User.objects.get(username=userform.username)
+                profile.save()
                 return HttpResponseRedirect(reverse('player:index'))
         ctx = {
             'form': form,
