@@ -284,6 +284,43 @@
         float: left;
     }
 
+        #titlebar #playlist_header h1 {
+            float: left;
+            text-align: center;
+            padding-left: 140px;
+        }
+
+        #titlebar #playlist_header .header_menu {
+            float: right;
+            margin: 0;
+            padding: 0;
+        }
+        
+            #titlebar #playlist_header .header_menu li {
+                display: inline-block;
+                float: left;
+                margin-left: 1px;
+            }
+    
+                #titlebar #playlist_header .header_menu li a {
+                    color: #222;
+                    background-color: #ddd;
+                    font-family: dejavusans;
+                    font-weight: bold;
+                    text-decoration: none;
+                    font-size: 10pt;
+                    line-height: 23px;
+                    padding: 0 3px;
+                    /*
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                    */
+                }
+                 
+                    #titlebar #playlist_header .header_menu li a:hover{
+                            
+                    }
+    
     #titlebar #songlist_header {
         height: 100%;
         overflow:auto;

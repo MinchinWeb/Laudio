@@ -95,15 +95,12 @@
             
             <div id="playlist_header">
                 <h1>{% blocktrans %}Playlist{% endblocktrans %}</h1>
-                {% if user.is_authenticated %}
-                    <ul class="header_menu">
-                        <li><a href="#" id="save_playlist" onclick="return false;">{% blocktrans %}Save{% endblocktrans %}</a></li>
-                        <li><a href="#" id="open_playlist" onclick="return false;">{% blocktrans %}Lists{% endblocktrans %}</a></li>
-                    </ul>
-                    <ul class="header_menu">
-                        <li><a href="#" id="cancel_playlist" onclick="return false;">{% blocktrans %}Cancel{% endblocktrans %}</a></li>
-                    </ul>
-                {% endif %}
+                    {% if user.is_authenticated %}
+                        <ul class="header_menu">
+                            <li><a href="#" id="save_playlist" onclick="return false;">{% blocktrans %}Save{% endblocktrans %}</a></li>
+                            <li><a href="#" id="open_playlist" onclick="return false;">{% blocktrans %}Lists{% endblocktrans %}</a></li>
+                        </ul>
+                    {% endif %}
             </div>
             
             <div id="songlist_header">
