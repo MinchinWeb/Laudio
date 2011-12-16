@@ -45,19 +45,34 @@ def ajax_search(request):
     """
     search = get_var(request, 'search')
     # filter every appropriate column
-    songs = Song.objects.filter(
-        Q(title__icontains=search)|
-        Q(album__artist__name__icontains=search)|
-        Q(album__name__icontains=search)|
-        Q(genre__name__icontains=search)
-    ).extra(
-        select=
-            {
-                'lartist': 'lower(artist)', 
-                'lalbum': 'lower(album)', 
-                'ltrnr': 'tracknumber',
-            }
-    ).order_by('lartist', 'lalbum', 'ltrnr')
+    search = '%' + search + '%'
+    songs = Song.objects.raw(
+        "SELECT sng.id AS id, \
+                sng.tracknumber AS tracknumber, \
+                sng.title AS title, \
+                alb.name AS album, \
+                art.name AS artist, \
+                gr.name AS genre \
+            FROM player_song sng \
+	        LEFT JOIN player_album alb \
+		        ON sng.album_id = alb.id \
+	        LEFT JOIN player_artist art \
+		        ON alb.artist_id = art.id \
+	        LEFT JOIN player_genre gr \
+		        ON sng.genre_id = gr.id \
+	        WHERE \
+		        LOWER(art.name) LIKE LOWER(%s) \
+		        OR \
+		        LOWER(alb.name) LIKE LOWER(%s) \
+		        OR \
+		        LOWER(gr.name) LIKE LOWER(%s) \
+		        OR \
+		        LOWER(sng.title) LIKE LOWER(%s) \
+	        ORDER BY \
+		        LOWER(art.name), LOWER(alb.name), LOWER(sng.tracknumber)",
+		[search, search, search, search]
+    )
+
     ctx = {
         'songs': songs,
     }
