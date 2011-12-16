@@ -46,10 +46,10 @@ def ajax_search(request):
     search = get_var(request, 'search')
     # filter every appropriate column
     songs = Song.objects.filter(
-        Q(title__contains=search)|
-        Q(artist__name__contains=search)|
-        Q(album__name__contains=search)|
-        Q(genre__name__contains=search)
+        Q(title__icontains=search)|
+        Q(album__artist__name__icontains=search)|
+        Q(album__name__icontains=search)|
+        Q(genre__name__icontains=search)
     ).extra(
         select=
             {

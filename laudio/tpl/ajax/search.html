@@ -5,9 +5,9 @@
         ondblclick="play_row(this);">
         <td class="collNr">{{ song.tracknumber }}</td>
         <td class="collTitle">{{ song.title }}</td>
-        <td class="collArtist">{{ song.artist }}</td>
-        <td class="collAlbum">{{ song.album }}</td>
-        <td class="collGenre">{{ song.genre }}</td>
+        <td class="collArtist">{{ song.album.artist.name }}</td>
+        <td class="collAlbum">{{ song.album.name }}</td>
+        <td class="collGenre">{{ song.genre.name }}</td>
     </tr>
 {% endfor %}
 
