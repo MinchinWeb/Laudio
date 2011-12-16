@@ -43,9 +43,11 @@ def ajax_search(request):
     """
     Searches the database for a simple request
     """
-    search = get_var(request, 'search')
+    search = get_var(request, 'search').lower()
     # filter every appropriate column
     search = '%' + search + '%'
+    # yeah we have to do this because ordering by lower doesnt work across
+    # tables
     songs = Song.objects.raw(
         "SELECT sng.id AS id, \
                 sng.tracknumber AS tracknumber, \
@@ -61,13 +63,13 @@ def ajax_search(request):
 	        LEFT JOIN player_genre gr \
 		        ON sng.genre_id = gr.id \
 	        WHERE \
-		        LOWER(art.name) LIKE LOWER(%s) \
+		        LOWER(art.name) LIKE %s \
 		        OR \
-		        LOWER(alb.name) LIKE LOWER(%s) \
+		        LOWER(alb.name) LIKE %s \
 		        OR \
-		        LOWER(gr.name) LIKE LOWER(%s) \
+		        LOWER(gr.name) LIKE %s \
 		        OR \
-		        LOWER(sng.title) LIKE LOWER(%s) \
+		        LOWER(sng.title) LIKE %s \
 	        ORDER BY \
 		        LOWER(art.name), LOWER(alb.name), LOWER(sng.tracknumber)",
 		[search, search, search, search]
