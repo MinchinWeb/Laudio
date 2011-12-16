@@ -269,6 +269,7 @@
         text-align: center;
         margin: 0;
         padding: 0;
+        color: #ddd;
     }
 
     #titlebar #sidebar_header {
@@ -285,7 +286,47 @@
 
     #titlebar #songlist_header {
         height: 100%;
+        overflow:auto;
     }
+    
+        #titlebar #songlist_header table {
+            height: 100%;
+            width: 100%;
+        }
+
+            #titlebar #songlist_header a {
+                font-family: dejavusans;
+                font-size: 10pt;
+                line-height: 22px;
+                height: 22px;
+                text-align: center;
+                margin: 0;
+                padding: 0 20px 0 0;
+                text-decoration: none;
+                color: #ddd;
+                background-repeat: no-repeat;
+                background-position: center right;
+            }
+            
+            
+                #titlebar #songlist_header a:hover {
+                    background-image: url('img/nosort.png');
+                }
+                
+                #titlebar #songlist_header a.sortup:hover {
+                    background-image: url('img/asc.png');
+                }
+                
+                #titlebar #songlist_header a.sortdown:hover {
+                    background-image: url('img/desc.png');
+                }
+
+.collNr { width: 5%; }
+.collTitle { width: 30%; }
+.collArtist { width: 25%; }
+.collAlbum { width: 25%; }
+.collGenre { width: 15%; }
+
 
 /**
  * Content
