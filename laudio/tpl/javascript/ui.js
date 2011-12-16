@@ -21,7 +21,6 @@
 
 
 $(document).ready(function () {
-    "use strict";
 
     var player,
         shift_key,
@@ -31,6 +30,7 @@ $(document).ready(function () {
     player = new Player();
     shift_key = false;
     ctrl_key = false;
+    
     /***************************************************************************
      * navigation links
      **************************************************************************/
@@ -123,6 +123,22 @@ $(document).ready(function () {
     });
 
 
+    /**
+     * Search
+     */
+
+
+
+
+    var timer;
+    $('#search input').keyup(function(e) {
+        if($(this).attr('value').length >= 2){
+            clearTimeout( timer );
+            var value = escape( $(this).attr('value') );
+            timer = setTimeout('search_db("' + value + '")', 500);
+        }
+    });
+
     /***************************************************************************
      * Playlist and Content
      **************************************************************************/
@@ -154,7 +170,78 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Tablesorting
+     */
+    $('.collNr a').live('click', function() {
+        activate_tablesorter(this, [[0,0],[2,0], [3,0], [4,0]], [[0,1],[2,0], [3,0], [4,0]]);
+        return false;
+    });
+    $('.collTitle a').live('click', function() {
+        activate_tablesorter(this, [[1,0],[2,0], [3,0], [4,0]], [[1,1],[2,0], [3,0], [4,0]]);
+        return false;
+    });
+    $('.collArtist a').live('click', function() {
+        activate_tablesorter(this, [[2,0], [3,0], [0,0]], [[2,1], [3,0], [0,0]]);
+        return false;
+    });
+    $('.collAlbum a').live('click', function() {
+        activate_tablesorter(this, [[3,0], [2,0], [0,0]], [[3,1], [2,0], [0,0]]);
+        return false;
+    });
+    $('.collGenre a').live('click', function() {
+        activate_tablesorter(this, [[4,0],[2,0], [3,0], [0,0]], [[4,1], [2,0], [3,0], [0,0]]);
+        return false;
+    });  
 
+
+    /**
+    * Colors all lines in the collection
+     * @param id: The table element which should be updated
+    */
+    function update_line_colors(id){
+        $(id + ' tbody tr').each(function(index) {
+            if(index % 2){
+                $(this).removeClass('line1');
+                $(this).removeClass('line2');
+                $(this).addClass('line2');
+            } else {
+                $(this).removeClass('line1');
+                $(this).removeClass('line2');
+                $(this).addClass('line1');
+            }       
+        });
+    }
+
+
+    /**
+     * Runs a tablesort on the songlist
+     * 
+     * @param header_link: The link which was clicked on
+     * @param sorting: The sorting for the songlist
+     */
+    function activate_tablesorter (header_link, sorting_up, sorting_down) {
+        if($('#songlist table tbody tr').length){
+            $('#songlist table').tablesorter();
+            if($(header_link).attr('class') == 'sortup'){
+                var sorting = sorting_up;
+                $('#songlist_header table th a').removeClass('sortup');
+                $('#songlist_header table th a').removeClass('sortdown');
+                $(header_link).removeClass('sortup');
+                $(header_link).addClass('sortdown');
+            } else {
+                var sorting = sorting_down;
+                $('#songlist_header table th a').removeClass('sortup');
+                $('#songlist_header table th a').removeClass('sortdown');
+                $(header_link).removeClass('sortdown');
+                $(header_link).addClass('sortup');
+            }
+            $('#songlist table').trigger('sorton',[sorting]);
+            update_line_colors('songlist table');
+        }
+    }
+
+    
     /**
      * Function for selecting lines
      *
@@ -177,7 +264,7 @@ $(document).ready(function () {
                 $select_from = $(row);
                 $select_to = $last_selected;
             }
-            $select_from.nextUntil('#' + $select_to.attr('id') + " + *").addClass('selected');
+            $select_from.nextUntil('#' + $select_to.attr('id') + ' + *').addClass('selected');
 
         } else {
             $(row).addClass('selected');
@@ -191,8 +278,50 @@ $(document).ready(function () {
     });
 
 
+    
     /***************************************************************************
      * Developement
      **************************************************************************/
     //$('#browser').css('display', 'block');
 });
+
+/**
+ * Start a search
+ * @param searchterm: The search string
+ */
+function search_db(searchterm){
+    var url,
+        data;
+    url = '{% url player:ajax_search %}';
+    data = {
+        'search': searchterm
+    }
+    // Start animation
+    $('#songlist table tbody').fadeOut('fast');
+    $('#songlist .loading').fadeIn('slow');
+    
+    
+    // unbind previous items from context to prevent slowdown
+    $('#songlist table tbody tr').unbind('contextmenu');
+    
+    // now that we got the get url, start query
+    $('#songlist table tbody').load(url, data, function (){
+        $('#songlist .loading').fadeOut('fast', function(){
+            $('#songlist table tbody').fadeIn('slow');
+            // set color to just playing song
+            var lastSong = player.id;
+            
+            // if we didnt just start it see if the currently played
+            // song is in the collection and highlight it
+            if (lastSong !== 0 && player.context === 'songlist'){
+                $( id_to_row(lastSong, true) ).addClass('active');
+            }
+            
+            // update table sorting
+            $('#songlist table').trigger('update');
+                
+            // update context menu
+            //collection_context_menu();
+        });
+    });
+}

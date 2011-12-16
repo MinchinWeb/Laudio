@@ -39,7 +39,6 @@ from laudio.src.inc.scan_progress import ScanProgressor
 from laudio.src.inc.shortcuts import send_file, download_file, get_var
 
 
-@require_GET
 def ajax_search(request):
     """
     Searches the database for a simple request
@@ -48,9 +47,9 @@ def ajax_search(request):
     # filter every appropriate column
     songs = Song.objects.filter(
         Q(title__contains=search)|
-        Q(artist__contains=search)|
-        Q(album__contains=search)|
-        Q(genre__contains=search)
+        Q(artist__name__contains=search)|
+        Q(album__name__contains=search)|
+        Q(genre__name__contains=search)
     ).extra(
         select=
             {
@@ -244,7 +243,6 @@ def ajax_song_cover(request, id):
 
 
 @check_login('user')
-@require_GET
 def ajax_song_file(request):
     """
     Returns the audio file
@@ -259,7 +257,6 @@ def ajax_song_file(request):
 
 
 @check_login("user")
-@require_GET
 def ajax_song_download(request):
     """
     Returns the audio file
