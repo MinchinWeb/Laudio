@@ -22,6 +22,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # System imports
 import urllib, urllib2
+import os
 
 # Django imports
 from django.shortcuts import render_to_response
@@ -30,6 +31,7 @@ from django.core.servers.basehttp import FileWrapper
 from django.template import RequestContext
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 
 # Laudio imports
 from laudio.src.inc.config import LaudioConfig

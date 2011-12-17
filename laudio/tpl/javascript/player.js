@@ -151,7 +151,7 @@ Player.prototype.play = function (row) {
 
     // get context
     var queryid;
-    this.context = $('').parent().parent().attr("id");
+    this.context = $('#' + row.id).parent().parent().attr("id");
     if (this.context === this.songlist) {
         this.id = row_to_id(row.id);
         queryid = this.id;

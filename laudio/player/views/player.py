@@ -103,6 +103,8 @@ def javascript(request, src):
 
 
 def log_me_out(request):
+    """Simple logout view
+    """
     logout(request)
     return HttpResponseRedirect( reverse('player:index') )
 
