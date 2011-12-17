@@ -25,7 +25,7 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout
 
 # Project imports
 from laudio.src.inc.shortcuts import render as csrf_render
@@ -102,4 +102,7 @@ def javascript(request, src):
     return render(request, tpl)
 
 
+def log_me_out(request):
+    logout(request)
+    return HttpResponseRedirect( reverse('player:index') )
 
