@@ -14,7 +14,10 @@
    inkscape:version="0.48.2 r9819"
    width="21"
    height="9"
-   sodipodi:docname="nosort.svg">
+   sodipodi:docname="nosort.svg"
+   inkscape:export-filename="/home/karsten/Desktop/SortierICONS/PNG/nosort.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <metadata
      id="metadata3553">
     <rdf:RDF>
@@ -44,17 +47,18 @@
      showgrid="false"
      inkscape:snap-page="false"
      inkscape:zoom="22.627417"
-     inkscape:cx="10.589844"
-     inkscape:cy="0.1816073"
+     inkscape:cx="1.2427762"
+     inkscape:cy="-0.23823735"
      inkscape:window-x="0"
      inkscape:window-y="34"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg3547" />
   <g
      transform="matrix(0.93266405,0,0,0.93266405,-219.5645,-368.09224)"
-     id="g4486">
+     id="g4486"
+     style="fill:#dddddd;fill-opacity:1;stroke:#dddddd;stroke-opacity:1">
     <path
-       style="color:#000000;fill:#555152;fill-opacity:1;fill-rule:nonzero;stroke:#555152;stroke-width:0.84723181;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       style="color:#000000;fill:#dddddd;fill-opacity:1;fill-rule:nonzero;stroke:#dddddd;stroke-width:0.84723181000000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:transform-center-y="0.75464473"
        d="m 246.67457,403.89161 -1.67658,-1.64106 -1.67658,-1.64105 3.35316,0 3.35315,0 -1.67657,1.64105 z"
        id="path4482"
@@ -64,6 +68,6 @@
        id="path4484"
        d="m 246.67457,395.09328 -1.67658,1.64106 -1.67658,1.64105 3.35316,0 3.35315,0 -1.67657,-1.64105 z"
        inkscape:transform-center-y="-0.75464473"
-       style="color:#000000;fill:#555152;fill-opacity:1;fill-rule:nonzero;stroke:#555152;stroke-width:0.84723181;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+       style="color:#000000;fill:#dddddd;fill-opacity:1;fill-rule:nonzero;stroke:#dddddd;stroke-width:0.84723181000000003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
   </g>
 </svg>

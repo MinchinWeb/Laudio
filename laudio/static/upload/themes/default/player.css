@@ -331,6 +331,11 @@
             width: 100%;
         }
 
+            #titlebar #songlist_header table th {
+                background-repeat: no-repeat;
+                background-position: center right;
+            }
+            
             #titlebar #songlist_header a {
                 font-family: dejavusans;
                 font-size: 10pt;
@@ -338,23 +343,25 @@
                 height: 22px;
                 text-align: center;
                 margin: 0;
-                padding: 0 0 0 2px;
+                padding: 0;
                 text-decoration: none;
                 color: #ddd;
-                background-repeat: no-repeat;
-                background-position: center right;
+                width: 100%;
+                display: block;
+                float: left;
             }
             
             
-                #titlebar #songlist_header a:hover {
+            
+                #titlebar #songlist_header th:hover {
                     background-image: url('img/nosort.png');
                 }
                 
-                #titlebar #songlist_header a.sortup:hover {
+                #titlebar #songlist_header th.sortup:hover {
                     background-image: url('img/asc.png');
                 }
                 
-                #titlebar #songlist_header a.sortdown:hover {
+                #titlebar #songlist_header th.sortdown:hover {
                     background-image: url('img/desc.png');
                 }
 
