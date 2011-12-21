@@ -28,6 +28,10 @@ $(document).ready(function () {
         $last_selected;
 
     player = new Player();
+    /*soundManager.onready(function(){
+    player.play("hi");    
+    });*/
+
     shift_key = false;
     ctrl_key = false;
     

@@ -2,9 +2,11 @@
 <nav>
     <ul class="horizontal_nav">
         <li><a href="{% url player:index %}" class="main">l-audio</a></li>
-        <li><a href="#" class="active" id="sidebar_link">{% blocktrans %}Sidebar{% endblocktrans %}</a></li>
-        <li><a href="#" class="active" id="playlist_link">{% blocktrans %}Playlist{% endblocktrans %}</a></li>
-        <li><a href="#" id="browser_link">{% blocktrans %}Browse{% endblocktrans %}</a></li>
+        {% if player %}
+            <li><a href="#" class="active" id="sidebar_link">{% blocktrans %}Sidebar{% endblocktrans %}</a></li>
+            <li><a href="#" class="active" id="playlist_link">{% blocktrans %}Playlist{% endblocktrans %}</a></li>
+            <li><a href="#" id="browser_link">{% blocktrans %}Browse{% endblocktrans %}</a></li>
+        {% endif %}
     </ul>
                 
     <ul id="login" class="horizontal_nav">

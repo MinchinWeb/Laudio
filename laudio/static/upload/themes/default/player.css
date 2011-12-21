@@ -19,6 +19,11 @@
  *
  */
 
+#soundmanager-debug-toggle {
+    position: absolute;
+    left: -500px;
+    top: -500px;
+}
 
 /**
  * Wrapper
@@ -33,42 +38,133 @@
 .overlay {
     height: 100%;
     width: 100%;
-    top: 37px;
+    top: 0;
     left: 0;
     position: absolute;
     z-index: 2;
-    background-color: rgba(255,255,255, 0.9);
+    background-color: #fefefe;
+    padding-top: 37px;
     display: none; 
 }
 
     .overlay .overlay_controls {
         position: absolute;
-        z-index: 3;
-        bottom: 40px;
+        z-index: 1;
+        bottom: 37px;
         left: 0;
-        border-top: 1px solid #ccc;
-        height: 40px;
+        height: 44px;
+        line-height: 44px;
+        float: left;
         width: 100%;
-        background-color: #DCE9BE; 
+        background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
     }
 
     .overlay .overlay_controls .horizontal_nav {
         float: right;
-        margin: 5px 15px 0 0;
+        margin: 6px 15px 0 0;
     }
 
-#browser #browsers {
-    float: left;
-    width: 30%;
-    margin: 10px;
-    border: 1px solid #ccc;
-    height: 20%;
-    overflow: auto;
+#browser {
+    font-family: dejavusans;
 }
 
-    #browser #browsers table {
-
+    #browser #browser_headers div {
+        width: 25%;
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 14pt;
+        text-decoration: underline;
     }
+
+    #browser #browsers {
+        width: 100%;
+        height: auto;
+        padding-top: 87px;
+        padding-bottom: 91px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+
+        #browser #browsers div {
+            float: left;
+            width: 23.75%;
+            margin-left: 1%;
+            height: 100%;
+            background-color: #ddd;
+        }
+        
+        #browser #browsers div:first-of-type {
+            margin-left: 1%;
+        }
+        
+            #browser #browsers div table {
+                background-color: #fefefe;
+                border: 1px solid #ddd;
+                height: 100%;
+                width: 100%;
+            }
+            
+                #browser #browsers div#letter_browser table td {
+                    border: 1px solid #aaa;
+                    background-color: #ddd;
+                    text-align: center;
+                    width: 25%;
+                    cursor: pointer;
+                }
+
+                    #browser #browsers div#letter_browser table td:hover {
+                        background-color: #ccc;
+                    }
+
+                #browser #browsers div div.border {
+                    padding: 1px !important;
+                    margin: 0;
+                    float: left;
+                    height: 100%;
+                    width: 100%;
+
+                }
+                
+                #browser #browsers div ul.list_browser {
+                    margin: 0;
+                    padding: 0;
+                    height: 100%;
+                    width: 100%;
+                    background-color: #fefefe;
+                    float: left;
+                    overflow: auto;
+                }
+                
+                    #browser #browsers div ul.list_browser li {
+                        text-align: center;
+                        height: 20px;
+                        line-height: 20px;
+                        list-style-type: none;
+                        margin: 0;
+                        padding: 0 5px;
+                        text-align: left;
+                    }
+                    
+                        #browser #browsers div ul.list_browser li:hover {
+                            background-color: #DCE9BE !important;
+                            cursor: pointer;
+                        }
+                        
+                        #browser #browsers div ul.list_browser li.line1 {
+                            background-color: #f6f6f6;
+                        }
+                        
+                        #browser #browsers div ul.list_browser li.line2 {
+                        }
+                    
+
 /**
  * Controls
  */
@@ -101,7 +197,7 @@
         }
     
             #controls .control a:active {
-                margin-top: 1px;
+                box-shadow:inset 0 0 15px #bbb;
             }
             
             #controls .control a:hover {
@@ -244,21 +340,8 @@
     left: 0px;
     height: 22px;
     width: 100%;
-    /*
-    background-color: #DCE9BE; 
-    color: #222;
-    */
     background-color: rgb(46,38,51); 
     color: #ddd;
-
-    /*
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    */
-/*
-    background-color: #99173C;
-    color: #ddd;
-*/
 }
 
     #titlebar h1 {
@@ -311,10 +394,6 @@
                     font-size: 10pt;
                     line-height: 23px;
                     padding: 0 3px;
-                    /*
-                    border-top-left-radius: 3px;
-                    border-top-right-radius: 3px;
-                    */
                 }
                  
                     #titlebar #playlist_header .header_menu li a:hover{
@@ -446,7 +525,7 @@
     }
 
         #songlist table tr:hover, #playlist table tr:hover {
-            background-color: #DCE9BE;
+            background-color: #DCE9BE !important;
             cursor: pointer;
         }
     

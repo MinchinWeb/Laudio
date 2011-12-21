@@ -265,12 +265,10 @@ def ajax_song_file(request):
     Returns the audio file
     """
     id = request.GET.get('id', '')
-    song = get_object_or_404(Song, id=id)
-    if song.codec == 'vorbis':
-        content_type = 'audio/mpeg'
-    elif song.codec == 'mp3':
-        content_type = 'audio/vorbis'
-    return send_file(request, song.path, content_type)    
+    #song = get_object_or_404(Song, id=id)
+    #return send_file(request, song.path)
+    #return send_file(request, '/home/bernhard/test.ogg')        
+    return HttpResponseRedirect('/laudio/static/test.ogg')  
 
 
 @check_login("user")
@@ -280,8 +278,4 @@ def ajax_song_download(request):
     """
     id = request.GET.get('id', '')
     song = get_object_or_404(Song, id=id)
-    if song.codec == 'vorbis':
-        content_type = 'audio/mpeg'
-    elif song.codec == 'mp3':
-        content_type = 'audio/vorbis'
-    return download_file(request, song.path, content_type)    
+    return download_file(request, song.path)    

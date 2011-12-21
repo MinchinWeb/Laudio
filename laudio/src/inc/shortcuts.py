@@ -23,6 +23,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 # System imports
 import urllib, urllib2
 import os
+import mimetypes
 
 # Django imports
 from django.shortcuts import render_to_response
@@ -32,6 +33,7 @@ from django.template import RequestContext
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.utils.encoding import smart_str
 
 # Laudio imports
 from laudio.src.inc.config import LaudioConfig
@@ -56,7 +58,7 @@ def render(request, tpl, tplvars={}):
                                
                                
 
-def send_file(request, path, content_type):
+def send_file(request, path):
     """                                                                         
     Send a file    
     
@@ -65,12 +67,13 @@ def send_file(request, path, content_type):
     content_type -- the type of the file (audio/vorbis audio/mpeg)
     """                         
     wrapper = FileWrapper(file(path))
-    response = HttpResponse(wrapper, content_type=content_type)
+    response = HttpResponse(wrapper,content_type=mimetypes.guess_type(path)[0])
     response['Content-Length'] = os.path.getsize(path)
+    response['X-Sendfile'] = smart_str(path)
     return response
     
 
-def download_file(request, path, content_type):
+def download_file(request, path):
     """                                                                         
     Downloads a file
     
@@ -78,7 +81,7 @@ def download_file(request, path, content_type):
     download -- the path to the file
     content_type -- the type of the file (audio/vorbis audio/mpeg)
     """
-    response = send_file(request, path, content_type)
+    response = send_file(request, path, content_type=mimetypes.guess_type(path)[0])
     filename = os.path.basename(path).replace(' ', '_')
     response['Content-Disposition'] = u'attachment; filename=%s' % filename
     return response

@@ -21,28 +21,96 @@
 {% endblock %}
 
 
+
 {% block content %}
-    {% include "includes/nav.html" %}
+    {% include "includes/nav.html" with player=1 %}
     <div id="browser" class="overlay">
+        <div id="browser_headers">
+            <div>{% blocktrans %}Artist by letters{% endblocktrans %}</div>
+            <div>{% blocktrans %}Artists{% endblocktrans %}</div>
+            <div>{% blocktrans %}Albums{% endblocktrans %}</div>
+            <div>{% blocktrans %}Genres{% endblocktrans %}</div>
+        </div>
         <div id="browsers">
-            <div id="artist_browser">
+            <div id="letter_browser">
                 <table>
-                    <tbody></tbody>
+                    <tbody>
+                        <tr>
+                            <td>A</td>
+                            <td>B</td>
+                            <td>C</td>
+                            <td>D</td>
+                        </tr>
+                        <tr>
+                            <td>E</td>
+                            <td>F</td>
+                            <td>G</td>
+                            <td>H</td>
+                        </tr>
+                        <tr>
+                            <td>I</td>
+                            <td>J</td>
+                            <td>K</td>
+                            <td>L</td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td>N</td>
+                            <td>O</td>
+                            <td>P</td>
+                        </tr>
+                        <tr>
+                            <td>Q</td>
+                            <td>R</td>
+                            <td>S</td>
+                            <td>T</td>
+                        </tr>
+                        <tr>
+                            <td>U</td>
+                            <td>V</td>
+                            <td>W</td>
+                            <td>X</td>
+                        </tr>
+                        <tr>
+                            <td>X</td>
+                            <td>Z</td>
+                            <td>0</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
+            <div id="artist_browser">
+                <div class="border">
+                    <ul class="list_browser">
+                        <li class="line1">Artist 1</li>
+                        <li class="line2">Artist 2</li>
+                    </ul>
+                </div>
+            </div>
             <div id="album_browser">
-                 <table>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table> 
+                <div class="border">
+                    <ul class="list_browser">
+                    </ul>
+                </div>
             </div>
             <div id="genre_browser">
-                <table>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </table> 
+                <div class="border">
+                    <ul class="list_browser">
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="overlay_controls">

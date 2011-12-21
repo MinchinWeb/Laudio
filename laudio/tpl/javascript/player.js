@@ -174,42 +174,45 @@ Player.prototype.play = function (row) {
         // value needed for play
         var self = this;
 
-        // play song
-        this.manager.createSound({
-            id: self.id,
-            url: '{% url player:ajax_song_file %}' + '?id=' + self.id,
-            volume: self.volume
-        });
+        this.manager.onready(function(){
+            // play song
+            self.manager.createSound({
+                id: self.id,
+                url: '{% url player:ajax_song_file %}' + '?id=' + self.id,
+                volume: self.volume
+            });
 
-        this.manager.play(this.id, {
-            onfinish: function () {
-                self.scrobble(self.id);
-                self.next_song();
-                self.update_play_icon();
-            },
-            onpause: function () {
-                self.update_play_icon();
-            },
-            onplay: function () {
-                self.update_mute_icon();
-                self.update_play_icon();
-            },
-            onresume: function () {
-                self.update_play_icon();
-            },
-            whileplaying: function () {
-                // set values
-                var pos = this.position;
-                if (this.isBuffering) {
-                    self.est_dur = this.durationEstimate;
-                } else {
-                    self.est_dur = this.duration;
+            self.manager.play(self.id, {
+                onfinish: function () {
+                    self.scrobble(self.id);
+                    self.next_song();
+                    self.update_play_icon();
+                },
+                onpause: function () {
+                    self.update_play_icon();
+                },
+                onplay: function () {
+                    self.update_volume_icon();
+                    self.update_play_icon();
+                },
+                onresume: function () {
+                    self.update_play_icon();
+                },
+                whileplaying: function () {
+                    // set values
+                    var pos = this.position;
+                    if (this.isBuffering) {
+                        self.est_dur = this.durationEstimate;
+                    } else {
+                        self.est_dur = this.duration;
+                    }
+                    self.update_position(pos, self.est_dur);
                 }
-                self.update_position(pos, self.est_dur);
-            }
+            });
+
+            self.set_sidebar_info(); 
         });
 
-        this.set_sidebar_info();
     });
 }
 
