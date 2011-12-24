@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 15:22+0100\n"
+"POT-Creation-Date: 2011-12-24 15:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,7 +136,7 @@ msgstr ""
 msgid "Music collection is not readable!"
 msgstr ""
 
-#: player/models.py:37 tpl/player/index.html:180 tpl/player/index.html.py:210
+#: player/models.py:37
 msgid "Artist"
 msgstr ""
 
@@ -146,7 +146,7 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: player/models.py:46 tpl/player/index.html:181 tpl/player/index.html.py:214
+#: player/models.py:46
 msgid "Album"
 msgstr ""
 
@@ -154,15 +154,15 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: player/models.py:55 tpl/player/index.html:182 tpl/player/index.html.py:222
+#: player/models.py:55
 msgid "Genre"
 msgstr ""
 
-#: player/models.py:63 tpl/player/index.html:179 tpl/player/index.html.py:198
+#: player/models.py:63
 msgid "Title"
 msgstr ""
 
-#: player/models.py:66 tpl/player/index.html:226
+#: player/models.py:66
 msgid "Codec"
 msgstr ""
 
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Length"
 msgstr ""
 
-#: player/models.py:72 tpl/player/index.html:230
+#: player/models.py:72
 msgid "Bitrate"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: player/models.py:81 tpl/includes/nav.html:7 tpl/player/index.html:165
+#: player/models.py:81
 msgid "Playlist"
 msgstr ""
 
@@ -285,98 +285,6 @@ msgstr ""
 msgid "Choose a custom theme"
 msgstr ""
 
-#: tpl/config/login.html:5 tpl/config/login.html.py:23
-msgid "Login"
-msgstr ""
-
-#: tpl/config/login.html:18
-msgid "Your username and password didn't match. Please try again."
-msgstr ""
-
-#: tpl/config/login.html:36 tpl/includes/nav.html:18
-msgid "login"
-msgstr ""
-
-#: tpl/includes/nav.html:6 tpl/player/index.html:161
-msgid "Sidebar"
-msgstr ""
-
-#: tpl/includes/nav.html:8
-msgid "Browse"
-msgstr ""
-
-#: tpl/includes/nav.html:14
-msgid "profile"
-msgstr ""
-
-#: tpl/includes/nav.html:15
-msgid "settings"
-msgstr ""
-
-#: tpl/includes/nav.html:16
-msgid "logout"
-msgstr ""
-
-#: tpl/install/index.html:15
-msgid "Welcome to l-audio"
-msgstr ""
-
-#: tpl/install/index.html:23
-msgid "save"
-msgstr ""
-
-#: tpl/player/index.html:29
-msgid "Artist by letters"
-msgstr ""
-
-#: tpl/player/index.html:30
-msgid "Artists"
-msgstr ""
-
-#: tpl/player/index.html:31
-msgid "Albums"
-msgstr ""
-
-#: tpl/player/index.html:32
-msgid "Genres"
-msgstr ""
-
-#: tpl/player/index.html:118
-msgid "load"
-msgstr ""
-
-#: tpl/player/index.html:151
-msgid "Enter search"
-msgstr ""
-
-#: tpl/player/index.html:168
-msgid "Save"
-msgstr ""
-
-#: tpl/player/index.html:169
-msgid "Lists"
-msgstr ""
-
-#: tpl/player/index.html:178
-msgid "Nr"
-msgstr ""
-
-#: tpl/player/index.html:202
-msgid "Duration"
-msgstr ""
-
-#: tpl/player/index.html:206
-msgid "Number"
-msgstr ""
-
-#: tpl/player/index.html:218
-msgid "Date"
-msgstr ""
-
-#: tpl/player/index.html:237
-msgid "Songs"
-msgstr ""
-
-#: tpl/player/index.html:241
-msgid "Days"
+#: tpl/javascript/player.js:448
+msgid "of"
 msgstr ""
