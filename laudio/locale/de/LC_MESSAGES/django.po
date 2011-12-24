@@ -1,0 +1,382 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-24 15:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: player/forms.py:38 player/forms.py:119 player/forms.py:154
+#: player/models.py:99
+msgid "Password"
+msgstr ""
+
+#: player/forms.py:39 player/forms.py:120 player/forms.py:155
+msgid "Confirm password"
+msgstr ""
+
+#: player/forms.py:53 player/forms.py:94 player/forms.py:102
+#: player/forms.py:135 player/forms.py:171
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: player/forms.py:79
+msgid "Last.fm Password"
+msgstr ""
+
+#: player/forms.py:80
+msgid "Confirm Last.fm password"
+msgstr ""
+
+#: player/forms.py:81
+msgid "Libre.fm Password"
+msgstr ""
+
+#: player/forms.py:82
+msgid "Confirm Libre.fm password"
+msgstr ""
+
+#: player/forms.py:121 player/forms.py:156
+msgid "Superuser"
+msgstr ""
+
+#: player/forms.py:122 player/forms.py:157
+msgid ""
+"Sets if the user is a superuser. If a superuser exists,                     "
+"only superusers can view the settings dialogue"
+msgstr ""
+
+#: player/forms.py:196
+msgid "Path to music collection"
+msgstr ""
+
+#: player/forms.py:197
+msgid ""
+"Enter the path to your music collection, which you want "
+"to                     scan. Remember, all folders above the collection need "
+"to be                     executeable for the server user (normally www-"
+"data) and all                     music files need to be readable for the "
+"server user"
+msgstr ""
+
+#: player/forms.py:201
+msgid "Load songs on startup"
+msgstr ""
+
+#: player/forms.py:202
+msgid ""
+"Automatically loads all songs in the player view. Dont "
+"check                     this checkbox if youve got more than 10k songs for "
+"it will                     remarkably slow down your browser"
+msgstr ""
+
+#: player/forms.py:205
+msgid "Require login"
+msgstr ""
+
+#: player/forms.py:206
+msgid "Requires all users to log in to listen to your music"
+msgstr ""
+
+#: player/forms.py:207
+msgid "Enable Ampache XML API"
+msgstr ""
+
+#: player/forms.py:208
+msgid ""
+"Enable the XML API to be able to listen to l-audio "
+"shares                     from other players like Amarok"
+msgstr ""
+
+#: player/forms.py:210
+msgid "Lifespan of the Ampache XML API Token in Seconds"
+msgstr ""
+
+#: player/forms.py:211
+msgid ""
+"If the token expires, the application has to reidentify "
+"itself.                         Too short tokens will cause a lot of "
+"identifications,                         too long ones will weaken the "
+"security."
+msgstr ""
+
+#: player/forms.py:214
+msgid "Debugging"
+msgstr ""
+
+#: player/forms.py:215
+msgid ""
+"Activates debugging (Writes detailed logs and activates "
+"the                     Flash debug pluging)"
+msgstr ""
+
+#: player/forms.py:236
+#, python-format
+msgid "Path %(path)s does not exist!"
+msgstr ""
+
+#: player/forms.py:238
+#, python-format
+msgid "No access rights for %(path)s!"
+msgstr ""
+
+#: player/forms.py:243
+msgid "Music collection is not readable!"
+msgstr ""
+
+#: player/models.py:37 tpl/player/index.html:180 tpl/player/index.html.py:210
+msgid "Artist"
+msgstr ""
+
+#: player/models.py:38 player/models.py:48 player/models.py:56
+#: player/models.py:74 player/models.py:85 player/models.py:94
+#: player/models.py:102 player/models.py:118
+msgid "Modified"
+msgstr ""
+
+#: player/models.py:46 tpl/player/index.html:181 tpl/player/index.html.py:214
+msgid "Album"
+msgstr ""
+
+#: player/models.py:47
+msgid "Year"
+msgstr ""
+
+#: player/models.py:55 tpl/player/index.html:182 tpl/player/index.html.py:222
+msgid "Genre"
+msgstr ""
+
+#: player/models.py:63 tpl/player/index.html:179 tpl/player/index.html.py:198
+msgid "Title"
+msgstr ""
+
+#: player/models.py:66 tpl/player/index.html:226
+msgid "Codec"
+msgstr ""
+
+#: player/models.py:67
+msgid "Tracknumber"
+msgstr ""
+
+#: player/models.py:68
+msgid "Path"
+msgstr ""
+
+#: player/models.py:69
+msgid "Last metadata change"
+msgstr ""
+
+#: player/models.py:70 player/models.py:82
+msgid "Added"
+msgstr ""
+
+#: player/models.py:71
+msgid "Length"
+msgstr ""
+
+#: player/models.py:72 tpl/player/index.html:230
+msgid "Bitrate"
+msgstr ""
+
+#: player/models.py:73
+msgid "Size"
+msgstr ""
+
+#: player/models.py:81 tpl/includes/nav.html:7 tpl/player/index.html:165
+msgid "Playlist"
+msgstr ""
+
+#: player/models.py:98
+msgid "Username"
+msgstr ""
+
+#: player/models.py:100
+msgid "Token"
+msgstr ""
+
+#: player/models.py:101
+msgid "Last handshake"
+msgstr ""
+
+#: player/models.py:119
+msgid "last.fm username"
+msgstr ""
+
+#: player/models.py:120
+msgid "last.fm password"
+msgstr ""
+
+#: player/models.py:121
+msgid "Scrobble last.fm"
+msgstr ""
+
+#: player/models.py:122
+msgid ""
+"Activate this if you want to submit your played tracks                     "
+"to your last.fm account"
+msgstr ""
+
+#: player/models.py:124
+msgid "libre.fm username"
+msgstr ""
+
+#: player/models.py:125
+msgid "libre.fm password"
+msgstr ""
+
+#: player/models.py:126
+msgid "Scrobble libre.fm"
+msgstr ""
+
+#: player/models.py:127
+msgid ""
+"Activate this if you want to submit your played tracks                     "
+"to your libre.fm account"
+msgstr ""
+
+#: player/models.py:129
+msgid "Show all songs on startup"
+msgstr ""
+
+#: player/models.py:130
+msgid ""
+"This displays your whole collection automatically on "
+"startup.                             Be carefull with bigger collections as "
+"it may impact your                             browser's speed"
+msgstr ""
+
+#: player/models.py:133
+msgid "Hide playlist by default"
+msgstr ""
+
+#: player/models.py:133
+msgid ""
+"Automatically                     hides the playlist in the Collection view "
+"so you have                     to click playlist to view it"
+msgstr ""
+
+#: player/models.py:136
+msgid "Hide sidebar by default"
+msgstr ""
+
+#: player/models.py:136
+msgid ""
+"Automatically                     hides the sidebar in the Collection view "
+"so you have                     to click sidebar to view it"
+msgstr ""
+
+#: player/models.py:139
+msgid "l-audio theme"
+msgstr ""
+
+#: player/models.py:140
+msgid "Choose a custom theme"
+msgstr ""
+
+#: tpl/config/login.html:5 tpl/config/login.html.py:23
+msgid "Login"
+msgstr ""
+
+#: tpl/config/login.html:18
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: tpl/config/login.html:36 tpl/includes/nav.html:18
+msgid "login"
+msgstr ""
+
+#: tpl/includes/nav.html:6 tpl/player/index.html:161
+msgid "Sidebar"
+msgstr ""
+
+#: tpl/includes/nav.html:8
+msgid "Browse"
+msgstr ""
+
+#: tpl/includes/nav.html:14
+msgid "profile"
+msgstr ""
+
+#: tpl/includes/nav.html:15
+msgid "settings"
+msgstr ""
+
+#: tpl/includes/nav.html:16
+msgid "logout"
+msgstr ""
+
+#: tpl/install/index.html:15
+msgid "Welcome to l-audio"
+msgstr ""
+
+#: tpl/install/index.html:23
+msgid "save"
+msgstr ""
+
+#: tpl/player/index.html:29
+msgid "Artist by letters"
+msgstr ""
+
+#: tpl/player/index.html:30
+msgid "Artists"
+msgstr ""
+
+#: tpl/player/index.html:31
+msgid "Albums"
+msgstr ""
+
+#: tpl/player/index.html:32
+msgid "Genres"
+msgstr ""
+
+#: tpl/player/index.html:118
+msgid "load"
+msgstr ""
+
+#: tpl/player/index.html:151
+msgid "Enter search"
+msgstr ""
+
+#: tpl/player/index.html:168
+msgid "Save"
+msgstr ""
+
+#: tpl/player/index.html:169
+msgid "Lists"
+msgstr ""
+
+#: tpl/player/index.html:178
+msgid "Nr"
+msgstr ""
+
+#: tpl/player/index.html:202
+msgid "Duration"
+msgstr ""
+
+#: tpl/player/index.html:206
+msgid "Number"
+msgstr ""
+
+#: tpl/player/index.html:218
+msgid "Date"
+msgstr ""
+
+#: tpl/player/index.html:237
+msgid "Songs"
+msgstr ""
+
+#: tpl/player/index.html:241
+msgid "Days"
+msgstr ""
