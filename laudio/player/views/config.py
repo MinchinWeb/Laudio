@@ -22,10 +22,12 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # Django imports
 from django.views.decorators.http import require_POST
+from django.contrib.auth.models import User
 
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
+from laudio.player.forms import UserProfileForm, UserForm
 
 @check_login('admin')
 def config_settings(request):
@@ -101,5 +103,26 @@ def xml_config_settings_delete_user(request, userid):
 def config_profile(request):
     """The profile view
     """    
-    ctx = {}
-    return csrf_render(request, 'config/profile.html', ctx)
+    # get form
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+        if form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return HttpResponseRedirect(reverse('player:config_profile'))
+        ctx = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return csrf_render(request, 'config/profile.html', ctx)
+    else:
+        user = request.user
+        user_profile = request.user.get_profile()
+        user_form = UserForm(instance=user)
+        profile_form = UserProfileForm(instance=user_profile)    
+        ctx = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return csrf_render(request, 'config/profile.html', ctx)

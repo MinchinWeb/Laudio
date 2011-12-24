@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load theme %}
+
+{% block title %}l-audio - {% blocktrans %}profile page{% endblocktrans %}{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/settings.css" type="text/css" media="all" />
+    <script src="{% url player:javascript 'settings' %}" type="text/javascript" charset="utf-8"></script>  
+{% endblock %}
+
+
+{% block content %}
+    {% include "includes/nav.html" with nav_profile='class="active"'%}
+
+    <div id="content">
+
+        <div id="settings">
+            <form method="post" action="{% url player:config_profile %}">
+                <fieldset>
+                <legend>{% blocktrans %}Profile data{% endblocktrans %}</legend>
+                {% csrf_token %}
+                    <table>
+                        {{ user_form.as_table }}
+                        {{ profile_form.as_table }}
+                    </table>
+                    <p><input type="submit" value="{% blocktrans %}update{% endblocktrans %}" /></p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

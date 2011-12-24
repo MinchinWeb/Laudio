@@ -28,3 +28,9 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+    #content #settings {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
