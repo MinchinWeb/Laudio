@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-25 16:51+0100\n"
+"POT-Creation-Date: 2011-12-25 17:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,26 +133,36 @@ msgid ""
 msgstr ""
 
 #: player/forms.py:215
-msgid "Debugging"
+msgid "Allow Transcoding"
 msgstr ""
 
 #: player/forms.py:216
+msgid ""
+"Allows users to activated transcoding to a lower bitrate                     "
+"to save bandwidth. This may cause high CPU load"
+msgstr ""
+
+#: player/forms.py:218
+msgid "Debugging"
+msgstr ""
+
+#: player/forms.py:219
 msgid ""
 "Activates debugging (Writes detailed logs and activates "
 "the                     Flash debug pluging)"
 msgstr ""
 
-#: player/forms.py:237
+#: player/forms.py:240
 #, python-format
 msgid "Path %(path)s does not exist!"
 msgstr ""
 
-#: player/forms.py:239
+#: player/forms.py:242
 #, python-format
 msgid "No access rights for %(path)s!"
 msgstr ""
 
-#: player/forms.py:244
+#: player/forms.py:247
 msgid "Music collection is not readable!"
 msgstr ""
 
