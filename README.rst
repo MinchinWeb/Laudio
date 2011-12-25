@@ -66,6 +66,17 @@ in the settings.py file by adding the corresponding language.
 
 Finally update the setup.py in the top directory to include your directory.
 
+Working on an existing translation
+----------------------------------
+Update the translations by running::
+
+    $ django-admin.py makemessages -a
+
+Then make your changes to the translation file in locale/$LGCODE/LC_MESSAGES/django.po
+and compile the messages with this command when you're done::
+
+    $ django-admin.py compilemessages
+
 Example for adding polish language translation
 ----------------------------------------------
 Go into the main directory and run::
