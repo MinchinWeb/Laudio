@@ -23,6 +23,8 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 # Django imports
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
@@ -97,8 +99,10 @@ def config_settings_edit_user(request, userid):
     """
     # get form
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+        user = get_object_or_404(User, id=userid)
+        user_profile = user.get_profile()
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, instance=user_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save(commit=False)
@@ -131,13 +135,13 @@ def config_settings_delete_user(request, userid):
     Keyword arguments:
     userid -- The id of the user
     """
+    user = get_object_or_404(User, id=userid)
     if request.method == 'POST':
-        user = get_object_or_404(User, id=userid)
         user.delete()
         return HttpResponseRedirect(reverse('player:config_settings'))
     else:
         ctx = {
-            'userid': userid
+            'change_user': user
         }
         return csrf_render(request, 'config/settings_delete_user.html', ctx)
 
@@ -173,7 +177,8 @@ def xml_config_settings_edit_user(request, userid):
     """
     # get form
     if request.method == 'POST':
-        user_form = XMLAPIUserForm(request.POST)
+        user = get_object_or_404(XMLAPIUser, id=userid)
+        user_form = XMLAPIUserForm(request.POST, instance=user)
         if user_form.is_valid():
             user_form.save()
             return HttpResponseRedirect(reverse('player:config_settings'))
@@ -184,7 +189,7 @@ def xml_config_settings_edit_user(request, userid):
         return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
     else:
         user = get_object_or_404(XMLAPIUser, id=userid)
-        user_form = UserEditForm(instance=user)
+        user_form = XMLAPIUserForm(instance=user)
         ctx = {
             'user_form': user_form,
             'userid': userid
@@ -199,13 +204,13 @@ def xml_config_settings_delete_user(request, userid):
     Keyword arguments:
     userid -- The id of the user
     """
+    user = get_object_or_404(XMLAPIUser, id=userid)
     if request.method == 'POST':
-        user = get_object_or_404(XMLAPIUser, id=userid)
         user.delete()
         return HttpResponseRedirect(reverse('player:config_settings'))
     else:
         ctx = {
-            'userid': userid
+            'change_user': user
         }
         return csrf_render(request, 'config/xml_settings_delete_user.html', ctx)
 
@@ -216,8 +221,10 @@ def config_profile(request):
     """    
     # get form
     if request.method == 'POST':
-        user_form = UserEditForm(request.POST)
-        profile_form = UserEditProfileForm(request.POST)
+        user = request.user
+        user_profile = request.user.get_profile()
+        user_form = UserEditForm(request.POST, instance=user)
+        profile_form = UserEditProfileForm(request.POST, instance=user_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()

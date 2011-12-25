@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load theme %}
+
+{% block title %}l-audio - {% blocktrans %}delete xml user page{% endblocktrans %}{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/settings.css" type="text/css" media="all" />
+    <script src="{% url player:javascript 'settings' %}" type="text/javascript" charset="utf-8"></script>  
+{% endblock %}
+
+
+{% block content %}
+    {% include "includes/nav.html" with nav_settings='class="active"'%}
+
+    <div id="content">
+
+        <div id="settings">
+            <h1>{% blocktrans with username=change_user.username %}Do you really want to delete the XML API user {{ username }}?{% endblocktrans %}</h1>
+            <form method="post" class="section" action="{% url player:xml_config_settings_delete_user change_user.id %}">
+                {% csrf_token %}
+                <p class="submit"><input 
+                onclick="history.back()"
+                type="button" value="{% blocktrans %}no{% endblocktrans %}" /></p>
+                <p class="submit"><input type="submit" value="{% blocktrans %}confirm{% endblocktrans %}" /></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

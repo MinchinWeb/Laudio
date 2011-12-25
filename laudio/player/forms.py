@@ -76,10 +76,10 @@ class XMLAPIUserForm(forms.ModelForm):
         
 
 class UserProfileForm(forms.ModelForm):
-    lastFMPass1 = forms.CharField(label=_('Last.fm Password'), required=True, widget=forms.PasswordInput)
-    lastFMPass2 = forms.CharField(label=_('Confirm Last.fm password'), required=True, widget=forms.PasswordInput)
-    libreFMPass1 = forms.CharField(label=_('Libre.fm Password'), required=True, widget=forms.PasswordInput)
-    libreFMPass2 = forms.CharField(label=_('Confirm Libre.fm password'), required=True, widget=forms.PasswordInput)
+    lastFMPass1 = forms.CharField(label=_('Last.fm Password'), widget=forms.PasswordInput)
+    lastFMPass2 = forms.CharField(label=_('Confirm Last.fm password'), widget=forms.PasswordInput)
+    libreFMPass1 = forms.CharField(label=_('Libre.fm Password'), widget=forms.PasswordInput)
+    libreFMPass2 = forms.CharField(label=_('Confirm Libre.fm password'), widget=forms.PasswordInput)
 
     class Meta:
         model = UserProfile
@@ -108,16 +108,19 @@ class UserProfileForm(forms.ModelForm):
         commit -- True if the values should be saved into the db
         """
         profile = super(UserProfileForm, self).save(commit=False)
-        profile.lastFMPass = self.cleaned_data["lastFMPass1"]
-        profile.libreFMPass = self.cleaned_data["libreFMPass1"]
+        # dont save if the password is empty
+        if self.cleaned_data["lastFMPass1"] == '':
+            profile.lastFMPass = self.cleaned_data["lastFMPass1"]
+        if self.cleaned_data["libreFMPass1"] == '':
+            profile.libreFMPass = self.cleaned_data["libreFMPass1"]
         if commit:
             profile.save()
         return user
 
 
 class UserForm(forms.ModelForm):
-    password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), widget=forms.PasswordInput)
     is_superuser = forms.BooleanField(label=_('Superuser'),
         help_text=_('Sets if the user is a superuser. If a superuser exists, \
                     only superusers can view the settings dialogue'), required=False)
@@ -151,8 +154,8 @@ class UserForm(forms.ModelForm):
 
 
 class UserEditForm(forms.ModelForm):
-    password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), widget=forms.PasswordInput)
 
     class Meta:
         model = User

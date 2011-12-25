@@ -95,8 +95,8 @@ class PlaylistEntry(models.Model):
 
 
 class XMLAPIUser(models.Model):
-    username = models.CharField(_('Username'), max_length=250)
-    password = models.CharField(_('Password'), max_length=64)
+    username = models.CharField(_('Username'), max_length=250, unique=True)
+    password = models.CharField(_('Password'), max_length=64, blank=True)
     token = models.CharField(_('Token'), max_length=64)
     last_handshake = models.DateTimeField(_('Last handshake'), auto_now_add=True)
     modified = models.DateTimeField(_('Modified'), auto_now=True)
