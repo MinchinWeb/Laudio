@@ -195,9 +195,9 @@ Open the /etc/laudio/apache/laudio.conf and change the two lines to::
     Alias /audio/static/ /usr/share/laudio/laudio/static/
     WSGIScriptAlias /audio /usr/share/laudio/laudio/static/django.wsgi
 
-Finally restart your Apache webserver.
+Finally restart your Apache webserver::
 
-    sudo /etc/init.d/apache2 restart
+    $ sudo /etc/init.d/apache2 restart
 
 
 
