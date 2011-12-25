@@ -151,4 +151,4 @@ class UserProfile(models.Model):
         help_text=_('Activate this if you have a slow internet connection \
                     and want l-audio to deliver a lower bandwidth stream'), blank=True)
     stream_quality = models.CharField(_('Stream quality'), max_length=100, choices=STREAM_QUALITY, 
-        help_text=_('The quality which we will transcode the song to'))
+        help_text=_('The quality which we will transcode the song to'), blank=True)

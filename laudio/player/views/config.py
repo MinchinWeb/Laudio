@@ -29,7 +29,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.conf import settings 
-
+from django.views.i18n import set_language
 
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
@@ -275,6 +275,7 @@ def config_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            set_language(request)
             return HttpResponseRedirect(reverse('player:config_profile'))
         ctx = {
             'user_form': user_form,

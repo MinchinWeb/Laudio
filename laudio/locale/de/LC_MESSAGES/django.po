@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-25 16:36+0100\n"
+"POT-Creation-Date: 2011-12-25 16:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,13 +351,13 @@ msgstr ""
 
 #: tpl/config/profile.html:18
 msgid "Profile Settings"
+msgstr "Profil Einstellungen"
+
+#: tpl/config/profile.html:26
+msgid "Language"
 msgstr ""
 
-#: tpl/config/profile.html:21
-msgid "Language settings"
-msgstr ""
-
-#: tpl/config/profile.html:29 tpl/config/settings.html:38
+#: tpl/config/profile.html:43 tpl/config/settings.html:38
 #: tpl/config/settings_edit_user.html:26
 #: tpl/config/xml_settings_edit_user.html:25
 msgid "update"

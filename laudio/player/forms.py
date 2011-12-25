@@ -154,8 +154,8 @@ class UserForm(forms.ModelForm):
 
 
 class UserEditForm(forms.ModelForm):
-    password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Confirm password'), widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=False, widget=forms.PasswordInput)
 
     class Meta:
         model = User

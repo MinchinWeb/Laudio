@@ -34,6 +34,5 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
 urlpatterns += patterns('',
-    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^', include('laudio.player.urls', namespace='player', app_name='player')),
 )

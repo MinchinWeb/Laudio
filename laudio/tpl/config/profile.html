@@ -17,15 +17,29 @@
         <div id="settings">
             <h1>{% trans 'Profile Settings' %}</h1>
             <div class="section">
-                <ul class="utils">
-                    <li><a href="{% url language_settings %}">{% trans 'Language settings' %}</a></li>
-                </ul>
                 <form method="post" action="{% url player:config_profile %}">
                     {% csrf_token %}
                     <table>
                         {{ user_form.as_table }}
                         {{ profile_form.as_table }}
+                        <tr>
+                            <th>{% trans 'Language' %}</th>
+                            <td>
+                                <select name="language">
+                                    {% get_language_info_list for LANGUAGES as languages %}
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% for language in languages %}
+                                        {% if LANGUAGE_CODE == language.code %}
+                                        <option selected="selected" value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
+                                        {% else %}
+                                        <option value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
                     </table>
+                    
                     <p class="submit"><input type="submit" value="{% blocktrans %}update{% endblocktrans %}" /></p>
                 </form>
             </div>
