@@ -41,6 +41,9 @@ setup(
 	],
 	package_data = {
 	    '' : [
+            'laudio/locale/*',
+                'laudio/locale/de/*',
+                    'laudio/locale/de/LC_MESSAGES/*',
 	        'laudio/static/*', 
 	            'laudio/static/img/*', 
 	            'laudio/static/style/*',
@@ -50,7 +53,7 @@ setup(
 	                'laudio/static/upload/themes/*',
 	                    'laudio/static/upload/themes/default/*',
                             'laudio/static/upload/themes/default/font/*',  
-                            'laudio/static/upload/themes/default/img/*',                            
+                            'laudio/static/upload/themes/default/img/*',
 	            'laudio/static/js/*', 
                     'laudio/static/js/lib/*',
                         'laudio/static/js/lib/jquery/*',
