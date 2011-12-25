@@ -257,3 +257,15 @@ class SettingsForm(forms.Form):
         config.xmlAuth = self.cleaned_data['xml_auth']
         config.tokenLifespan = self.cleaned_data['token_lifespan']
         config.save()
+
+
+class ThemeForm(forms.Form):
+    themepath = forms.FileField()
+    # TODO: finish form
+    
+    def clean_themepath(self):
+        """
+        Checks if a the theme is already in the themepath or the 
+        theme is called default
+        """
+        pass

@@ -16,7 +16,7 @@
     <div id="content">
 
         <div id="settings">
-            <h1>{% blocktrans with username=change_user.username %}Do you really want to delete the user {{ username }}?{% endblocktrans %}</h1>
+            <h1>{% blocktrans with username=change_user.username %}Do you really want to delete the user: {{ username }}?{% endblocktrans %}</h1>
             <form method="post" class="section" action="{% url player:config_settings_delete_user change_user.id %}">
                 {% csrf_token %}
                 <p class="submit"><input 

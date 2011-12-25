@@ -20,24 +20,30 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+# System imports
+import os
+
 # Django imports
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.conf import settings 
+
 
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
 from laudio.player.models import XMLAPIUser
 from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
-    UserEditProfileForm, UserEditForm, XMLAPIUserForm
+    UserEditProfileForm, UserEditForm, XMLAPIUserForm, ThemeForm
 
 
 @check_login('admin')
 def config_settings(request):
     """The settings view
-    """   
+    """
+    themes = os.listdir( '%s/themes/' % (settings.MEDIA_ROOT) )
     users = User.objects.all()
     xml_users = XMLAPIUser.objects.all()
     # get form
@@ -49,7 +55,8 @@ def config_settings(request):
         ctx = {
             'settings_form': settings_form,
             'users': users, 
-            'xml_users': xml_users
+            'xml_users': xml_users,
+            'themes': themes
         }
         return csrf_render(request, 'config/settings.html', ctx)
     else:
@@ -57,7 +64,8 @@ def config_settings(request):
         ctx = {
             'settings_form': settings_form,
             'users': users, 
-            'xml_users': xml_users
+            'xml_users': xml_users,
+            'themes': themes
         }
         return csrf_render(request, 'config/settings.html', ctx)
 
@@ -213,6 +221,45 @@ def xml_config_settings_delete_user(request, userid):
             'change_user': user
         }
         return csrf_render(request, 'config/xml_settings_delete_user.html', ctx)
+
+
+@check_login('admin')
+def config_settings_new_theme(request):
+    """The settings view for creating a new xml api user
+    """
+    # get form
+    if request.method == 'POST':
+        theme_form = ThemeForm(request.POST, request.FILES)
+        if theme_form.is_valid():
+            theme_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'theme_form': theme_form
+        }
+        return csrf_render(request, 'config/settings_new_theme.html', ctx)
+    else:
+        theme_form = ThemeForm()
+        ctx = {
+            'theme_form': theme_form
+        }
+        return csrf_render(request, 'config/settings_new_theme.html', ctx)
+
+
+@check_login('admin')
+def config_settings_delete_theme(request, themename):
+    """The settings view for deleting a user
+    
+    Keyword arguments:
+    userid -- The id of the user
+    """
+    if request.method == 'POST':
+        # todo unlink theme
+        return HttpResponseRedirect(reverse('player:config_settings'))
+    else:
+        ctx = {
+            'themename': themename
+        }
+        return csrf_render(request, 'config/settings_delete_theme.html', ctx)
 
 
 @check_login('user')
