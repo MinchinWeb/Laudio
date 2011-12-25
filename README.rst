@@ -28,6 +28,7 @@ Dependencies
 * libapache2-mod-wsgi 
 * python-pysqlite2 
 * ttf-dejavu
+* ffmpeg
 
 Installing 
 ==========
@@ -40,7 +41,63 @@ want the source to be downloaded. Then type in::
     $ git clone git@github.com:Raydiation/Laudio.git
     $ cd Laudio*
     $ sudo /bin/bash setup.sh
+
+
+Translation
+===========
+To translate l-audio into your language, you must do the following. First
+get your language code on http://www.gnu.org/software/gettext/manual/gettext.html#Language-Codes
+This code will be referenced as $LGCODE in this documentation. Then go
+into the main directory and run::
+
+    $ django-admin.py makemessages -l $LGCODE -e js
     
+To update the language files to the current status, run::
+
+    $ django-admin.py makemessages -a
+    
+If you made all your changes, you need to compile the translation into a
+format which can be read by gettext. To do this, simply run
+
+    $ django-admin.py compilemessages
+    
+If you've added a new language, you must change the LANGUAGE dictionairy
+in the settings.py file by adding the corresponding language.
+
+Finally update the setup.py in the top directory to include your directory.
+
+Example for adding polish language translation
+----------------------------------------------
+Go into the main directory and run::
+
+    $ django-admin.py makemessages -l pl -e js
+    $ django-admin.py makemessages -a
+    
+Edit the file in locale/pl/LC_MESSAGES/django.po then compile your messages::
+
+    $ django-admin.py compilemessages
+    
+Now activate the translation in the settings.py. To do this change this::
+
+    LANGUAGES = (
+        ('de', _('German')),
+        ('en', _('English')),
+    )
+
+to this::
+
+    LANGUAGES = (
+          ('de', _('German')),
+          ('en', _('English')),
+          ('pl', _('Polish')),
+    )
+    
+Then update the setup.py and add this to package_data::
+
+    'laudio/locale/pl/*',
+        'laudio/locale/pl/LC_MESSAGES/*',
+        
+
 Security
 ========
 To only allow access from apache to your music directory please change the 
@@ -116,9 +173,9 @@ The music files should be chmoded 0755. Every folder above the files has
 to have a+x, so Apache can traverse down into the directory
 
 
-How can i change the URL under which Laudio is being run
+How can i change the URL under which l-audio is being run
 --------------------------------------------------------
-If you want to let Laudio run under a different URL then localhost/laudio, like
+If you want to let l-audio run under a different URL then localhost/laudio, like
 localhost/audio for instance, you can now easily adjust it.
 
 Open the /etc/laudio/apache/laudio.conf and change the two lines to::
