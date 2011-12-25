@@ -21,10 +21,13 @@
  */
 
 
+
 /**
  * The player class which handles playing music and the music logic
+ *
+ * @param manager: The soundmanager
  */
-function Player() {
+function Player(manager) {
     // can be library or playlist
     // this is used to determine wether we have to play the next song in the
     // songlist or the playlist
@@ -71,7 +74,7 @@ function Player() {
     this.est_duration = 0;
 
     // soundManager setup
-    this.manager = soundManager;
+    this.manager = manager;
     this.manager.url = '{{ STATIC_URL }}js/lib/soundmanager/swf/';
     this.manager.useHTML5Audio = true;
     this.manager.flashVersion = 8;
@@ -151,7 +154,7 @@ Player.prototype.play = function (row) {
 
     // get context
     var queryid;
-    this.context = $('#' + row.id).parent().parent().attr("id");
+    this.context = $('#' + row.id).parent().parent().parent().attr("id");
     if (this.context === this.songlist) {
         this.id = row_to_id(row.id);
         queryid = this.id;
@@ -160,7 +163,10 @@ Player.prototype.play = function (row) {
         queryid = row.title;
     }
 
-    $.getJSON('{% url player:ajax_song_data %}/', { id: queryid }, function (json) {
+    // value needed for play
+    var self = this;
+    
+    $.getJSON('{% url player:ajax_song_data %}', { id: queryid }, function (json) {
         this.tracknr = json.tracknr;
         this.title = json.title;
         this.artist = json.artist;
@@ -171,10 +177,7 @@ Player.prototype.play = function (row) {
         this.duration = json.duration;
         this.date = json.date;
 
-        // value needed for play
-        var self = this;
-
-        this.manager.onready(function(){
+        self.manager.onready(function(){
             // play song
             self.manager.createSound({
                 id: self.id,
