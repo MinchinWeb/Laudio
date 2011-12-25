@@ -87,6 +87,31 @@ input {
     width: 258px;
 }
 
+select {
+    font-family: dejavusans;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    height: 26px;
+    padding: 1px 5px; 
+    margin-top: 3px;
+    width: 258px;
+}
+
+checkbox {
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+textarea {
+    font-family: dejavusans;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    height: 100px;
+    padding: 1px 5px; 
+    margin-top: 3px;
+    width: 258px;
+}
+
 /**
  * Navigation
  */

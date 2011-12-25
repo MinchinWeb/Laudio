@@ -88,6 +88,8 @@ def javascript(request, src):
     Keyword arguments:
     src -- The javascript part which should be generated 
     """
+    tpl = ''
+    
     if src == 'main':
         tpl = 'javascript/main.js'
     elif src == 'ui':
@@ -98,6 +100,8 @@ def javascript(request, src):
         tpl = 'javascript/inc.js'
     elif src == 'playlist':
         tpl = 'javascript/playlist.js'
+    elif src == 'settings':
+        tpl = 'javascript/settings.js'
         
     return render(request, tpl)
 

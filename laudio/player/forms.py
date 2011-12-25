@@ -192,7 +192,7 @@ class UserEditProfileForm(forms.ModelForm):
         exclude = ('user', 'lastFMPass', 'libreFMPass')
 
 
-class SettingsForm(forms.ModelForm):
+class SettingsForm(forms.Form):
     collection_path = forms.CharField(label=_('Path to music collection'),
         help_text=_('Enter the path to your music collection, which you want to \
                     scan. Remember, all folders above the collection need to be \

@@ -29,8 +29,61 @@
     box-sizing: border-box;
 }
 
-    #content #settings {
-        height: 100%;
+#settings {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: #555152;
+    padding: 0;
+}
+
+    #settings h1 {
+        margin: 0;
+        padding: 15px 0;
+        font-size: 16pt;
+        text-align: center;
         width: 100%;
-        overflow: auto;
+        background-color: #99173C;
+        color: #fefefe;
+        font-weight: normal;
+        border-bottom: 1px solid #444;
+        z-index: 1;
+        position: relative;
     }
+    
+    #settings form {
+        padding: 30px 20px 20px 20px;
+        width: 900px;
+        margin: auto;
+        background-color: #ddd;
+        box-shadow: 0px 0px 15px #222;
+        z-index: 3;
+        position: relative;
+    }
+        
+        
+        #settings form tr {
+            
+        }
+        
+            #settings form th {
+                text-align: right;
+                font-weight: normal;
+                width: 300px;
+                padding: 5px 20px 5px 0;
+            }
+            
+            #settings form td {
+            
+            }
+            
+                #settings form td span.helptext {
+                    background-color: #DCE9BE;
+                    padding: 3px;
+                    display: none;
+                }
+        
+        #settings form p.submit {
+            text-align: center;
+            padding: 10px 0 25px 0;
+        }

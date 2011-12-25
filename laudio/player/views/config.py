@@ -27,7 +27,7 @@ from django.contrib.auth.models import User
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
-from laudio.player.forms import UserProfileForm, UserForm
+from laudio.player.forms import UserProfileForm, UserForm, SettingsForm
 
 @check_login('admin')
 def config_settings(request):
@@ -107,7 +107,7 @@ def config_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
-        if form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             return HttpResponseRedirect(reverse('player:config_profile'))
@@ -126,3 +126,25 @@ def config_profile(request):
             'profile_form': profile_form
         }
         return csrf_render(request, 'config/profile.html', ctx)
+        
+
+@check_login('admin')
+def config_settings(request):
+    """The profile view
+    """    
+    # get form
+    if request.method == 'POST':
+        settings_form = SettingsForm(request.POST)
+        if settings_form.is_valid():
+            settings_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'settings_form': settings_form
+        }
+        return csrf_render(request, 'config/settings.html', ctx)
+    else:
+        settings_form = SettingsForm()    
+        ctx = {
+            'settings_form': settings_form
+        }
+        return csrf_render(request, 'config/settings.html', ctx)
