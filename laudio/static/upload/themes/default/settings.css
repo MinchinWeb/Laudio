@@ -51,7 +51,7 @@
         position: relative;
     }
     
-    #settings form {
+    #settings .section {
         padding: 30px 20px 20px 20px;
         width: 900px;
         margin: auto;
@@ -85,5 +85,5 @@
         
         #settings form p.submit {
             text-align: center;
-            padding: 10px 0 25px 0;
+            padding: 0px 0 25px 0;
         }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 15:28+0100\n"
+"POT-Creation-Date: 2011-12-25 13:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgid "Confirm password"
 msgstr ""
 
 #: player/forms.py:53 player/forms.py:94 player/forms.py:102
-#: player/forms.py:135 player/forms.py:171
+#: player/forms.py:135 player/forms.py:169
 msgid "The two password fields didn't match."
 msgstr ""
 
@@ -48,21 +48,21 @@ msgstr ""
 msgid "Confirm Libre.fm password"
 msgstr ""
 
-#: player/forms.py:121 player/forms.py:156
+#: player/forms.py:121
 msgid "Superuser"
 msgstr ""
 
-#: player/forms.py:122 player/forms.py:157
+#: player/forms.py:122
 msgid ""
 "Sets if the user is a superuser. If a superuser exists,                     "
 "only superusers can view the settings dialogue"
 msgstr ""
 
-#: player/forms.py:196
+#: player/forms.py:194
 msgid "Path to music collection"
 msgstr ""
 
-#: player/forms.py:197
+#: player/forms.py:195
 msgid ""
 "Enter the path to your music collection, which you want "
 "to                     scan. Remember, all folders above the collection need "
@@ -71,40 +71,40 @@ msgid ""
 "server user"
 msgstr ""
 
-#: player/forms.py:201
+#: player/forms.py:199
 msgid "Load songs on startup"
 msgstr ""
 
-#: player/forms.py:202
+#: player/forms.py:200
 msgid ""
 "Automatically loads all songs in the player view. Dont "
 "check                     this checkbox if youve got more than 10k songs for "
 "it will                     remarkably slow down your browser"
 msgstr ""
 
-#: player/forms.py:205
+#: player/forms.py:203
 msgid "Require login"
 msgstr ""
 
-#: player/forms.py:206
+#: player/forms.py:204
 msgid "Requires all users to log in to listen to your music"
 msgstr ""
 
-#: player/forms.py:207
+#: player/forms.py:205
 msgid "Enable Ampache XML API"
 msgstr ""
 
-#: player/forms.py:208
+#: player/forms.py:206
 msgid ""
 "Enable the XML API to be able to listen to l-audio "
 "shares                     from other players like Amarok"
 msgstr ""
 
-#: player/forms.py:210
+#: player/forms.py:208
 msgid "Lifespan of the Ampache XML API Token in Seconds"
 msgstr ""
 
-#: player/forms.py:211
+#: player/forms.py:209
 msgid ""
 "If the token expires, the application has to reidentify "
 "itself.                         Too short tokens will cause a lot of "
@@ -112,27 +112,27 @@ msgid ""
 "security."
 msgstr ""
 
-#: player/forms.py:214
+#: player/forms.py:212
 msgid "Debugging"
 msgstr ""
 
-#: player/forms.py:215
+#: player/forms.py:213
 msgid ""
 "Activates debugging (Writes detailed logs and activates "
 "the                     Flash debug pluging)"
 msgstr ""
 
-#: player/forms.py:236
+#: player/forms.py:234
 #, python-format
 msgid "Path %(path)s does not exist!"
 msgstr ""
 
-#: player/forms.py:238
+#: player/forms.py:236
 #, python-format
 msgid "No access rights for %(path)s!"
 msgstr ""
 
-#: player/forms.py:243
+#: player/forms.py:241
 msgid "Music collection is not readable!"
 msgstr ""
 

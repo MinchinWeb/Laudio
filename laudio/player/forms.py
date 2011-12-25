@@ -153,14 +153,12 @@ class UserForm(forms.ModelForm):
 class UserEditForm(forms.ModelForm):
     password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
     password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
-    is_superuser = forms.BooleanField(label=_('Superuser'),
-        help_text=_('Sets if the user is a superuser. If a superuser exists, \
-                    only superusers can view the settings dialogue'))
+
     class Meta:
         model = User
         exclude = ('first_name', 'last_name', 'is_staff', 'last_login',
                    'date_joined', 'groups', 'user_permissions', 'password',
-                   'username')
+                   'username', 'is_active', 'is_superuser')
                    
     def clean_password2(self):
         """Password confirmation checker

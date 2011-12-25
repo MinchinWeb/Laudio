@@ -11,20 +11,60 @@
 
 
 {% block content %}
-    {% include "includes/nav.html" with nav_profile='class="active"'%}
+    {% include "includes/nav.html" with nav_settings='class="active"'%}
 
     <div id="content">
 
         <div id="settings">
             <h1>{% trans 'Settings' %}</h1>
-            <form method="post" action="{% url player:config_settings %}">
+            <form method="post" class="section" action="{% url player:config_settings %}">
                 {% csrf_token %}
                 <table>
                     {{ settings_form.as_table }}
                 </table>
                 <p class="submit"><input type="submit" value="{% blocktrans %}update{% endblocktrans %}" /></p>
             </form>
+            
             <h1>{% trans 'User Management' %}</h1>
+            <div class="section">
+                <table>
+                    <tr>
+                        <th>{% trans 'Username' %}</th>
+                        <th>{% trans 'Allowed to login' %}</th>
+                        <th>{% trans 'Superuser' %}</th>
+                        <th>{% trans 'delete' %}</th>
+                        <th>{% trans 'edit' %}</th>
+                    </tr>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.is_active|yesno }}</td>
+                            <td>{{ user.is_superuser|yesno }}</td>
+                            <td><a href="{% url player:config_settings_edit_user user.id %}">{% trans 'delete' %}</a></td>
+                            <td><a href="{% url player:config_settings_delete_user user.id %}">{% trans 'edit' %}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <h1>{% trans 'XML API User Management' %}</h1>
+            <div class="section">
+                <table>
+                    <tr>
+                        <th>{% trans 'Username' %}</th>
+                        <th>{% trans 'Allowed to connect' %}</th>
+                        <th>{% trans 'delete' %}</th>
+                        <th>{% trans 'edit' %}</th>
+                    </tr>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.is_superuser|yesno }}</td>
+                            <td><a href="{% url player:config_settings_edit_user user.id %}">{% trans 'delete' %}</a></td>
+                            <td><a href="{% url player:config_settings_delete_user user.id %}">{% trans 'edit' %}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

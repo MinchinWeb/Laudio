@@ -27,7 +27,8 @@ from django.contrib.auth.models import User
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
-from laudio.player.forms import UserProfileForm, UserForm, SettingsForm
+from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
+    UserEditProfileForm, UserEditForm
 
 @check_login('admin')
 def config_settings(request):
@@ -105,8 +106,8 @@ def config_profile(request):
     """    
     # get form
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+        user_form = UserEditForm(request.POST)
+        profile_form = UserEditProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -119,8 +120,8 @@ def config_profile(request):
     else:
         user = request.user
         user_profile = request.user.get_profile()
-        user_form = UserForm(instance=user)
-        profile_form = UserProfileForm(instance=user_profile)    
+        user_form = UserEditForm(instance=user)
+        profile_form = UserEditProfileForm(instance=user_profile)    
         ctx = {
             'user_form': user_form,
             'profile_form': profile_form
@@ -131,7 +132,8 @@ def config_profile(request):
 @check_login('admin')
 def config_settings(request):
     """The profile view
-    """    
+    """   
+    users = User.objects.all()
     # get form
     if request.method == 'POST':
         settings_form = SettingsForm(request.POST)
@@ -139,12 +141,14 @@ def config_settings(request):
             settings_form.save()
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
-            'settings_form': settings_form
+            'settings_form': settings_form,
+            'users': users
         }
         return csrf_render(request, 'config/settings.html', ctx)
     else:
         settings_form = SettingsForm()    
         ctx = {
-            'settings_form': settings_form
+            'settings_form': settings_form,
+            'users': users
         }
         return csrf_render(request, 'config/settings.html', ctx)

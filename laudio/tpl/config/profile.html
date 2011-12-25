@@ -17,7 +17,7 @@
 
         <div id="settings">
             <h1>{% trans 'Profile Settings' %}</h1>
-            <form method="post" action="{% url player:config_profile %}">
+            <form method="post" class="section" action="{% url player:config_profile %}">
                 {% csrf_token %}
                 <table>
                     {{ user_form.as_table }}
