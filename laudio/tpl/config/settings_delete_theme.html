@@ -17,13 +17,13 @@
 
         <div id="settings">
             <h1>{% blocktrans with name=themename %}Do you really want to delete the theme: {{ name }}?{% endblocktrans %}</h1>
-            <form method="post" class="section" action="{% url player:config_settings_delete_theme themename %}">
-                {% csrf_token %}
-                <p class="submit"><input 
-                onclick="history.back()"
-                type="button" value="{% blocktrans %}no{% endblocktrans %}" /></p>
-                <p class="submit"><input type="submit" value="{% blocktrans %}confirm{% endblocktrans %}" /></p>
-            </form>
+            <div class="section">
+                <form method="post" action="{% url player:config_settings_delete_theme themename %}">
+                    {% csrf_token %}
+                    <p class="submit confirm"><input onclick="history.back()" type="button" value="{% blocktrans %}no{% endblocktrans %}" />
+                    <input type="submit" value="{% blocktrans %}confirm{% endblocktrans %}" /></p>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

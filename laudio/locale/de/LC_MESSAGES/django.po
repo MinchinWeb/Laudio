@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-25 17:29+0100\n"
+"POT-Creation-Date: 2011-12-25 18:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -425,12 +425,12 @@ msgstr ""
 #: tpl/config/settings.html:53 tpl/config/settings.html.py:62
 #: tpl/config/settings.html:78 tpl/config/settings.html.py:85
 #: tpl/config/settings.html:100 tpl/config/settings.html.py:105
-msgid "delete"
+msgid "Delete"
 msgstr ""
 
 #: tpl/config/settings.html:54 tpl/config/settings.html.py:63
 #: tpl/config/settings.html:79 tpl/config/settings.html.py:86
-msgid "edit"
+msgid "Change"
 msgstr ""
 
 #: tpl/config/settings.html:69
@@ -462,13 +462,13 @@ msgstr ""
 msgid "Do you really want to delete the theme: %(name)s?"
 msgstr ""
 
-#: tpl/config/settings_delete_theme.html:24
+#: tpl/config/settings_delete_theme.html:23
 #: tpl/config/settings_delete_user.html:24
 #: tpl/config/xml_settings_delete_user.html:24
 msgid "no"
 msgstr ""
 
-#: tpl/config/settings_delete_theme.html:25
+#: tpl/config/settings_delete_theme.html:24
 #: tpl/config/settings_delete_user.html:25
 #: tpl/config/xml_settings_delete_user.html:25
 msgid "confirm"

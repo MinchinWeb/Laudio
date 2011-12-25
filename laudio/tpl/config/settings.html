@@ -44,14 +44,14 @@
                 <ul class="utils">
                     <li><a href="{% url player:config_settings_new_user %}">{% trans 'new user' %}</a></li>
                 </ul>
-                <table>
+                <table class="lists">
                     <tr>
                         <th>{% trans 'Username' %}</th>
                         <th>{% trans 'Full name' %}</th>
                         <th>{% trans 'Allowed to login' %}</th>
                         <th>{% trans 'Superuser' %}</th>
-                        <th>{% trans 'delete' %}</th>
-                        <th>{% trans 'edit' %}</th>
+                        <th>{% trans 'Delete' %}</th>
+                        <th>{% trans 'Change' %}</th>
                     </tr>
                     {% for user in users %}
                         <tr>
@@ -59,8 +59,8 @@
                             <td>{{ user.last_name }} {{ user.first_name }}</td>
                             <td>{{ user.is_active|yesno }}</td>
                             <td>{{ user.is_superuser|yesno }}</td>
-                            <td><a href="{% url player:config_settings_delete_user user.id %}">{% trans 'delete' %}</a></td>
-                            <td><a href="{% url player:config_settings_edit_user user.id %}">{% trans 'edit' %}</a></td>
+                            <td><a href="{% url player:config_settings_delete_user user.id %}">{% trans 'Delete' %}</a></td>
+                            <td><a href="{% url player:config_settings_edit_user user.id %}">{% trans 'Change' %}</a></td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -71,19 +71,19 @@
                 <ul class="utils">
                     <li><a href="{% url player:xml_config_settings_new_user %}">{% trans 'new user' %}</a></li>
                 </ul>
-                <table>
+                <table class="lists">
                     <tr>
                         <th>{% trans 'Username' %}</th>
                         <th>{% trans 'Allowed to connect' %}</th>
-                        <th>{% trans 'delete' %}</th>
-                        <th>{% trans 'edit' %}</th>
+                        <th>{% trans 'Delete' %}</th>
+                        <th>{% trans 'Change' %}</th>
                     </tr>
                     {% for user in xml_users %}
                         <tr>
                             <td>{{ user.username }}</td>
                             <td>{{ user.is_active|yesno }}</td>
-                            <td><a href="{% url player:xml_config_settings_delete_user user.id %}">{% trans 'delete' %}</a></td>
-                            <td><a href="{% url player:xml_config_settings_edit_user user.id %}">{% trans 'edit' %}</a></td>
+                            <td><a href="{% url player:xml_config_settings_delete_user user.id %}">{% trans 'Delete' %}</a></td>
+                            <td><a href="{% url player:xml_config_settings_edit_user user.id %}">{% trans 'Change' %}</a></td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -94,15 +94,15 @@
                 <ul class="utils">
                     <li><a href="{% url player:config_settings_new_theme %}">{% trans 'upload a new theme' %}</a></li>
                 </ul>
-                <table>
+                <table class="lists">
                     <tr>
                         <th>{% trans 'Name' %}</th>
-                        <th>{% trans 'delete' %}</th>
+                        <th>{% trans 'Delete' %}</th>
                     </tr>
                     {% for theme in themes %}
                         <tr>
                             <td>{{ theme }}</td>
-                            <td><a href="{% url player:config_settings_delete_theme theme %}">{% trans 'delete' %}</a></td>
+                            <td><a href="{% url player:config_settings_delete_theme theme %}">{% trans 'Delete' %}</a></td>
                         </tr>
                     {% endfor %}
                 </table>

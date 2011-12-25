@@ -17,12 +17,14 @@
 
         <div id="settings">
             <h1>{% blocktrans with username=change_user.username %}Do you really want to delete the user: {{ username }}?{% endblocktrans %}</h1>
-            <form method="post" class="section" action="{% url player:config_settings_delete_user change_user.id %}">
-                {% csrf_token %}
-                <p class="submit"><input 
-                onclick="history.back()"
-                type="button" value="{% blocktrans %}no{% endblocktrans %}" /></p>
-                <p class="submit"><input type="submit" value="{% blocktrans %}confirm{% endblocktrans %}" /></p>
+            <div class="section">
+                <form method="post" action="{% url player:config_settings_delete_user change_user.id %}">
+                    {% csrf_token %}
+                    <p class="submit confirm">
+                        <input onclick="history.back()" type="button" value="{% blocktrans %}no{% endblocktrans %}" />
+                        <input type="submit" value="{% blocktrans %}confirm{% endblocktrans %}" />
+                    </p>
+                </div>
             </form>
         </div>
     </div>

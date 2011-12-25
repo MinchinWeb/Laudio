@@ -51,34 +51,107 @@
         position: relative;
     }
     
+    #settings .utils {
+        margin: 0 0 20px 0;
+        list-style-type: none;
+        padding: 0;
+        height: 50px;
+        background-color: #555152;
+    }
+    
+        #settings .utils li {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            float: left;
+        }
+        
+            #settings .utils li a {
+                line-height: 50px;
+                height: 48px;
+                padding: 0 10px;
+                color: #fefefe;
+                
+                float: left;
+                text-decoration: none;
+            }
+            
+                #settings .utils li a:hover {
+                    background-color: #2E2633;
+                }
+    
     #settings .section {
-        padding: 30px 20px 20px 20px;
         width: 900px;
         margin: auto;
+        margin-bottom: 20px;
         background-color: #ddd;
         box-shadow: 0px 0px 15px #222;
         z-index: 3;
         position: relative;
     }
     
-        #settings form th {
-            text-align: right;
-            font-weight: normal;
-            width: 300px;
-            padding: 5px 20px 5px 0;
+        #settings form {
+            padding: 0 20px 30px 20px;
         }
         
-        #settings form td {
         
-        }
-        
-            #settings form td span.helptext {
-                background-color: #DCE9BE;
-                padding: 3px;
-                display: none;
+            #settings form th {
+                text-align: right;
+                font-weight: normal;
+                width: 300px;
+                padding: 5px 20px 5px 0;
             }
-    
-        #settings form p.submit {
-            text-align: center;
-            padding: 0px 0 25px 0;
+            
+            #settings form td {
+            
+            }
+            
+                #settings form td span.helptext {
+                    background-color: #DCE9BE;
+                    padding: 3px;
+                    display: none;
+                }
+        
+            #settings form p.submit {
+                text-align: center;
+                width: 600px;
+                margin: auto;
+                height: 40px;
+                line-height: 40px;
+            }
+            
+            #settings form p.confirm {
+                padding-top: 20px;
+            }
+
+
+        #settings table {
+            margin: 30px 30px 30px 30px;
         }
+        
+        #settings table.lists {
+            width: 820px;
+            background-color: #eee;
+            margin: 30px 40px 60px 40px;
+        }
+
+            #settings table.lists th {
+                text-align: left;
+                padding: 5px;
+                padding-left: 20px;
+                border-bottom: 1px solid #ccc;
+            }
+        
+            #settings table.lists td {
+                padding: 5px;
+                padding-left: 20px;
+            }
+            
+                #settings table.lists td a {
+                    color: #333;
+                    text-decoration: none;
+                }
+                
+                    #settings table.lists td a:hover {
+                        text-decoration: underline;
+                    }
