@@ -130,16 +130,14 @@ $(document).ready(function () {
     /**
      * Search
      */
-
-
-
-
     var timer;
     $('#search input').keyup(function(e) {
         if($(this).attr('value').length >= 2){
             clearTimeout( timer );
-            var value = escape( $(this).attr('value') );
-            timer = setTimeout('search_db("' + value + '")', 500);
+            var value = $(this).val();
+            timer = setTimeout(function(){
+                search_db(value, player);
+            }, 500);
         }
     });
 
@@ -292,13 +290,14 @@ $(document).ready(function () {
 /**
  * Start a search
  * @param searchterm: The search string
+ * @param playid: The player object
  */
-function search_db(searchterm){
+function search_db(searchterm, player){
     var url,
         data;
     url = '{% url player:ajax_search %}';
     data = {
-        'search': searchterm
+        search: searchterm
     }
     // Start animation
     $('#songlist table tbody').fadeOut('fast');
@@ -313,11 +312,19 @@ function search_db(searchterm){
         $('#songlist .loader').fadeOut('fast', function(){
             $('#songlist table tbody').fadeIn('slow');
             // set color to just playing song
-            var lastSong = player.id;
+            var lastSong,
+                context;
+            if(player === undefined){
+                lastSong = 0;
+                context = '';
+            } else {
+                lastSong = player.id;
+                context = player.context;
+            }
             
             // if we didnt just start it see if the currently played
             // song is in the collection and highlight it
-            if (lastSong !== 0 && player.context === 'songlist'){
+            if (lastSong !== 0 && context === 'songlist'){
                 $( id_to_row(lastSong, true) ).addClass('active');
             }
             

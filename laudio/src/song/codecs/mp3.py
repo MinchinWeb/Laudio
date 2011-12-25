@@ -31,7 +31,7 @@ from mutagen.id3 import ID3NoHeaderError
 from laudio.src.song.song import Song
 
 
-class Mp3Song(Song):
+class MP3Song(Song):
     """
     This class is used for handling mp3 songs
     """
@@ -66,3 +66,4 @@ class Mp3Song(Song):
             self.bitrate = 0
             self.length = 0
             self.title = os.path.basename(self.path)
+            

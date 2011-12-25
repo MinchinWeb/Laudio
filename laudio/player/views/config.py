@@ -34,6 +34,7 @@ from django.views.i18n import set_language
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
+from laudio.src.inc.resource_checker import ResourceChecker
 from laudio.src.inc.config import LaudioConfig
 from laudio.player.models import XMLAPIUser
 from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
@@ -47,6 +48,8 @@ def config_settings(request):
     themes = os.listdir( '%s/themes/' % (settings.MEDIA_ROOT) )
     users = User.objects.all()
     xml_users = XMLAPIUser.objects.all()
+    warnings = ResourceChecker().get_warnings()
+    
     # get form
     if request.method == 'POST':
         settings_form = SettingsForm(request.POST)
@@ -57,7 +60,8 @@ def config_settings(request):
             'settings_form': settings_form,
             'users': users, 
             'xml_users': xml_users,
-            'themes': themes
+            'themes': themes,
+            'warnings': warnings
         }
         return csrf_render(request, 'config/settings.html', ctx)
     else:
@@ -70,14 +74,14 @@ def config_settings(request):
             'collection_startup': config.collectionStartup, 
             'xml_auth': config.xmlAuth,
             'token_lifespan': config.tokenLifespan
-            
         }
         settings_form = SettingsForm(initial=initial)    
         ctx = {
             'settings_form': settings_form,
             'users': users, 
             'xml_users': xml_users,
-            'themes': themes
+            'themes': themes,
+            'warnings': warnings
         }
         return csrf_render(request, 'config/settings.html', ctx)
 

@@ -59,9 +59,18 @@ class Song(object):
         path -- The path to the song
         """
         self.path = path
+        self.modified = False
+        self.added = False
         self.date = 0
+        self.artist = ''
+        self.title = ''
+        self.album = ''
+        self.genre = ''
+        self.length = 0
+        self.bitrate = 0
+        self.tracknumber = 0
         self.size = os.path.getsize(self.path) 
-        self.lastModified = datetime.datetime.fromtimestamp( fos.stat(path).st_mtime )
+        self.lastModified = datetime.datetime.fromtimestamp( os.stat(path).st_mtime )
         self._debugger = LaudioDebugger()
 
 
@@ -72,7 +81,7 @@ class Song(object):
         if name == 'date':
             if isinstance(value, str):
                 regex = r'^(\d{1,4})-?.*'
-                year = re.search(regex, date)
+                year = re.search(regex, value)
                 try:
                     if year:
                         value = datetime.datetime( int( year.group(1) ), 1, 1 )
@@ -97,7 +106,7 @@ class Song(object):
             song = SongModel.objects.get(path=self.path)
             return song
         except SongModel.DoesNotExist:
-            return False
+            return SongModel()
     
 
     def isModified(self, song):
@@ -109,29 +118,28 @@ class Song(object):
         song -- The database instance of a song. If song is not given
                 a new song will be created and saved in the database 
         """
-        return song.lastModified == self.lastModified
+        return song.lastmodified == self.lastModified
 
 
     def save(self):
         """
         Saves the values of the object into the database
         """
-        
         # get the database model of the song
         modi = True
         song = self.getModel()
-        if not song:
-            song = SongModel()
+        if not hasattr(song, 'lastmodified'):
             modi = False
+            song.lastmodified = self.lastModified
 
         # only save to database if song is modified
         if self.isModified(song):
             # debug
             if modi:
-                self.modfied += 1
+                self.modfied = True
                 self._debugger.log("Music Scanner", "modified %s" % self.path)
             else:
-                self.added += 1
+                self.added = True
                 self._debugger.log("Music Scanner", "added %s" % self.path)
 
             # Get artist if artist is already in the database and do the same
@@ -139,24 +147,28 @@ class Song(object):
             try:
                 artist = ArtistModel.objects.get(name=self.artist)
             except ArtistModel.DoesNotExist:
-                artist = ArtistModel(name=self.artist)
+                artist = ArtistModel()
+                artist.name = self.artist
                 artist.save()
             try:
                 album = AlbumModel.objects.get(name=self.album)
             except AlbumModel.DoesNotExist:
-                album = AlbumModel(name=self.album)
+                album = AlbumModel()
+                album.artist = artist
+                album.name = self.album
                 album.save()
             try:
                 genre = GenreModel.objects.get(name=self.genre)
             except GenreModel.DoesNotExist:
-                genre = GenreModel(name=self.genre)
+                genre = GenreModel()
+                genre.name = self.genre
                 genre.save()
             
             for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
                          'length', 'date', 'path', 'size'):
                 setattr( song, attr, getattr(self, attr) )
             
-            song.lastModified = self.lastModified
+            song.lastmodified = self.lastModified
             song.artist = artist
             song.album = album
             song.genre = genre
