@@ -457,18 +457,18 @@ Player.prototype.update_position = function (pos, dur) {
 }
 
 /**
- * Sets the values for the sidebar
+ * Returns the current id for the playing row
  *
- * @return: Returns the current id for the playing row
+ * @return: the current id
  */
 Player.prototype.current_row_id = function () {
     var row_id;
     if (this.context === this.songlist) {
-        row_id = '#row' + this.id;
+        row_id = 'row' + this.id;
     } else {
-        row_id = '#plrow' + this.id;
+        row_id = 'plrow' + this.id;
     }
-    return $('#' + this.context + ' tbody tr ' + row_id);
+    return row_id;
 }
 
 /**
