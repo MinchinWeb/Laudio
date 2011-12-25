@@ -76,7 +76,8 @@ Go into the main directory and run::
 Edit the file in locale/pl/LC_MESSAGES/django.po then compile your messages::
 
     $ django-admin.py compilemessages
-    
+
+
 Now activate the translation in the settings.py. To do this change this::
 
     LANGUAGES = (
@@ -92,7 +93,7 @@ to this::
           ('pl', _('Polish')),
     )
     
-Then update the setup.py and add this to package_data::
+Then update the setup.py and by adding this to package_data::
 
     'laudio/locale/pl/*',
         'laudio/locale/pl/LC_MESSAGES/*',
