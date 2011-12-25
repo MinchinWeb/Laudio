@@ -32,45 +32,45 @@ msgstr ""
 
 #: settings.py:86
 msgid "German"
-msgstr ""
+msgstr "Deutsch"
 
 #: settings.py:87
 msgid "English"
-msgstr ""
+msgstr "Englisch"
 
 #: player/forms.py:38 player/forms.py:122 player/forms.py:157
 #: player/models.py:99
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: player/forms.py:39 player/forms.py:123 player/forms.py:158
 msgid "Confirm password"
-msgstr ""
+msgstr "Passwort bestätigen"
 
 #: player/forms.py:53 player/forms.py:94 player/forms.py:102
 #: player/forms.py:138 player/forms.py:172
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Die beiden Passwörter stimmen nicht überein."
 
 #: player/forms.py:79
 msgid "Last.fm Password"
-msgstr ""
+msgstr "Last.fm Passwort"
 
 #: player/forms.py:80
 msgid "Confirm Last.fm password"
-msgstr ""
+msgstr "Last.fm Passwort bestätigen"
 
 #: player/forms.py:81
 msgid "Libre.fm Password"
-msgstr ""
+msgstr "Libre.fm Passwort"
 
 #: player/forms.py:82
 msgid "Confirm Libre.fm password"
-msgstr ""
+msgstr "Libre.fm Passwort bestätigen"
 
 #: player/forms.py:124 tpl/config/settings.html:52
 msgid "Superuser"
-msgstr ""
+msgstr "Superuser"
 
 #: player/forms.py:125
 msgid ""
@@ -80,7 +80,7 @@ msgstr ""
 
 #: player/forms.py:197
 msgid "Path to music collection"
-msgstr ""
+msgstr "Pfad zur Musiksammlung"
 
 #: player/forms.py:198
 msgid ""
@@ -93,7 +93,7 @@ msgstr ""
 
 #: player/forms.py:202
 msgid "Load songs on startup"
-msgstr ""
+msgstr "Lade Lieder beim Start"
 
 #: player/forms.py:203
 msgid ""
@@ -104,7 +104,7 @@ msgstr ""
 
 #: player/forms.py:206
 msgid "Require login"
-msgstr ""
+msgstr "Login voraussetzen"
 
 #: player/forms.py:207
 msgid "Requires all users to log in to listen to your music"
@@ -112,7 +112,7 @@ msgstr ""
 
 #: player/forms.py:208
 msgid "Enable Ampache XML API"
-msgstr ""
+msgstr "Ampache XML API aktivieren"
 
 #: player/forms.py:209
 msgid ""
@@ -122,7 +122,7 @@ msgstr ""
 
 #: player/forms.py:211
 msgid "Lifespan of the Ampache XML API Token in Seconds"
-msgstr ""
+msgstr "Lebensdauer des Ampache XML API Schlüssels in Sekunden"
 
 #: player/forms.py:212
 msgid ""
@@ -134,7 +134,7 @@ msgstr ""
 
 #: player/forms.py:215
 msgid "Allow Transcoding"
-msgstr ""
+msgstr "Transcoding erlauben"
 
 #: player/forms.py:216
 msgid ""
@@ -155,95 +155,95 @@ msgstr ""
 #: player/forms.py:240
 #, python-format
 msgid "Path %(path)s does not exist!"
-msgstr ""
+msgstr "Pfad %(path)s existiert nicht!"
 
 #: player/forms.py:242
 #, python-format
 msgid "No access rights for %(path)s!"
-msgstr ""
+msgstr "Keine Berechtigung für %(path)s!"
 
 #: player/forms.py:247
 msgid "Music collection is not readable!"
-msgstr ""
+msgstr "Musiksammlung ist nicht lesbar!"
 
 #: player/models.py:37 tpl/player/index.html:180 tpl/player/index.html.py:210
 msgid "Artist"
-msgstr ""
+msgstr "Künstler"
 
 #: player/models.py:38 player/models.py:48 player/models.py:56
 #: player/models.py:74 player/models.py:85 player/models.py:94
 #: player/models.py:102 player/models.py:127
 msgid "Modified"
-msgstr ""
+msgstr "Modifiziert"
 
 #: player/models.py:46 tpl/player/index.html:181 tpl/player/index.html.py:214
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: player/models.py:47
 msgid "Year"
-msgstr ""
+msgstr "Jahr"
 
 #: player/models.py:55 tpl/player/index.html:182 tpl/player/index.html.py:222
 msgid "Genre"
-msgstr ""
+msgstr "Genre"
 
 #: player/models.py:63 tpl/player/index.html:179 tpl/player/index.html.py:198
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: player/models.py:66 tpl/player/index.html:226
 msgid "Codec"
-msgstr ""
+msgstr "Codec"
 
 #: player/models.py:67
 msgid "Tracknumber"
-msgstr ""
+msgstr "Liednummer"
 
 #: player/models.py:68
 msgid "Path"
-msgstr ""
+msgstr "Pfad"
 
 #: player/models.py:69
 msgid "Last metadata change"
-msgstr ""
+msgstr "Letzte Metadaten Änderung"
 
 #: player/models.py:70 player/models.py:82
 msgid "Added"
-msgstr ""
+msgstr "Hinzugefügt"
 
 #: player/models.py:71
 msgid "Length"
-msgstr ""
+msgstr "Länge"
 
 #: player/models.py:72 tpl/player/index.html:230
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitrate"
 
 #: player/models.py:73
 msgid "Size"
-msgstr ""
+msgstr "Grösse"
 
 #: player/models.py:81 tpl/includes/nav.html:7 tpl/player/index.html:165
 msgid "Playlist"
-msgstr ""
+msgstr "Playlist"
 
 #: player/models.py:98 tpl/config/settings.html:49
 #: tpl/config/settings.html.py:76
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 #: player/models.py:100
 msgid "Token"
-msgstr ""
+msgstr "Schlüssel"
 
 #: player/models.py:101
 msgid "Last handshake"
-msgstr ""
+msgstr "Letzter Handshake"
 
 #: player/models.py:103
 msgid "Is active"
-msgstr ""
+msgstr "Ist aktiv"
 
 #: player/models.py:103
 msgid ""
@@ -252,11 +252,11 @@ msgstr ""
 
 #: player/models.py:128
 msgid "last.fm username"
-msgstr ""
+msgstr "last.fm Benutzername"
 
 #: player/models.py:129
 msgid "last.fm password"
-msgstr ""
+msgstr "last.fm Passwort"
 
 #: player/models.py:130
 msgid "Scrobble last.fm"
@@ -267,14 +267,16 @@ msgid ""
 "Activate this if you want to submit your played tracks                     "
 "to your last.fm account"
 msgstr ""
+"Aktiviere dies, wenn du deine gespielten Lieder"
+"an Last.fm senden willst."
 
 #: player/models.py:133
 msgid "libre.fm username"
-msgstr ""
+msgstr "libre.fm Benutzername"
 
 #: player/models.py:134
 msgid "libre.fm password"
-msgstr ""
+msgstr "libre.fm Passwort"
 
 #: player/models.py:135
 msgid "Scrobble libre.fm"
@@ -288,7 +290,7 @@ msgstr ""
 
 #: player/models.py:138
 msgid "Show all songs on startup"
-msgstr ""
+msgstr "Zeige alle Lieder beim Start"
 
 #: player/models.py:139
 msgid ""
@@ -299,7 +301,7 @@ msgstr ""
 
 #: player/models.py:142
 msgid "Hide playlist by default"
-msgstr ""
+msgstr "Verstecke Playlist standardmässig"
 
 #: player/models.py:142
 msgid ""
@@ -309,7 +311,7 @@ msgstr ""
 
 #: player/models.py:145
 msgid "Hide sidebar by default"
-msgstr ""
+msgstr "Verstecke Seitenleiste standardmässig"
 
 #: player/models.py:145
 msgid ""
@@ -319,15 +321,15 @@ msgstr ""
 
 #: player/models.py:148
 msgid "l-audio theme"
-msgstr ""
+msgstr "l-audio Theme"
 
 #: player/models.py:149
 msgid "Choose a custom theme"
-msgstr ""
+msgstr "Wähle ein benutzerdefiniertes Theme"
 
 #: player/models.py:150
 msgid "Enable stream transcoding"
-msgstr ""
+msgstr "Aktiviere Stream Transcoding"
 
 #: player/models.py:151
 msgid ""
@@ -337,27 +339,27 @@ msgstr ""
 
 #: player/models.py:153
 msgid "Stream quality"
-msgstr ""
+msgstr "Stream Qualität"
 
 #: player/models.py:154
 msgid "The quality which we will transcode the song to"
-msgstr ""
+msgstr "Die Qualität in welcher die Lieder transkodiert werden"
 
 #: tpl/config/login.html:5 tpl/config/login.html.py:18
 msgid "Login"
-msgstr ""
+msgstr "Anmelden"
 
 #: tpl/config/login.html:22
 msgid "Your username and password didn't match. Please try again."
-msgstr ""
+msgstr "Dein Benutzername und Passwort passt nicht. Bitte probier es erneut."
 
 #: tpl/config/login.html:40 tpl/includes/nav.html:18
 msgid "login"
-msgstr ""
+msgstr "Anmelden"
 
 #: tpl/config/profile.html:5
 msgid "profile page"
-msgstr ""
+msgstr "Profil Seite"
 
 #: tpl/config/profile.html:18
 msgid "Profile Settings"
@@ -365,21 +367,21 @@ msgstr "Profil Einstellungen"
 
 #: tpl/config/profile.html:26
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: tpl/config/profile.html:43 tpl/config/settings.html:38
 #: tpl/config/settings_edit_user.html:26
 #: tpl/config/xml_settings_edit_user.html:25
 msgid "update"
-msgstr ""
+msgstr "aktuallisieren"
 
 #: tpl/config/settings.html:5
 msgid "settings page"
-msgstr ""
+msgstr "Einstellungsseite"
 
 #: tpl/config/settings.html:20
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: tpl/config/settings.html:24
 msgid "Adds all songs from your directory to the music collection"
@@ -387,7 +389,7 @@ msgstr ""
 
 #: tpl/config/settings.html:25
 msgid "Scan music"
-msgstr ""
+msgstr "Musik scannen"
 
 #: tpl/config/settings.html:27
 msgid "Removes all songs and playlists from the database"
@@ -395,7 +397,7 @@ msgstr ""
 
 #: tpl/config/settings.html:28
 msgid "Reset data"
-msgstr ""
+msgstr "Daten zurücksetzen"
 
 #: tpl/config/settings.html:30
 msgid ""
@@ -408,54 +410,54 @@ msgstr ""
 
 #: tpl/config/settings.html:42
 msgid "User Management"
-msgstr ""
+msgstr "Benutzerverwaltung"
 
 #: tpl/config/settings.html:45 tpl/config/settings.html.py:72
 msgid "new user"
-msgstr ""
+msgstr "Neuer Benutzer"
 
 #: tpl/config/settings.html:50
 msgid "Full name"
-msgstr ""
+msgstr "Voller Name"
 
 #: tpl/config/settings.html:51
 msgid "Allowed to login"
-msgstr ""
+msgstr "Anmelden erlaubt"
 
 #: tpl/config/settings.html:53 tpl/config/settings.html.py:62
 #: tpl/config/settings.html:78 tpl/config/settings.html.py:85
 #: tpl/config/settings.html:100 tpl/config/settings.html.py:105
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: tpl/config/settings.html:54 tpl/config/settings.html.py:63
 #: tpl/config/settings.html:79 tpl/config/settings.html.py:86
 msgid "Change"
-msgstr ""
+msgstr "Ändern"
 
 #: tpl/config/settings.html:69
 msgid "XML API User Management"
-msgstr ""
+msgstr "XML API Benutzerverwaltung"
 
 #: tpl/config/settings.html:77
 msgid "Allowed to connect"
-msgstr ""
+msgstr "Verbinden erlaubt"
 
 #: tpl/config/settings.html:92
 msgid "Themes"
-msgstr ""
+msgstr "Themes"
 
 #: tpl/config/settings.html:95
 msgid "upload a new theme"
-msgstr ""
+msgstr "Lade ein neues Theme hoch"
 
 #: tpl/config/settings.html:99
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: tpl/config/settings_delete_theme.html:5
 msgid "delete theme page"
-msgstr ""
+msgstr "Lösche Theme"
 
 #: tpl/config/settings_delete_theme.html:19
 #, python-format
@@ -466,13 +468,13 @@ msgstr ""
 #: tpl/config/settings_delete_user.html:24
 #: tpl/config/xml_settings_delete_user.html:24
 msgid "no"
-msgstr ""
+msgstr "nein"
 
 #: tpl/config/settings_delete_theme.html:24
 #: tpl/config/settings_delete_user.html:25
 #: tpl/config/xml_settings_delete_user.html:25
 msgid "confirm"
-msgstr ""
+msgstr "bestätigen"
 
 #: tpl/config/settings_delete_user.html:5
 msgid "delete user page"
@@ -489,7 +491,7 @@ msgstr ""
 
 #: tpl/config/settings_edit_user.html:19
 msgid "Edit a user"
-msgstr ""
+msgstr "Bearbeite einen Benutzer"
 
 #: tpl/config/settings_new_theme.html:5
 msgid "theme upload page"
@@ -497,11 +499,11 @@ msgstr ""
 
 #: tpl/config/settings_new_theme.html:19
 msgid "Upload a new theme"
-msgstr ""
+msgstr "Lade ein neues Theme hoch"
 
 #: tpl/config/settings_new_theme.html:25
 msgid "upload"
-msgstr ""
+msgstr "hochladen"
 
 #: tpl/config/settings_new_user.html:5
 msgid "new user creation page"
@@ -509,12 +511,12 @@ msgstr ""
 
 #: tpl/config/settings_new_user.html:19
 msgid "Create a new user"
-msgstr ""
+msgstr "Erstelle einen neuen Benutzer"
 
 #: tpl/config/settings_new_user.html:26
 #: tpl/config/xml_settings_new_user.html:25
 msgid "create"
-msgstr ""
+msgstr "erstellen"
 
 #: tpl/config/xml_settings_delete_user.html:5
 msgid "delete xml user page"
@@ -523,7 +525,7 @@ msgstr ""
 #: tpl/config/xml_settings_delete_user.html:19
 #, python-format
 msgid "Do you really want to delete the XML API user: %(username)s?"
-msgstr ""
+msgstr "Willst du den XML API Benutzer wirklich löschen: %(username)s?"
 
 #: tpl/config/xml_settings_edit_user.html:5
 msgid "edit xml api user page"
@@ -531,7 +533,7 @@ msgstr ""
 
 #: tpl/config/xml_settings_edit_user.html:19
 msgid "Edit an XML API user"
-msgstr ""
+msgstr "Bearbeite einen XML API Benutzer"
 
 #: tpl/config/xml_settings_new_user.html:5
 msgid "new xml api user creation page"
@@ -539,91 +541,91 @@ msgstr ""
 
 #: tpl/config/xml_settings_new_user.html:19
 msgid "Create a new XML API user"
-msgstr ""
+msgstr "Erstelle einen neuen XML API Benutzer"
 
 #: tpl/includes/nav.html:6 tpl/player/index.html:161
 msgid "Sidebar"
-msgstr ""
+msgstr "Seitenleiste"
 
 #: tpl/includes/nav.html:8
 msgid "Browse"
-msgstr ""
+msgstr "Durchsuchen"
 
 #: tpl/includes/nav.html:14
 msgid "profile"
-msgstr ""
+msgstr "Profil"
 
 #: tpl/includes/nav.html:15
 msgid "settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: tpl/includes/nav.html:16
 msgid "logout"
-msgstr ""
+msgstr "Abmelden"
 
 #: tpl/install/index.html:17
 msgid "Welcome to l-audio. Please create your superuser account!"
-msgstr ""
+msgstr "Willkommen bei l-audio. Bitte erstelle dein Superuser Konto!"
 
 #: tpl/install/index.html:24
 msgid "save"
-msgstr ""
+msgstr "speichern"
 
 #: tpl/player/index.html:29
 msgid "Artist by letters"
-msgstr ""
+msgstr "Künstler nach Buchstaben"
 
 #: tpl/player/index.html:30
 msgid "Artists"
-msgstr ""
+msgstr "Künstler"
 
 #: tpl/player/index.html:31
 msgid "Albums"
-msgstr ""
+msgstr "Albums"
 
 #: tpl/player/index.html:32
 msgid "Genres"
-msgstr ""
+msgstr "Genres"
 
 #: tpl/player/index.html:118
 msgid "load"
-msgstr ""
+msgstr "laden"
 
 #: tpl/player/index.html:151
 msgid "Enter search"
-msgstr ""
+msgstr "Sucheingabe"
 
 #: tpl/player/index.html:168
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: tpl/player/index.html:169
 msgid "Lists"
-msgstr ""
+msgstr "Listen"
 
 #: tpl/player/index.html:178
 msgid "Nr"
-msgstr ""
+msgstr "Nr"
 
 #: tpl/player/index.html:202
 msgid "Duration"
-msgstr ""
+msgstr "Dauer"
 
 #: tpl/player/index.html:206
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: tpl/player/index.html:218
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: tpl/player/index.html:237
 msgid "Songs"
-msgstr ""
+msgstr "Lieder"
 
 #: tpl/player/index.html:241
 msgid "Days"
-msgstr ""
+msgstr "Tage"
 
 #: tpl/player/index.html:268
 msgid ""
