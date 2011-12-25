@@ -55,7 +55,8 @@ into the main directory and run::
 To update the language files to the current status, run::
 
     $ django-admin.py makemessages -a
-    
+
+
 If you made all your changes, you need to compile the translation into a
 format which can be read by gettext. To do this, simply run
 
