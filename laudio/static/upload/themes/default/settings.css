@@ -60,29 +60,24 @@
         z-index: 3;
         position: relative;
     }
-        
-        
-        #settings form tr {
-            
+    
+        #settings form th {
+            text-align: right;
+            font-weight: normal;
+            width: 300px;
+            padding: 5px 20px 5px 0;
         }
         
-            #settings form th {
-                text-align: right;
-                font-weight: normal;
-                width: 300px;
-                padding: 5px 20px 5px 0;
-            }
-            
-            #settings form td {
-            
-            }
-            
-                #settings form td span.helptext {
-                    background-color: #DCE9BE;
-                    padding: 3px;
-                    display: none;
-                }
+        #settings form td {
         
+        }
+        
+            #settings form td span.helptext {
+                background-color: #DCE9BE;
+                padding: 3px;
+                display: none;
+            }
+    
         #settings form p.submit {
             text-align: center;
             padding: 0px 0 25px 0;
