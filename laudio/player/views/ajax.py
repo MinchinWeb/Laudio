@@ -22,6 +22,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # System imports
 import time
+import datetime
 
 # Django imports
 from django.shortcuts import get_object_or_404, render
@@ -70,7 +71,7 @@ def ajax_search(request):
 		        OR \
 		        LOWER(sng.title) LIKE %s \
 	        ORDER BY \
-		        LOWER(art.name), LOWER(alb.name), LOWER(sng.tracknumber)",
+		        LOWER(art.name), LOWER(alb.name), sng.tracknumber",
 		[search, search, search, search]
     )
 
@@ -193,6 +194,7 @@ def ajax_song_scrobble(request):
     id = int(request.POST.get('id', ''))
     song = get_object_or_404(Song, id=id)
     msg = ""
+    success = 0
     
     # if user is logged in submit stats
     if request.user.is_authenticated():
@@ -238,17 +240,18 @@ def ajax_song_scrobble(request):
         'msg': msg,
         'success': success,
     }
-    return render(request, 'ajax/success.html', ctx)
+    return render(request, 'ajax/success.json', ctx)
 
 
 @check_login('user')
-def ajax_song_cover(request, id):
+def ajax_song_cover(request):
     """Fetches the URL of albumcover, either locally or from the Internet
 
     Keyword arguments:
     id -- the id of the song we want the cover from
     """
-    song = Song.objects.get(id=id)
+    id = request.GET.get('id', '')
+    song = get_object_or_404(Song, id=id)
     fetcher = CoverFetcher(song, request)
     cover = fetcher.fetch()
     ctx = {

@@ -151,7 +151,16 @@ Player.prototype.play = function (row) {
     if (!row) {
         return false;
     }
+    
+    // check if a song is still playing
+    if(this.id !== 0 &&
+       this.manager.getSoundById(this.id) !== null &&
+       this.manager.getSoundById(this.id).playState === 1){
+        this.manager.destroySound(this.id);
+    }
 
+    select_lines(row);
+    
     // get context
     var queryid;
     this.context = $('#' + row.id).parent().parent().parent().attr("id");
@@ -167,16 +176,16 @@ Player.prototype.play = function (row) {
     var self = this;
     
     $.getJSON('{% url player:ajax_song_data %}', { id: queryid }, function (json) {
-        this.tracknr = json.tracknr;
-        this.title = json.title;
-        this.artist = json.artist;
-        this.album = json.album;
-        this.genre = json.genre;
-        this.codec = json.codec;
-        this.bitrate = json.bitrate;
-        this.duration = json.duration;
-        this.date = json.date;
-
+        self.tracknr = json.tracknr;
+        self.title = json.title;
+        self.artist = json.artist;
+        self.album = json.album;
+        self.genre = json.genre;
+        self.codec = json.codec;
+        self.bitrate = json.bitrate;
+        self.duration = json.duration;
+        self.date = json.date;
+        
         self.manager.onready(function(){
             // play song
             self.manager.createSound({
@@ -187,8 +196,10 @@ Player.prototype.play = function (row) {
 
             self.manager.play(self.id, {
                 onfinish: function () {
-                    self.scrobble(self.id);
-                    self.next_song();
+                    {% if user.is_authenticated %}
+                        self.scrobble(self.id);
+                    {% endif %}
+                    self.play_next();
                     self.update_play_icon();
                 },
                 onpause: function () {
@@ -371,6 +382,11 @@ Player.prototype.set_sidebar_info = function (id) {
     $('#' + this.songdata + ' tr:eq(6) td').html(this.genre);
     $('#' + this.songdata + ' tr:eq(7) td').html(this.codec);
     $('#' + this.songdata + ' tr:eq(8) td').html(this.bitrate + ' kb/s');
+    
+    // set cover
+    $.getJSON('{% url player:ajax_song_cover %}', { id: this.id }, function (json) {
+        $('#songcover').css('background-image', 'url(\'' + json.path + '\')');
+    });
 }
 
 
