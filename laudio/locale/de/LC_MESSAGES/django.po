@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-25 18:38+0100\n"
+"POT-Creation-Date: 2011-12-26 00:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr "Libre.fm Passwort"
 msgid "Confirm Libre.fm password"
 msgstr "Libre.fm Passwort bestätigen"
 
-#: player/forms.py:124 tpl/config/settings.html:52
+#: player/forms.py:124 tpl/config/settings.html:56
 msgid "Superuser"
 msgstr "Superuser"
 
@@ -228,8 +228,8 @@ msgstr "Grösse"
 msgid "Playlist"
 msgstr "Playlist"
 
-#: player/models.py:98 tpl/config/settings.html:49
-#: tpl/config/settings.html.py:76
+#: player/models.py:98 tpl/config/settings.html:53
+#: tpl/config/settings.html.py:80
 msgid "Username"
 msgstr "Benutzername"
 
@@ -267,8 +267,7 @@ msgid ""
 "Activate this if you want to submit your played tracks                     "
 "to your last.fm account"
 msgstr ""
-"Aktiviere dies, wenn du deine gespielten Lieder"
-"an Last.fm senden willst."
+"Aktiviere dies, wenn du deine gespielten Liederan Last.fm senden willst."
 
 #: player/models.py:133
 msgid "libre.fm username"
@@ -345,6 +344,12 @@ msgstr "Stream Qualität"
 msgid "The quality which we will transcode the song to"
 msgstr "Die Qualität in welcher die Lieder transkodiert werden"
 
+#: src/inc/resource_checker.py:55
+msgid ""
+"Apache configuration allows / access, please restrict                access "
+"to your music directory!"
+msgstr ""
+
 #: tpl/config/login.html:5 tpl/config/login.html.py:18
 msgid "Login"
 msgstr "Anmelden"
@@ -369,7 +374,7 @@ msgstr "Profil Einstellungen"
 msgid "Language"
 msgstr "Sprache"
 
-#: tpl/config/profile.html:43 tpl/config/settings.html:38
+#: tpl/config/profile.html:43 tpl/config/settings.html:42
 #: tpl/config/settings_edit_user.html:26
 #: tpl/config/xml_settings_edit_user.html:25
 msgid "update"
@@ -383,75 +388,75 @@ msgstr "Einstellungsseite"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: tpl/config/settings.html:24
+#: tpl/config/settings.html:25
 msgid "Adds all songs from your directory to the music collection"
 msgstr ""
 
-#: tpl/config/settings.html:25
+#: tpl/config/settings.html:26
 msgid "Scan music"
 msgstr "Musik scannen"
 
-#: tpl/config/settings.html:27
+#: tpl/config/settings.html:28
 msgid "Removes all songs and playlists from the database"
 msgstr ""
 
-#: tpl/config/settings.html:28
+#: tpl/config/settings.html:29
 msgid "Reset data"
 msgstr "Daten zurücksetzen"
 
-#: tpl/config/settings.html:30
+#: tpl/config/settings.html:31
 msgid ""
 "Removes all songs from the database that are no longer on your harddrive"
 msgstr ""
 
-#: tpl/config/settings.html:31
+#: tpl/config/settings.html:32
 msgid "Tidy up database"
 msgstr ""
 
-#: tpl/config/settings.html:42
+#: tpl/config/settings.html:46
 msgid "User Management"
 msgstr "Benutzerverwaltung"
 
-#: tpl/config/settings.html:45 tpl/config/settings.html.py:72
+#: tpl/config/settings.html:49 tpl/config/settings.html.py:76
 msgid "new user"
 msgstr "Neuer Benutzer"
 
-#: tpl/config/settings.html:50
+#: tpl/config/settings.html:54
 msgid "Full name"
 msgstr "Voller Name"
 
-#: tpl/config/settings.html:51
+#: tpl/config/settings.html:55
 msgid "Allowed to login"
 msgstr "Anmelden erlaubt"
 
-#: tpl/config/settings.html:53 tpl/config/settings.html.py:62
-#: tpl/config/settings.html:78 tpl/config/settings.html.py:85
-#: tpl/config/settings.html:100 tpl/config/settings.html.py:105
+#: tpl/config/settings.html:57 tpl/config/settings.html.py:66
+#: tpl/config/settings.html:82 tpl/config/settings.html.py:89
+#: tpl/config/settings.html:104 tpl/config/settings.html.py:109
 msgid "Delete"
 msgstr "Löschen"
 
-#: tpl/config/settings.html:54 tpl/config/settings.html.py:63
-#: tpl/config/settings.html:79 tpl/config/settings.html.py:86
+#: tpl/config/settings.html:58 tpl/config/settings.html.py:67
+#: tpl/config/settings.html:83 tpl/config/settings.html.py:90
 msgid "Change"
 msgstr "Ändern"
 
-#: tpl/config/settings.html:69
+#: tpl/config/settings.html:73
 msgid "XML API User Management"
 msgstr "XML API Benutzerverwaltung"
 
-#: tpl/config/settings.html:77
+#: tpl/config/settings.html:81
 msgid "Allowed to connect"
 msgstr "Verbinden erlaubt"
 
-#: tpl/config/settings.html:92
+#: tpl/config/settings.html:96
 msgid "Themes"
 msgstr "Themes"
 
-#: tpl/config/settings.html:95
+#: tpl/config/settings.html:99
 msgid "upload a new theme"
 msgstr "Lade ein neues Theme hoch"
 
-#: tpl/config/settings.html:99
+#: tpl/config/settings.html:103
 msgid "Name"
 msgstr "Name"
 
@@ -627,7 +632,7 @@ msgstr "Lieder"
 msgid "Days"
 msgstr "Tage"
 
-#: tpl/player/index.html:268
+#: tpl/player/index.html:269
 msgid ""
 "\n"
 "                            l-audio is ready, please select your songs \n"
