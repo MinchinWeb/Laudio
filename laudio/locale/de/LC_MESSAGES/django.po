@@ -1,17 +1,17 @@
 # Laudio - A webbased musicplayer
-# 
+#
 # Copyright (C) 2012 Bernhard Posselt, bernhard.posselt@gmx.at
-# 
+#
 # Laudio is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Laudio is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-25 16:21+0100\n"
+"POT-Creation-Date: 2011-12-25 16:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: settings.py:86
+msgid "German"
+msgstr ""
+
+#: settings.py:87
+msgid "English"
+msgstr ""
 
 #: player/forms.py:38 player/forms.py:122 player/forms.py:157
 #: player/models.py:99
@@ -60,7 +68,7 @@ msgstr ""
 msgid "Confirm Libre.fm password"
 msgstr ""
 
-#: player/forms.py:124
+#: player/forms.py:124 tpl/config/settings.html:52
 msgid "Superuser"
 msgstr ""
 
@@ -148,7 +156,7 @@ msgstr ""
 msgid "Music collection is not readable!"
 msgstr ""
 
-#: player/models.py:37
+#: player/models.py:37 tpl/player/index.html:180 tpl/player/index.html.py:210
 msgid "Artist"
 msgstr ""
 
@@ -158,7 +166,7 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: player/models.py:46
+#: player/models.py:46 tpl/player/index.html:181 tpl/player/index.html.py:214
 msgid "Album"
 msgstr ""
 
@@ -166,15 +174,15 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: player/models.py:55
+#: player/models.py:55 tpl/player/index.html:182 tpl/player/index.html.py:222
 msgid "Genre"
 msgstr ""
 
-#: player/models.py:63
+#: player/models.py:63 tpl/player/index.html:179 tpl/player/index.html.py:198
 msgid "Title"
 msgstr ""
 
-#: player/models.py:66
+#: player/models.py:66 tpl/player/index.html:226
 msgid "Codec"
 msgstr ""
 
@@ -198,7 +206,7 @@ msgstr ""
 msgid "Length"
 msgstr ""
 
-#: player/models.py:72
+#: player/models.py:72 tpl/player/index.html:230
 msgid "Bitrate"
 msgstr ""
 
@@ -206,11 +214,12 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: player/models.py:81
+#: player/models.py:81 tpl/includes/nav.html:7 tpl/player/index.html:165
 msgid "Playlist"
 msgstr ""
 
-#: player/models.py:98
+#: player/models.py:98 tpl/config/settings.html:49
+#: tpl/config/settings.html.py:76
 msgid "Username"
 msgstr ""
 
@@ -322,4 +331,299 @@ msgstr ""
 
 #: player/models.py:154
 msgid "The quality which we will transcode the song to"
+msgstr ""
+
+#: tpl/config/login.html:5 tpl/config/login.html.py:18
+msgid "Login"
+msgstr ""
+
+#: tpl/config/login.html:22
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: tpl/config/login.html:40 tpl/includes/nav.html:18
+msgid "login"
+msgstr ""
+
+#: tpl/config/profile.html:5
+msgid "profile page"
+msgstr ""
+
+#: tpl/config/profile.html:18
+msgid "Profile Settings"
+msgstr ""
+
+#: tpl/config/profile.html:21
+msgid "Language settings"
+msgstr ""
+
+#: tpl/config/profile.html:29 tpl/config/settings.html:38
+#: tpl/config/settings_edit_user.html:26
+#: tpl/config/xml_settings_edit_user.html:25
+msgid "update"
+msgstr ""
+
+#: tpl/config/settings.html:5
+msgid "settings page"
+msgstr ""
+
+#: tpl/config/settings.html:20
+msgid "Settings"
+msgstr ""
+
+#: tpl/config/settings.html:24
+msgid "Adds all songs from your directory to the music collection"
+msgstr ""
+
+#: tpl/config/settings.html:25
+msgid "Scan music"
+msgstr ""
+
+#: tpl/config/settings.html:27
+msgid "Removes all songs and playlists from the database"
+msgstr ""
+
+#: tpl/config/settings.html:28
+msgid "Reset data"
+msgstr ""
+
+#: tpl/config/settings.html:30
+msgid ""
+"Removes all songs from the database that are no longer on your harddrive"
+msgstr ""
+
+#: tpl/config/settings.html:31
+msgid "Tidy up database"
+msgstr ""
+
+#: tpl/config/settings.html:42
+msgid "User Management"
+msgstr ""
+
+#: tpl/config/settings.html:45 tpl/config/settings.html.py:72
+msgid "new user"
+msgstr ""
+
+#: tpl/config/settings.html:50
+msgid "Full name"
+msgstr ""
+
+#: tpl/config/settings.html:51
+msgid "Allowed to login"
+msgstr ""
+
+#: tpl/config/settings.html:53 tpl/config/settings.html.py:62
+#: tpl/config/settings.html:78 tpl/config/settings.html.py:85
+#: tpl/config/settings.html:100 tpl/config/settings.html.py:105
+msgid "delete"
+msgstr ""
+
+#: tpl/config/settings.html:54 tpl/config/settings.html.py:63
+#: tpl/config/settings.html:79 tpl/config/settings.html.py:86
+msgid "edit"
+msgstr ""
+
+#: tpl/config/settings.html:69
+msgid "XML API User Management"
+msgstr ""
+
+#: tpl/config/settings.html:77
+msgid "Allowed to connect"
+msgstr ""
+
+#: tpl/config/settings.html:92
+msgid "Themes"
+msgstr ""
+
+#: tpl/config/settings.html:95
+msgid "upload a new theme"
+msgstr ""
+
+#: tpl/config/settings.html:99
+msgid "Name"
+msgstr ""
+
+#: tpl/config/settings_delete_theme.html:5
+msgid "delete theme page"
+msgstr ""
+
+#: tpl/config/settings_delete_theme.html:19
+#, python-format
+msgid "Do you really want to delete the theme: %(name)s?"
+msgstr ""
+
+#: tpl/config/settings_delete_theme.html:24
+#: tpl/config/settings_delete_user.html:24
+#: tpl/config/xml_settings_delete_user.html:24
+msgid "no"
+msgstr ""
+
+#: tpl/config/settings_delete_theme.html:25
+#: tpl/config/settings_delete_user.html:25
+#: tpl/config/xml_settings_delete_user.html:25
+msgid "confirm"
+msgstr ""
+
+#: tpl/config/settings_delete_user.html:5
+msgid "delete user page"
+msgstr ""
+
+#: tpl/config/settings_delete_user.html:19
+#, python-format
+msgid "Do you really want to delete the user: %(username)s?"
+msgstr ""
+
+#: tpl/config/settings_edit_user.html:5
+msgid "edit user page"
+msgstr ""
+
+#: tpl/config/settings_edit_user.html:19
+msgid "Edit a user"
+msgstr ""
+
+#: tpl/config/settings_new_theme.html:5
+msgid "theme upload page"
+msgstr ""
+
+#: tpl/config/settings_new_theme.html:19
+msgid "Upload a new theme"
+msgstr ""
+
+#: tpl/config/settings_new_theme.html:25
+msgid "upload"
+msgstr ""
+
+#: tpl/config/settings_new_user.html:5
+msgid "new user creation page"
+msgstr ""
+
+#: tpl/config/settings_new_user.html:19
+msgid "Create a new user"
+msgstr ""
+
+#: tpl/config/settings_new_user.html:26
+#: tpl/config/xml_settings_new_user.html:25
+msgid "create"
+msgstr ""
+
+#: tpl/config/xml_settings_delete_user.html:5
+msgid "delete xml user page"
+msgstr ""
+
+#: tpl/config/xml_settings_delete_user.html:19
+#, python-format
+msgid "Do you really want to delete the XML API user: %(username)s?"
+msgstr ""
+
+#: tpl/config/xml_settings_edit_user.html:5
+msgid "edit xml api user page"
+msgstr ""
+
+#: tpl/config/xml_settings_edit_user.html:19
+msgid "Edit an XML API user"
+msgstr ""
+
+#: tpl/config/xml_settings_new_user.html:5
+msgid "new xml api user creation page"
+msgstr ""
+
+#: tpl/config/xml_settings_new_user.html:19
+msgid "Create a new XML API user"
+msgstr ""
+
+#: tpl/includes/nav.html:6 tpl/player/index.html:161
+msgid "Sidebar"
+msgstr ""
+
+#: tpl/includes/nav.html:8
+msgid "Browse"
+msgstr ""
+
+#: tpl/includes/nav.html:14
+msgid "profile"
+msgstr ""
+
+#: tpl/includes/nav.html:15
+msgid "settings"
+msgstr ""
+
+#: tpl/includes/nav.html:16
+msgid "logout"
+msgstr ""
+
+#: tpl/install/index.html:17
+msgid "Welcome to l-audio. Please create your superuser account!"
+msgstr ""
+
+#: tpl/install/index.html:24
+msgid "save"
+msgstr ""
+
+#: tpl/player/index.html:29
+msgid "Artist by letters"
+msgstr ""
+
+#: tpl/player/index.html:30
+msgid "Artists"
+msgstr ""
+
+#: tpl/player/index.html:31
+msgid "Albums"
+msgstr ""
+
+#: tpl/player/index.html:32
+msgid "Genres"
+msgstr ""
+
+#: tpl/player/index.html:118
+msgid "load"
+msgstr ""
+
+#: tpl/player/index.html:151
+msgid "Enter search"
+msgstr ""
+
+#: tpl/player/index.html:168
+msgid "Save"
+msgstr ""
+
+#: tpl/player/index.html:169
+msgid "Lists"
+msgstr ""
+
+#: tpl/player/index.html:178
+msgid "Nr"
+msgstr ""
+
+#: tpl/player/index.html:202
+msgid "Duration"
+msgstr ""
+
+#: tpl/player/index.html:206
+msgid "Number"
+msgstr ""
+
+#: tpl/player/index.html:218
+msgid "Date"
+msgstr ""
+
+#: tpl/player/index.html:237
+msgid "Songs"
+msgstr ""
+
+#: tpl/player/index.html:241
+msgid "Days"
+msgstr ""
+
+#: tpl/player/index.html:268
+msgid ""
+"\n"
+"                            l-audio is ready, please select your songs \n"
+"                            from the browse window or type in your search to "
+"display the songs.\n"
+"                            If you want to show all songs on startup by "
+"default,\n"
+"                            please activate the feature in your profile "
+"settings\n"
+"                            "
 msgstr ""
