@@ -68,10 +68,9 @@
         
             #settings .utils li a {
                 line-height: 50px;
-                height: 48px;
+                height: 50px;
                 padding: 0 10px;
                 color: #fefefe;
-                
                 float: left;
                 text-decoration: none;
             }
