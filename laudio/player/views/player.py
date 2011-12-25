@@ -68,11 +68,11 @@ def setup(request):
                 userform.is_active = True
                 userform.is_superuser = True
                 userform.is_staff = True
+                userform.save()
                 # create a profile
                 profile = UserProfile()
                 profile.user = User.objects.get(username=userform.username)
                 profile.save()
-                userform.save()
                 return HttpResponseRedirect(reverse('player:index'))
         ctx = {
             'form': form,

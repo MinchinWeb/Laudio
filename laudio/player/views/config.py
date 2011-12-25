@@ -21,15 +21,43 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Django imports
-from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
 # Laudio imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
+from laudio.player.models import XMLAPIUser
 from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
     UserEditProfileForm, UserEditForm, XMLAPIUserForm
 
+
+@check_login('admin')
+def config_settings(request):
+    """The settings view
+    """   
+    users = User.objects.all()
+    xml_users = XMLAPIUser.objects.all()
+    # get form
+    if request.method == 'POST':
+        settings_form = SettingsForm(request.POST)
+        if settings_form.is_valid():
+            settings_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'settings_form': settings_form,
+            'users': users, 
+            'xml_users': xml_users
+        }
+        return csrf_render(request, 'config/settings.html', ctx)
+    else:
+        settings_form = SettingsForm()    
+        ctx = {
+            'settings_form': settings_form,
+            'users': users, 
+            'xml_users': xml_users
+        }
+        return csrf_render(request, 'config/settings.html', ctx)
 
 @check_login('admin')
 def config_settings_new_user(request):
@@ -79,17 +107,19 @@ def config_settings_edit_user(request, userid):
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'user_form': user_form,
-            'profile_form': profile_form
+            'profile_form': profile_form,
+            'userid': userid
         }
         return csrf_render(request, 'config/settings_edit_user.html', ctx)
     else:
         user = get_object_or_404(User, id=userid)
-        user_profile = request.user.get_profile()
+        user_profile = user.get_profile()
         user_form = UserEditForm(instance=user)
         profile_form = UserEditProfileForm(instance=user_profile)    
         ctx = {
             'user_form': user_form,
-            'profile_form': profile_form
+            'profile_form': profile_form,
+            'userid': userid
         }
         return csrf_render(request, 'config/settings_edit_user.html', ctx)
 
@@ -106,7 +136,9 @@ def config_settings_delete_user(request, userid):
         user.delete()
         return HttpResponseRedirect(reverse('player:config_settings'))
     else:
-        ctx = {}
+        ctx = {
+            'userid': userid
+        }
         return csrf_render(request, 'config/settings_delete_user.html', ctx)
 
 
@@ -147,6 +179,7 @@ def xml_config_settings_edit_user(request, userid):
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'user_form': user_form,
+            'userid': userid
         }
         return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
     else:
@@ -154,6 +187,7 @@ def xml_config_settings_edit_user(request, userid):
         user_form = UserEditForm(instance=user)
         ctx = {
             'user_form': user_form,
+            'userid': userid
         }
         return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
 
@@ -170,7 +204,9 @@ def xml_config_settings_delete_user(request, userid):
         user.delete()
         return HttpResponseRedirect(reverse('player:config_settings'))
     else:
-        ctx = {}
+        ctx = {
+            'userid': userid
+        }
         return csrf_render(request, 'config/xml_settings_delete_user.html', ctx)
 
 
@@ -203,26 +239,3 @@ def config_profile(request):
         return csrf_render(request, 'config/profile.html', ctx)
         
 
-@check_login('admin')
-def config_settings(request):
-    """The settings view
-    """   
-    users = User.objects.all()
-    # get form
-    if request.method == 'POST':
-        settings_form = SettingsForm(request.POST)
-        if settings_form.is_valid():
-            settings_form.save()
-            return HttpResponseRedirect(reverse('player:config_settings'))
-        ctx = {
-            'settings_form': settings_form,
-            'users': users
-        }
-        return csrf_render(request, 'config/settings.html', ctx)
-    else:
-        settings_form = SettingsForm()    
-        ctx = {
-            'settings_form': settings_form,
-            'users': users
-        }
-        return csrf_render(request, 'config/settings.html', ctx)

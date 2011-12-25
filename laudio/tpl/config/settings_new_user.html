@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load theme %}
+
+{% block title %}l-audio - {% blocktrans %}new user creation page{% endblocktrans %}{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}themes/{% theme user %}/settings.css" type="text/css" media="all" />
+    <script src="{% url player:javascript 'settings' %}" type="text/javascript" charset="utf-8"></script>  
+{% endblock %}
+
+
+{% block content %}
+    {% include "includes/nav.html" with nav_settings='class="active"'%}
+
+    <div id="content">
+
+        <div id="settings">
+            <h1>{% trans 'Create a new user' %}</h1>
+            <form method="post" class="section" action="{% url player:config_settings_new_user %}">
+                {% csrf_token %}
+                <table>
+                    {{ user_form.as_table }}
+                    {{ profile_form.as_table }}
+                </table>
+                <p class="submit"><input type="submit" value="{% blocktrans %}create{% endblocktrans %}" /></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

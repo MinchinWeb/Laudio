@@ -100,6 +100,9 @@ class XMLAPIUser(models.Model):
     token = models.CharField(_('Token'), max_length=64)
     last_handshake = models.DateTimeField(_('Last handshake'), auto_now_add=True)
     modified = models.DateTimeField(_('Modified'), auto_now=True)
+    is_active = models.BooleanField(_('Is active'), help_text=_('Set to true if \
+            you want the user to be able to access the XML API'), blank=True,
+            default=True)
 
     def set_password(self, password):
         self.password = hashlib.sha256(password)
