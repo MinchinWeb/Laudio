@@ -160,7 +160,7 @@ to::
         }
     }
     
-Then you have to recreat the database::
+Then you have to recreate the database::
 
     python /usr/share/laudio/laudio/manage.py syncdb --noinput
     
@@ -228,7 +228,7 @@ Contributing
 ============
 
 To contribute send a mail to: bernhard.posselt@gmx.at or join the channel
-on Freenode
+on Freenode or just simply send me a pull request ;)
 
 License
 =======
