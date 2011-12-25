@@ -212,6 +212,9 @@ class SettingsForm(forms.Form):
         help_text=_('If the token expires, the application has to reidentify itself. \
                         Too short tokens will cause a lot of identifications, \
                         too long ones will weaken the security.'))
+    transcoding = forms.BooleanField(required=False, label=_('Allow Transcoding'),
+        help_text=_('Allows users to activated transcoding to a lower bitrate \
+                    to save bandwidth. This may cause high CPU load'))
     debug = forms.BooleanField(required=False, label=_('Debugging'),
         help_text=_('Activates debugging (Writes detailed logs and activates the \
                     Flash debug pluging)'))
@@ -253,8 +256,9 @@ class SettingsForm(forms.Form):
         config.collectionPath = self.cleaned_data['collection_path']
         config.debug = self.cleaned_data['debug']
         config.collectionStartup = self.cleaned_data['collection_startup']
-        config.require_login = self.cleaned_data['require_login']
+        config.requireLogin = self.cleaned_data['require_login']
         config.xmlAuth = self.cleaned_data['xml_auth']
+        config.transcoding = self.cleaned_data['transcoding']
         config.tokenLifespan = self.cleaned_data['token_lifespan']
         config.save()
 

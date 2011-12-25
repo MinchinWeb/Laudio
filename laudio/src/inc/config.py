@@ -51,6 +51,7 @@ class LaudioConfig(object):
         # xml token lifespan in seconds
         self.tokenLifespan = 60*60*24
         self.xmlAuth = False
+        self.transcoding = False
         
         # read in main config
         try:
@@ -65,6 +66,11 @@ class LaudioConfig(object):
                 
             try:
                 self.collectionStartup = config.getboolean('settings', 'collection_startup')
+            except ConfigParser.NoOptionError:
+                self.parserError = True
+                
+            try:
+                self.transcoding = config.getboolean('settings', 'transcoding')
             except ConfigParser.NoOptionError:
                 self.parserError = True
                 
@@ -117,6 +123,7 @@ class LaudioConfig(object):
         config.set('settings', 'debug', str(self.debug))
         config.set('settings', 'token_lifespan', str(self.tokenLifespan))
         config.set('settings', 'xml_auth', str(self.xmlAuth))
+        config.set('settings', 'transcoding', str(self.transcoding))
         with open(self.mainConfig, 'wb') as confFile:
             config.write(confFile)
 
