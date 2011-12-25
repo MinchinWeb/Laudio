@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-25 14:00+0100\n"
+"POT-Creation-Date: 2011-12-25 16:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: player/forms.py:38 player/forms.py:119 player/forms.py:154
+#: player/forms.py:38 player/forms.py:122 player/forms.py:157
 #: player/models.py:99
 msgid "Password"
 msgstr ""
 
-#: player/forms.py:39 player/forms.py:120 player/forms.py:155
+#: player/forms.py:39 player/forms.py:123 player/forms.py:158
 msgid "Confirm password"
 msgstr ""
 
 #: player/forms.py:53 player/forms.py:94 player/forms.py:102
-#: player/forms.py:135 player/forms.py:169
+#: player/forms.py:138 player/forms.py:172
 msgid "The two password fields didn't match."
 msgstr ""
 
@@ -48,21 +48,21 @@ msgstr ""
 msgid "Confirm Libre.fm password"
 msgstr ""
 
-#: player/forms.py:121
+#: player/forms.py:124
 msgid "Superuser"
 msgstr ""
 
-#: player/forms.py:122
+#: player/forms.py:125
 msgid ""
 "Sets if the user is a superuser. If a superuser exists,                     "
 "only superusers can view the settings dialogue"
 msgstr ""
 
-#: player/forms.py:194
+#: player/forms.py:197
 msgid "Path to music collection"
 msgstr ""
 
-#: player/forms.py:195
+#: player/forms.py:198
 msgid ""
 "Enter the path to your music collection, which you want "
 "to                     scan. Remember, all folders above the collection need "
@@ -71,40 +71,40 @@ msgid ""
 "server user"
 msgstr ""
 
-#: player/forms.py:199
+#: player/forms.py:202
 msgid "Load songs on startup"
 msgstr ""
 
-#: player/forms.py:200
+#: player/forms.py:203
 msgid ""
 "Automatically loads all songs in the player view. Dont "
 "check                     this checkbox if youve got more than 10k songs for "
 "it will                     remarkably slow down your browser"
 msgstr ""
 
-#: player/forms.py:203
+#: player/forms.py:206
 msgid "Require login"
 msgstr ""
 
-#: player/forms.py:204
+#: player/forms.py:207
 msgid "Requires all users to log in to listen to your music"
 msgstr ""
 
-#: player/forms.py:205
+#: player/forms.py:208
 msgid "Enable Ampache XML API"
 msgstr ""
 
-#: player/forms.py:206
+#: player/forms.py:209
 msgid ""
 "Enable the XML API to be able to listen to l-audio "
 "shares                     from other players like Amarok"
 msgstr ""
 
-#: player/forms.py:208
+#: player/forms.py:211
 msgid "Lifespan of the Ampache XML API Token in Seconds"
 msgstr ""
 
-#: player/forms.py:209
+#: player/forms.py:212
 msgid ""
 "If the token expires, the application has to reidentify "
 "itself.                         Too short tokens will cause a lot of "
@@ -112,27 +112,27 @@ msgid ""
 "security."
 msgstr ""
 
-#: player/forms.py:212
+#: player/forms.py:215
 msgid "Debugging"
 msgstr ""
 
-#: player/forms.py:213
+#: player/forms.py:216
 msgid ""
 "Activates debugging (Writes detailed logs and activates "
 "the                     Flash debug pluging)"
 msgstr ""
 
-#: player/forms.py:234
+#: player/forms.py:237
 #, python-format
 msgid "Path %(path)s does not exist!"
 msgstr ""
 
-#: player/forms.py:236
+#: player/forms.py:239
 #, python-format
 msgid "No access rights for %(path)s!"
 msgstr ""
 
-#: player/forms.py:241
+#: player/forms.py:244
 msgid "Music collection is not readable!"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 
 #: player/models.py:38 player/models.py:48 player/models.py:56
 #: player/models.py:74 player/models.py:85 player/models.py:94
-#: player/models.py:102 player/models.py:124
+#: player/models.py:102 player/models.py:127
 msgid "Modified"
 msgstr ""
 
@@ -210,99 +210,104 @@ msgstr ""
 msgid "Last handshake"
 msgstr ""
 
-#: player/models.py:125
-msgid "last.fm username"
+#: player/models.py:103
+msgid "Is active"
 msgstr ""
 
-#: player/models.py:126
-msgid "last.fm password"
-msgstr ""
-
-#: player/models.py:127
-msgid "Scrobble last.fm"
+#: player/models.py:103
+msgid ""
+"Set to true if             you want the user to be able to access the XML API"
 msgstr ""
 
 #: player/models.py:128
+msgid "last.fm username"
+msgstr ""
+
+#: player/models.py:129
+msgid "last.fm password"
+msgstr ""
+
+#: player/models.py:130
+msgid "Scrobble last.fm"
+msgstr ""
+
+#: player/models.py:131
 msgid ""
 "Activate this if you want to submit your played tracks                     "
 "to your last.fm account"
 msgstr ""
 
-#: player/models.py:130
+#: player/models.py:133
 msgid "libre.fm username"
 msgstr ""
 
-#: player/models.py:131
+#: player/models.py:134
 msgid "libre.fm password"
 msgstr ""
 
-#: player/models.py:132
+#: player/models.py:135
 msgid "Scrobble libre.fm"
 msgstr ""
 
-#: player/models.py:133
+#: player/models.py:136
 msgid ""
 "Activate this if you want to submit your played tracks                     "
 "to your libre.fm account"
 msgstr ""
 
-#: player/models.py:135
+#: player/models.py:138
 msgid "Show all songs on startup"
 msgstr ""
 
-#: player/models.py:136
+#: player/models.py:139
 msgid ""
 "This displays your whole collection automatically on "
 "startup.                             Be carefull with bigger collections as "
 "it may impact your                             browser's speed"
 msgstr ""
 
-#: player/models.py:139
+#: player/models.py:142
 msgid "Hide playlist by default"
 msgstr ""
 
-#: player/models.py:139
+#: player/models.py:142
 msgid ""
 "Automatically                     hides the playlist in the Collection view "
 "so you have                     to click playlist to view it"
 msgstr ""
 
-#: player/models.py:142
+#: player/models.py:145
 msgid "Hide sidebar by default"
 msgstr ""
 
-#: player/models.py:142
+#: player/models.py:145
 msgid ""
 "Automatically                     hides the sidebar in the Collection view "
 "so you have                     to click sidebar to view it"
 msgstr ""
 
-#: player/models.py:145
+#: player/models.py:148
 msgid "l-audio theme"
 msgstr ""
 
-#: player/models.py:146
+#: player/models.py:149
 msgid "Choose a custom theme"
 msgstr ""
 
-#: player/models.py:147
+#: player/models.py:150
 msgid "Enable stream transcoding"
 msgstr ""
 
-#: player/models.py:148
+#: player/models.py:151
 msgid ""
 "Activate this if you have a slow internet connection                     and "
 "want l-audio to deliver a lower bandwidth stream"
 msgstr ""
 
-#: player/models.py:150
+#: player/models.py:153
 msgid "Stream quality"
 msgstr ""
 
-#: player/models.py:151
+#: player/models.py:154
 msgid "The quality which we will transcode the song to"
-msgstr ""
-
-#: tpl/javascript/player.js:448
-msgid "of"
 msgstr ""
