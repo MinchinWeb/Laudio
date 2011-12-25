@@ -25,6 +25,12 @@
     top: -500px;
 }
 
+#sm2-container {
+    position: absolute;
+    left: -500px;
+    top: -500px;
+}
+
 /**
  * Wrapper
  */

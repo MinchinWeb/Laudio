@@ -19,21 +19,15 @@
  *
  */
 
-
+var player;
+var $last_selected;
+var shift_key = false;
+var ctrl_key = false;
+    
 $(document).ready(function () {
 
-    var player,
-        shift_key,
-        ctrl_key,
-        $last_selected;
-
-    player = new Player();
-    /*soundManager.onready(function(){
-    player.play("hi");    
-    });*/
-
-    shift_key = false;
-    ctrl_key = false;
+    player = new Player(soundManager);
+    $last_selected = player.id;
     
     /***************************************************************************
      * navigation links
@@ -130,16 +124,14 @@ $(document).ready(function () {
     /**
      * Search
      */
-
-
-
-
     var timer;
     $('#search input').keyup(function(e) {
         if($(this).attr('value').length >= 2){
             clearTimeout( timer );
-            var value = escape( $(this).attr('value') );
-            timer = setTimeout('search_db("' + value + '")', 500);
+            var value = $(this).val();
+            timer = setTimeout(function(){
+                search_db(value);
+            }, 500);
         }
     });
 
@@ -199,83 +191,6 @@ $(document).ready(function () {
     });  
 
 
-    /**
-    * Colors all lines in the collection
-     * @param id: The table element which should be updated
-    */
-    function update_line_colors(id){
-        $(id + ' tbody tr').each(function(index) {
-            if(index % 2){
-                $(this).removeClass('line1');
-                $(this).removeClass('line2');
-                $(this).addClass('line2');
-            } else {
-                $(this).removeClass('line1');
-                $(this).removeClass('line2');
-                $(this).addClass('line1');
-            }       
-        });
-    }
-
-
-    /**
-     * Runs a tablesort on the songlist
-     * 
-     * @param header_link: The link which was clicked on
-     * @param sorting: The sorting for the songlist
-     */
-    function activate_tablesorter (header_link, sorting_up, sorting_down) {
-        if($('#songlist table tbody tr').length){
-            $('#songlist table').tablesorter();
-            if($(header_link).attr('class') == 'sortup'){
-                var sorting = sorting_up;
-                $('#songlist_header table th a').removeClass('sortup');
-                $('#songlist_header table th a').removeClass('sortdown');
-                $(header_link).removeClass('sortup');
-                $(header_link).addClass('sortdown');
-            } else {
-                var sorting = sorting_down;
-                $('#songlist_header table th a').removeClass('sortup');
-                $('#songlist_header table th a').removeClass('sortdown');
-                $(header_link).removeClass('sortdown');
-                $(header_link).addClass('sortup');
-            }
-            $('#songlist table').trigger('sorton',[sorting]);
-            update_line_colors('songlist table');
-        }
-    }
-
-    
-    /**
-     * Function for selecting lines
-     *
-     * @param row: The dom element which we have clicked
-     */
-    function select_lines(row) {
-        if (!(shift_key || ctrl_key)) {
-            $(row).siblings().removeClass('selected');
-        }
-
-        var $select_from,
-            $select_to;
-        // check for shift selection
-        if (shift_key) {
-            // check if we have to select backwards or forwards
-            if ($last_selected.index() <= $(row).index()) {
-                $select_from = $last_selected;
-                $select_to = $(row);
-            } else {
-                $select_from = $(row);
-                $select_to = $last_selected;
-            }
-            $select_from.nextUntil('#' + $select_to.attr('id') + ' + *').addClass('selected');
-
-        } else {
-            $(row).addClass('selected');
-            $last_selected = $(row);
-        }
-    }
-
     // selecting lines
     $('#playlist tbody tr').click(function () {
         select_lines(this);
@@ -286,19 +201,28 @@ $(document).ready(function () {
     /***************************************************************************
      * Developement
      **************************************************************************/
-    //$('#browser').css('display', 'block');
 });
+
+/**
+ * Plays the song of the row
+ *
+ * @param row: The dom element which we have clicked
+ */
+function play_row(row){
+    player.play(row);
+}
 
 /**
  * Start a search
  * @param searchterm: The search string
+ * @param playid: The player object
  */
 function search_db(searchterm){
     var url,
         data;
     url = '{% url player:ajax_search %}';
     data = {
-        'search': searchterm
+        search: searchterm
     }
     // Start animation
     $('#songlist table tbody').fadeOut('fast');
@@ -313,11 +237,19 @@ function search_db(searchterm){
         $('#songlist .loader').fadeOut('fast', function(){
             $('#songlist table tbody').fadeIn('slow');
             // set color to just playing song
-            var lastSong = player.id;
+            var lastSong,
+                context;
+            if(player === undefined){
+                lastSong = 0;
+                context = '';
+            } else {
+                lastSong = player.id;
+                context = player.context;
+            }
             
             // if we didnt just start it see if the currently played
             // song is in the collection and highlight it
-            if (lastSong !== 0 && player.context === 'songlist'){
+            if (lastSong !== 0 && context === 'songlist'){
                 $( id_to_row(lastSong, true) ).addClass('active');
             }
             
@@ -329,3 +261,80 @@ function search_db(searchterm){
         });
     });
 }
+
+/**
+ * Function for selecting lines
+ *
+ * @param row: The dom element which we have clicked
+ */
+function select_lines(row) {
+    if (!(shift_key || ctrl_key)) {
+        $(row).siblings().removeClass('selected');
+    }
+
+    var $select_from,
+        $select_to;
+    // check for shift selection
+    if (shift_key) {
+        // check if we have to select backwards or forwards
+        if ($last_selected.index() <= $(row).index()) {
+            $select_from = $last_selected;
+            $select_to = $(row);
+        } else {
+            $select_from = $(row);
+            $select_to = $last_selected;
+        }
+        $select_from.nextUntil('#' + $select_to.attr('id') + ' + *').addClass('selected');
+
+    } else {
+        $(row).addClass('selected');
+        $last_selected = $(row);
+    }
+}
+
+/**
+ * Colors all lines in the collection
+ * @param id: The table element which should be updated
+ */
+function update_line_colors(id){
+    $(id + ' tbody tr').each(function(index) {
+        if(index % 2){
+            $(this).removeClass('line1');
+            $(this).removeClass('line2');
+            $(this).addClass('line2');
+        } else {
+            $(this).removeClass('line1');
+            $(this).removeClass('line2');
+            $(this).addClass('line1');
+        }       
+    });
+}
+
+
+/**
+ * Runs a tablesort on the songlist
+ * 
+ * @param header_link: The link which was clicked on
+ * @param sorting: The sorting for the songlist
+ */
+function activate_tablesorter (header_link, sorting_up, sorting_down) {
+    if($('#songlist table tbody tr').length){
+        $('#songlist table').tablesorter();
+        if($(header_link).attr('class') == 'sortup'){
+            var sorting = sorting_up;
+            $('#songlist_header table th a').removeClass('sortup');
+            $('#songlist_header table th a').removeClass('sortdown');
+            $(header_link).removeClass('sortup');
+            $(header_link).addClass('sortdown');
+        } else {
+            var sorting = sorting_down;
+            $('#songlist_header table th a').removeClass('sortup');
+            $('#songlist_header table th a').removeClass('sortdown');
+            $(header_link).removeClass('sortdown');
+            $(header_link).addClass('sortup');
+        }
+        $('#songlist table').trigger('sorton',[sorting]);
+        update_line_colors('songlist table');
+    }
+}
+

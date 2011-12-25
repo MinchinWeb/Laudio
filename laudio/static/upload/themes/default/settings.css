@@ -89,6 +89,13 @@
         position: relative;
     }
     
+        #settings p.warning {
+            color: #fefefe;
+            background-color: #99173C;
+            line-height: 25px;
+            padding: 0 30px;
+        }
+    
         #settings form {
             padding: 0 20px 30px 20px;
         }

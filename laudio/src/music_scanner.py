@@ -33,7 +33,7 @@ from laudio.src.inc.debugger import LaudioDebugger
 from laudio.src.inc.config import LaudioConfig
 from laudio.src.inc.scan_progress import ScanProgressor
 from laudio.src.song.codecs.vorbis import VorbisSong
-from laudio.src.song.codecs.mp3 import Mp3Song
+from laudio.src.song.codecs.mp3 import MP3Song
 
 
 class MusicScanner(object):
@@ -91,7 +91,7 @@ class MusicScanner(object):
                     self.broken.append(name)
             # mp3
             if name.lower().endswith(".mp3"):
-                self._addSong( Mp3Song(name) )
+                self._addSong( MP3Song(name) )
         
         self._debugger.log("Music Scanner", "Finished scan")
         
@@ -109,8 +109,10 @@ class MusicScanner(object):
         self.scanLog.updateScannedTracks()
         try:
             musicFile.save()
-            self.modified = musicFile.modified
-            self.added = musicFile.added
+            if musicFile.modified:
+                self.modified += 1
+            if musicFile.added:
+                self.added += 1
         except IOError:
             self.noRights.append(musicFile.path)
 

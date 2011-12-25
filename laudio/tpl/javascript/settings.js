@@ -24,4 +24,9 @@ $(document).ready(function () {
     $('#settings form tr').hover(function(){
         $(this).children('.helptext').fadeIn();
     });
+    
+    
+    $('#scan_music').click(function(){
+        $.post('{% url player:ajax_scan %}'); 
+    });
 });

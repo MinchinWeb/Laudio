@@ -22,8 +22,12 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # System imports
 import os
+import re
 import MySQLdb
 
+# Django imports
+from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 class ResourceChecker(object):
     """
@@ -36,6 +40,22 @@ class ResourceChecker(object):
         """Constructor
         """
         pass
+       
+    def get_warnings(self):
+        """Checks configuration files for security holes and outputs warnings
+        """
+        warnings = []
+        
+        # check apache configuration if global access is allowed
+        apache_config = settings.LAUDIO_CFG['APACHE_CFG']
+        regex = r'<Directory\s+/\s*>'
+        with open(apache_config) as file:
+            config = file.read()
+        if re.search(regex, config):
+            warnings.append(_('Apache configuration allows / access, please restrict\
+                access to your music directory!'))
+        
+        return warnings
         
         
     def is_rw(self, path):

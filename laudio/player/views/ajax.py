@@ -28,6 +28,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404
 from django.db.models import Q, Count, Sum
 from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.csrf import csrf_exempt
 
 # Laudio imports
 from laudio.player.models import Song
@@ -38,12 +39,13 @@ from laudio.src.inc.decorators import check_login
 from laudio.src.inc.scan_progress import ScanProgressor
 from laudio.src.inc.shortcuts import send_file, download_file, get_var
 
-
+@csrf_exempt
 def ajax_search(request):
     """
     Searches the database for a simple request
     """
-    search = get_var(request, 'search').lower()
+    search = request.POST.get('search', '').lower()
+    print search
     # filter every appropriate column
     search = '%' + search + '%'
     # yeah we have to do this because ordering by lower doesnt work across
@@ -51,10 +53,7 @@ def ajax_search(request):
     songs = Song.objects.raw(
         "SELECT sng.id AS id, \
                 sng.tracknumber AS tracknumber, \
-                sng.title AS title, \
-                alb.name AS album, \
-                art.name AS artist, \
-                gr.name AS genre \
+                sng.title AS title \
             FROM player_song sng \
 	        LEFT JOIN player_album alb \
 		        ON sng.album_id = alb.id \
@@ -82,7 +81,7 @@ def ajax_search(request):
 
 
 @check_login('admin')
-@require_POST
+#@require_POST
 def ajax_scan(request):
     """
     Starts a music scan
@@ -265,10 +264,8 @@ def ajax_song_file(request):
     Returns the audio file
     """
     id = request.GET.get('id', '')
-    #song = get_object_or_404(Song, id=id)
-    #return send_file(request, song.path)
-    #return send_file(request, '/home/bernhard/test.ogg')        
-    return HttpResponseRedirect('/laudio/static/test.ogg')  
+    song = get_object_or_404(Song, id=id)
+    return send_file(request, song.path)
 
 
 @check_login("user")
@@ -279,3 +276,4 @@ def ajax_song_download(request):
     id = request.GET.get('id', '')
     song = get_object_or_404(Song, id=id)
     return download_file(request, song.path)    
+

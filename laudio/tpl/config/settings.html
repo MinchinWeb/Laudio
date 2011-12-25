@@ -20,7 +20,8 @@
             <h1>{% trans 'Settings' %}</h1>
             <div class="section">
                 <ul class="utils">
-                    <li><a href="#" 
+                    <li><a id="scan_music"
+                           href="#" 
                            title="{% trans 'Adds all songs from your directory to the music collection' %}"
                         >{% trans 'Scan music' %}</a></li>
                     <li><a href="#"
@@ -30,6 +31,9 @@
                            title="{% trans 'Removes all songs from the database that are no longer on your harddrive' %}"
                         >{% trans 'Tidy up database' %}</a></li>
                 </ul>
+                {% for warning in warnings %}
+                    <p class="warning">Warning: {{ warning }}</p>
+                {% endfor %}
                 <form method="post" action="{% url player:config_settings %}">
                     {% csrf_token %}
                     <table>
