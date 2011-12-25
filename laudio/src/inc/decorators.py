@@ -53,6 +53,11 @@ def check_login(authLevel):
     def decorator(view):
         
         def wrapper(*args, **kwargs):
+            # check if we have to create a superuser
+            su_exists = len(User.objects.filter(is_superuser=True))
+            if not su_exists:
+                return HttpResponseRedirect( reverse('player:setup') )
+            
             # get the first argument which is always the request object
             # and check if the user is authenticated
             config = LaudioConfig(settings.LAUDIO_CFG)

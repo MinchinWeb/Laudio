@@ -28,22 +28,36 @@ from django.contrib.auth.models import User
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
 from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
-    UserEditProfileForm, UserEditForm
-
-@check_login('admin')
-def config_settings(request):
-    """The settings view
-    """
-    ctx = {}
-    return csrf_render(request, 'config/settings.html', ctx)
+    UserEditProfileForm, UserEditForm, XMLAPIUserForm
 
 
 @check_login('admin')
-def config_settings_new_user(request, userid):
+def config_settings_new_user(request):
     """The settings view for creating a new user
     """
-    ctx = {}
-    return csrf_render(request, 'config/settings_new_user.html', ctx)
+    # get form
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save(commit=False)
+            profile_form.user = User.objects.get(username=user_form.username)
+            profile_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return csrf_render(request, 'config/settings_new_user.html', ctx)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()   
+        ctx = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return csrf_render(request, 'config/settings_new_user.html', ctx)
     
 
 @check_login('admin')    
@@ -53,28 +67,69 @@ def config_settings_edit_user(request, userid):
     Keyword arguments:
     userid -- The id of the user
     """
-    ctx = {}
-    return csrf_render(request, 'config/settings_edit_user.html', ctx)
+    # get form
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save(commit=False)
+            profile_form.user = User.objects.get(username=user_form.username)
+            profile_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return csrf_render(request, 'config/settings_edit_user.html', ctx)
+    else:
+        user = get_object_or_404(User, id=userid)
+        user_profile = request.user.get_profile()
+        user_form = UserEditForm(instance=user)
+        profile_form = UserEditProfileForm(instance=user_profile)    
+        ctx = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return csrf_render(request, 'config/settings_edit_user.html', ctx)
 
 
 @check_login('admin')
-@require_POST
 def config_settings_delete_user(request, userid):
     """The settings view for deleting a user
     
     Keyword arguments:
     userid -- The id of the user
     """
-    ctx = {}
-    return csrf_render(request, 'config/settings_delete_user.html', ctx)
+    if request.method == 'POST':
+        user = get_object_or_404(User, id=userid)
+        user.delete()
+        return HttpResponseRedirect(reverse('player:config_settings'))
+    else:
+        ctx = {}
+        return csrf_render(request, 'config/settings_delete_user.html', ctx)
 
 
 @check_login('admin')
-def xml_config_settings_new_user(request, userid):
-    """The settings view for creating a new user
+def xml_config_settings_new_user(request):
+    """The settings view for creating a new xml api user
     """
-    ctx = {}
-    return csrf_render(request, 'config/xml_settings_new_user.html', ctx)
+    # get form
+    if request.method == 'POST':
+        user_form = XMLAPIUserForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'user_form': user_form
+        }
+        return csrf_render(request, 'config/xml_settings_new_user.html', ctx)
+    else:
+        user_form = XMLAPIUserForm()
+        ctx = {
+            'user_form': user_form
+        }
+        return csrf_render(request, 'config/xml_settings_new_user.html', ctx)
     
 
 @check_login('admin')    
@@ -84,20 +139,39 @@ def xml_config_settings_edit_user(request, userid):
     Keyword arguments:
     userid -- The id of the user
     """
-    ctx = {}
-    return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
+    # get form
+    if request.method == 'POST':
+        user_form = XMLAPIUserForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('player:config_settings'))
+        ctx = {
+            'user_form': user_form,
+        }
+        return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
+    else:
+        user = get_object_or_404(XMLAPIUser, id=userid)
+        user_form = UserEditForm(instance=user)
+        ctx = {
+            'user_form': user_form,
+        }
+        return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
 
 
 @check_login('admin')
-@require_POST
 def xml_config_settings_delete_user(request, userid):
     """The settings view for deleting a user
     
     Keyword arguments:
     userid -- The id of the user
     """
-    ctx = {}
-    return csrf_render(request, 'config/xml_settings_delete_user.html', ctx)
+    if request.method == 'POST':
+        user = get_object_or_404(XMLAPIUser, id=userid)
+        user.delete()
+        return HttpResponseRedirect(reverse('player:config_settings'))
+    else:
+        ctx = {}
+        return csrf_render(request, 'config/xml_settings_delete_user.html', ctx)
 
 
 @check_login('user')
@@ -131,7 +205,7 @@ def config_profile(request):
 
 @check_login('admin')
 def config_settings(request):
-    """The profile view
+    """The settings view
     """   
     users = User.objects.all()
     # get form

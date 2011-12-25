@@ -112,6 +112,12 @@ for theme in os.listdir( os.path.join(settings.MEDIA_ROOT, 'themes/') ):
     THEMES.append(
         (theme, theme)
         )
+# activate streaming compression
+STREAM_QUALITY = (
+    (1, '64 kbit/s'),
+    (2, '128 kbit/s'),
+    (3, '256 kbit/s'),
+)
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -120,21 +126,26 @@ class UserProfile(models.Model):
     lastFMPass = models.CharField(_('last.fm password'), max_length=100, blank=True)
     lastFMSubmit = models.BooleanField(_('Scrobble last.fm'), 
         help_text=_('Activate this if you want to submit your played tracks \
-                    to your last.fm account'))
+                    to your last.fm account'), blank=True)
     libreFMName = models.CharField(_('libre.fm username'), max_length=100, blank=True)
     libreFMPass = models.CharField(_('libre.fm password'), max_length=100, blank=True)
     libreFMSubmit = models.BooleanField(_('Scrobble libre.fm'),
         help_text=_('Activate this if you want to submit your played tracks \
-                    to your libre.fm account'))
+                    to your libre.fm account'), blank=True)
     showLib = models.BooleanField(_('Show all songs on startup'), 
                 help_text=_('This displays your whole collection automatically on startup. \
                             Be carefull with bigger collections as it may impact your \
-                            browser\'s speed'))
+                            browser\'s speed'), blank=True)
     hidePlaylist = models.BooleanField(_('Hide playlist by default'), help_text=_('Automatically \
                     hides the playlist in the Collection view so you have \
-                    to click playlist to view it'))
+                    to click playlist to view it'), blank=True)
     hideSidebar = models.BooleanField(_('Hide sidebar by default'), help_text=_('Automatically \
                     hides the sidebar in the Collection view so you have \
-                    to click sidebar to view it'))
+                    to click sidebar to view it'), blank=True)
     theme = models.CharField(_('l-audio theme'), max_length=100, choices=THEMES, 
         help_text=_('Choose a custom theme'))
+    stream_transcoding = models.BooleanField(_('Enable stream transcoding'),
+        help_text=_('Activate this if you have a slow internet connection \
+                    and want l-audio to deliver a lower bandwidth stream'), blank=True)
+    stream_quality = models.CharField(_('Stream quality'), max_length=100, choices=STREAM_QUALITY, 
+        help_text=_('The quality which we will transcode the song to'))
