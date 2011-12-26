@@ -63,13 +63,11 @@ def send_file(request, path):
     Send a file    
     
     Keyword arguments:
-    download -- the path to the file
-    content_type -- the type of the file (audio/vorbis audio/mpeg)
+    path -- the path to the file
     """                         
-    #wrapper = FileWrapper(file(path))
     mime = mimetypes.guess_type(path)[0]
     size = os.path.getsize(path)
-    response = HttpResponse(mimetype=mime)
+    response = HttpResponse(content_type=mime)
     response['Content-Length'] = size
     response['X-Sendfile'] = smart_str(path)
     # Accept ranges are needed to make media seekable
@@ -82,8 +80,7 @@ def download_file(request, path):
     Downloads a file
     
     Keyword arguments:
-    download -- the path to the file
-    content_type -- the type of the file (audio/vorbis audio/mpeg)
+    path -- the path to the file
     """
     response = send_file(request, path, content_type=mimetypes.guess_type(path)[0])
     filename = smart_str(path)

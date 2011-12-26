@@ -23,7 +23,10 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 # System imports
 import os
 import re
-import MySQLdb
+try:
+    import MySQLdb
+except ImportError:
+    pass
 
 # Django imports
 from django.utils.translation import ugettext_lazy as _
@@ -40,6 +43,7 @@ class ResourceChecker(object):
         """Constructor
         """
         pass
+       
        
     def get_warnings(self):
         """Checks configuration files for security holes and outputs warnings
@@ -64,6 +68,7 @@ class ResourceChecker(object):
             warnings.append(_('Apache configuration allows mod_sendfile / access, \
                 please restrict access to your music directory!'))
         
+        # TODO: more security warnings
         return warnings
         
         

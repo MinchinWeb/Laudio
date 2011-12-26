@@ -28,7 +28,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('laudio.player.views.player',
     url(r'^$', 'index', name='index'),
     url(r'^setup/$', 'setup', name='setup'),
-    url(r'javascript/(?P<src>\w+)/$', 'javascript', name='javascript'),
+    url(r'^js/(?P<src>\w+)/$', 'javascript', name='javascript'),
     url(r'^logout/$', 'log_me_out', name='logout'),
 )
 

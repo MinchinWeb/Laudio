@@ -84,7 +84,7 @@ function Player(manager) {
     this.manager.allowScriptAccess = 'always';
     this.manager.useFastPolling = false;
     this.manager.preferFlash = false;
-
+    
     // icon presets
     this.update_shuffle_icon();
     this.update_repeat_icon();

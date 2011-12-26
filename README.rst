@@ -20,6 +20,7 @@ Get a live preview on http://laudio-player.org/
 
 Dependencies
 ============
+* python (2.7)
 * python-lxml 
 * python-django (1.3)
 * python-mutagen 
@@ -43,6 +44,11 @@ want the source to be downloaded. Then type in::
     $ cd Laudio*
     $ sudo /bin/bash setup.sh
 
+To get fonts working on debian based system you need to replace the symlinks to the fonts::
+
+    $ sudo rm /usr/share/laudio/laudio/static/upload/themes/default/fonts/*
+    $ ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf /usr/share/laudio/laudio/static/upload/themes/default/font/DejaVuSans-Bold.ttf
+    $ ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed.ttf /usr/share/laudio/laudio/static/upload/themes/default/font/DejaVuSansCondensed.ttf
 
 Developement
 ============
