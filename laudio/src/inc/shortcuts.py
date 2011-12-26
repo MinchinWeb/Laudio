@@ -66,11 +66,11 @@ def send_file(request, path):
     download -- the path to the file
     content_type -- the type of the file (audio/vorbis audio/mpeg)
     """                         
-    wrapper = FileWrapper(file(path))
+    #wrapper = FileWrapper(file(path))
     mime = mimetypes.guess_type(path)[0]
-    mime = 'audio/ogg'
-    response = HttpResponse(wrapper, content_type=mime)
-    response['Content-Length'] = os.path.getsize(path)
+    size = os.path.getsize(path)
+    response = HttpResponse(mimetype=mime)
+    response['Content-Length'] = size
     response['X-Sendfile'] = smart_str(path)
     # Accept ranges are needed to make media seekable
     response['Accept-Ranges'] = 'bytes'
