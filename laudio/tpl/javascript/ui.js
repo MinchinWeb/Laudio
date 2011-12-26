@@ -30,6 +30,29 @@ $(document).ready(function () {
     searcher = new Search();
     $last_selected = player.id;
     
+    // check config stuff
+    {% if user.is_authenticated %}
+    
+        {% if user.get_profile.showLib %}
+            searcher.simple('');
+        {% endif %}
+        
+        {% if user.get_profile.hidePlaylist %}
+            $('#playlist').css('display', 'none');
+            $('#playlist_header').css('display', 'none');
+        {% endif %}
+        
+        {% if user.get_profile.hideSidebar %}
+            $('#sidebar').css('display', 'none');
+            $('#sidebar_header').css('display', 'none');
+        {% endif %}
+        
+    {% else %}
+        {% if config.collectionStartup %}
+            searcher.simple('');
+        {% endif %}
+    {% endif %}
+    
     /***************************************************************************
      * navigation links
      **************************************************************************/
