@@ -157,6 +157,7 @@ Player.prototype.play = function (row) {
        this.manager.getSoundById(this.id) !== null &&
        this.manager.getSoundById(this.id).playState === 1){
         this.manager.destroySound(this.id);
+        $(row).removeClass('active');
     }
 
     select_lines(row);
