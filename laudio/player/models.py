@@ -34,7 +34,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Artist(models.Model):
-    name = models.CharField(_('Artist'), max_length=150)
+    name = models.CharField(_('Artist'), max_length=150, unique=True)
     modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):
@@ -52,7 +52,7 @@ class Album(models.Model):
 
 
 class Genre(models.Model):
-    name = models.CharField(_('Genre'), max_length=150)
+    name = models.CharField(_('Genre'), max_length=150, unique=True)
     modified = models.DateTimeField(_('Modified'), auto_now=True)
 
     def __unicode__(self):

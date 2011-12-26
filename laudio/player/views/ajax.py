@@ -38,14 +38,14 @@ from laudio.src.music_scanner import MusicScanner
 from laudio.src.cover_fetcher import CoverFetcher
 from laudio.src.inc.decorators import check_login
 from laudio.src.inc.scan_progress import ScanProgressor
-from laudio.src.inc.shortcuts import send_file, download_file, get_var
+from laudio.src.inc.shortcuts import send_file, download_file, get_var, post_var
 
 @csrf_exempt
 def ajax_search(request):
     """
     Searches the database for a simple request
     """
-    search = request.POST.get('search', '').lower()
+    search = post_var(request, 'search').lower()
     # filter every appropriate column
     search = '%' + search + '%'
     # yeah we have to do this because ordering by lower doesnt work across
@@ -79,13 +79,65 @@ def ajax_search(request):
     }
     return render(request, 'ajax/search.html', ctx)
 
+@csrf_exempt
+def ajax_search_advanced(request):
+    """
+    Searches the database for a complex query
+    
+    If the get variable browser is not 0, only one row will be loaded:
+    1 for artists
+    2 for albums
+    3 for genres
+    """
+    artist = '%' + post_var(request, 'artist').lower() + '%'
+    title = '%' + post_var(request, 'title').lower() + '%'
+    genre = '%' + post_var(request, 'genre').lower() + '%'
+    album = '%' + post_var(request, 'album').lower() + '%'
+    browser = int(request.POST.get('browser', 0))
+    # yeah we have to do this because ordering by lower doesnt work across
+    # tables
+    songs = Song.objects.raw(
+        "SELECT sng.id AS id, \
+                sng.tracknumber AS tracknumber, \
+                sng.title AS title \
+            FROM player_song sng \
+	        LEFT JOIN player_album alb \
+		        ON sng.album_id = alb.id \
+	        LEFT JOIN player_artist art \
+		        ON alb.artist_id = art.id \
+	        LEFT JOIN player_genre gr \
+		        ON sng.genre_id = gr.id \
+	        WHERE \
+		        LOWER(art.name) LIKE %s \
+		        OR \
+		        LOWER(alb.name) LIKE %s \
+		        OR \
+		        LOWER(gr.name) LIKE %s \
+		        OR \
+		        LOWER(sng.title) LIKE %s \
+	        ORDER BY \
+		        LOWER(art.name), LOWER(alb.name), sng.tracknumber",
+		[artist, album, genre, title]
+    )
+
+    ctx = {
+        'songs': songs,
+        'browser': browser
+    }
+    if browser == 0:
+        tpl = 'ajax/search.html'
+    else:
+        tpl = 'ajax/browser_search.html'
+    return render(request, tpl, ctx)
+
+
 
 @csrf_exempt
 def ajax_search_artist_letter(request):
     """
     Searches the database for artists starting with a letter
     """
-    search = request.POST.get('search', '').lower()
+    search = post_var(request, 'search').lower()
     # filter every appropriate column
     search = search + '%'
     # yeah we have to do this because ordering by lower doesnt work across

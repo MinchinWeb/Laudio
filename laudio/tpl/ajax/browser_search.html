@@ -1,0 +1,36 @@
+{% if browser == 1 %}
+    {% regroup songs by album.artist as song_list %}
+    {% for song in song_list %}
+        <li class="{% cycle 'line1' 'line2' %}" 
+            onclick="filter_lines(this);"
+            ondblclick="load_line(this);">
+            {{ song.grouper }}
+        </li>
+    {% endfor %}
+{% endif %}
+hi
+
+{% if browser == 2 %}
+    {% regroup songs by album as song_list %}
+    {% for song in song_list %}
+        <li class="{% cycle 'line1' 'line2' %}" 
+            onclick="filter_lines(this);"
+            ondblclick="load_line(this);">
+            {{ song.grouper }}
+        </li>
+    {% endfor %}
+{% endif %}
+
+{% if browser == 3 %}
+    {% regroup songs by genre as song_list %}
+    {% for song in song_list %}
+        <li class="{% cycle 'line1' 'line2' %}" 
+            onclick="filter_lines(this);"
+            ondblclick="load_line(this);">
+            {{ song.grouper }}
+        </li>
+    {% endfor %}
+{% endif %}
+
+
+

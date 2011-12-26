@@ -91,9 +91,18 @@ def download_file(request, path):
     
     
 def get_var(request, name):
-    """Gets and returns a GET variable from the request
+    """Gets and returns a GET variable escaped from the request 
     
     Keyword arguments:
     request -- The request
     """
     return urllib.unquote_plus(request.GET.get('name', ''))
+    
+
+def post_var(request, name):
+    """Gets and returns a POST variable escaped from the request 
+    
+    Keyword arguments:
+    request -- The request
+    """
+    return urllib.unquote_plus(request.POST.get('name', ''))

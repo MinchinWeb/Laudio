@@ -31,7 +31,7 @@ from django.contrib.auth import logout
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.player.forms import SetupForm
 from laudio.src.inc.decorators import check_login
-from laudio.player.models import UserProfile
+from laudio.player.models import UserProfile, Artist, Album, Genre
 
 
 def index(request):
@@ -51,7 +51,15 @@ def index(request):
 def player(request):
     """Shows the player if there are superusers
     """
-    return csrf_render(request, 'player/index.html')
+    artists = Artist.objects.all().distinct('name').order_by('name')
+    albums = Album.objects.all().distinct('name').order_by('name')
+    genres = Genre.objects.all().distinct('name').order_by('name')
+    ctx = {
+        'artists': artists,
+        'albums': albums,
+        'genres': genres
+    }
+    return csrf_render(request, 'player/index.html', ctx)
     
     
 def setup(request):

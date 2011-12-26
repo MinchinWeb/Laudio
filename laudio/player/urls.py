@@ -43,6 +43,7 @@ urlpatterns += patterns('laudio.player.views.ajax',
     url(r'^ajax/db/statistics/$', 'ajax_db_statistics', name='ajax_db_statistics'),
     # search
     url(r'^ajax/search/$', 'ajax_search', name='ajax_search'),
+    url(r'^ajax/search/advanced/$', 'ajax_search_advanced', name='ajax_search_advanced'),
     url(r'^ajax/search/artist/letter/$', 'ajax_search_artist_letter', name='ajax_search_artist_letter'),
     # song data
     url(r'^ajax/song/data/$', 'ajax_song_data', name='ajax_song_data'),

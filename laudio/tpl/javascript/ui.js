@@ -124,6 +124,8 @@ $(document).ready(function () {
     /**
      * Search
      */
+    
+     
     var timer;
     $('#search input').keyup(function(e) {
         if($(this).attr('value').length >= 2){
@@ -144,6 +146,7 @@ $(document).ready(function () {
         $('#browser').slideUp();
         $('#browser_link').toggleClass('active');
     });
+    
     
     /***************************************************************************
      * Playlist and Content
@@ -206,12 +209,8 @@ $(document).ready(function () {
         select_lines(this);
     });
 
-
-    
-    /***************************************************************************
-     * Developement
-     **************************************************************************/
 });
+
 
 /**
  * Plays the song of the row
@@ -227,44 +226,69 @@ function play_row(row){
  * Start a search
  * @param url: which url we should search
  * @param data: the data array we should pass
+ * @param target: the id where we load the stuff
  */
-function ajax_search(url, data){
-    // Start animation
-    $('#songlist table tbody').fadeOut('fast');
-    $('#songlist .loader').fadeIn('slow');
-    
-    
-    // unbind previous items from context to prevent slowdown
-    $('#songlist table tbody tr').unbind('contextmenu');
-    
-    // now that we got the get url, start query
-    $('#songlist table tbody').load(url, data, function (){
-        $('#songlist .loader').fadeOut('fast', function(){
-            $('#songlist table tbody').fadeIn('slow');
-            // set color to just playing song
-            var lastSong,
-                context;
-            if(player === undefined){
-                lastSong = 0;
-                context = '';
-            } else {
-                lastSong = player.id;
-                context = player.context;
-            }
-            
-            // if we didnt just start it see if the currently played
-            // song is in the collection and highlight it
-            if (lastSong !== 0 && context === 'songlist'){
-                $( id_to_row(lastSong, true) ).addClass('active');
-            }
-            
-            // update table sorting
-            $('#songlist table').trigger('update');
+function ajax_search(url, data, target){
+
+    if(target === 'songlist'){
+        // Start animation
+        $('#songlist table tbody').fadeOut('fast');
+        $('#songlist .loader').fadeIn('slow');
+        
+        
+        // unbind previous items from context to prevent slowdown
+        $('#songlist table tbody tr').unbind('contextmenu');
+        
+        // now that we got the get url, start query
+        $('#songlist table tbody').load(url, data, function (){
+            $('#songlist .loader').fadeOut('fast', function(){
+                $('#songlist table tbody').fadeIn('slow');
+                // set color to just playing song
+                var lastSong,
+                    context;
+                if(player === undefined){
+                    lastSong = 0;
+                    context = '';
+                } else {
+                    lastSong = player.id;
+                    context = player.context;
+                }
                 
-            // update context menu
-            //collection_context_menu();
+                // if we didnt just start it see if the currently played
+                // song is in the collection and highlight it
+                if (lastSong !== 0 && context === 'songlist'){
+                    $( id_to_row(lastSong, true) ).addClass('active');
+                }
+                
+                // update table sorting
+                $('#songlist table').trigger('update');
+                    
+                // update context menu
+                //collection_context_menu();
+            });
+        }); 
+        
+    } else {
+        // since we passed numbers, we must find out where the targets are
+        if(target === 1){
+            target = 'artist_browser ul';
+        } else if(target === 2){
+            target = 'album_browser ul';
+        } else if(target === 3){
+            target = 'genre_browser ul';
+        }
+        // Start animation
+        $('#' + target).fadeOut('fast');
+        $('#' + target + ' .loader').fadeIn('slow');
+        
+        // now that we got the get url, start query
+        $('#' + target).load(url, data, function (){
+            $('#' + target + ' .loader').fadeOut('fast', function(){
+                $('#' + target).fadeIn('slow');
+            });
         });
-    });
+    }
+
 }
 
 /**
@@ -278,7 +302,7 @@ function search_db_artist_letters(searchterm){
     data = {
         search: searchterm
     }
-    ajax_search(url, data);
+    ajax_search(url, data, 'songlist');
 }
 
 /**
@@ -292,7 +316,27 @@ function search_db(searchterm){
     data = {
         search: searchterm
     }
-    ajax_search(url, data);
+    ajax_search(url, data, 'songlist');
+}
+
+/**
+ * Starts a search in all columns
+ * @param artist: the artist
+ * @param album: the album
+ * @param genre: the genre
+ * @param browser: the browser
+ */
+function search_db_advanced(artist, album, genre, browser){
+    var url,
+        data;
+    url = '{% url player:ajax_search_advanced %}';
+    data = {
+        artist: artist,
+        album: album,
+        genre: genre,
+        browser: browser
+    }
+    ajax_search(url, data, browser);
 }
 
 /**

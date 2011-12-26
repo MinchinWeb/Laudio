@@ -98,20 +98,42 @@
             <div id="artist_browser">
                 <div class="border">
                     <ul class="list_browser">
-                        <li class="line1">Artist 1</li>
-                        <li class="line2">Artist 2</li>
+                        {% for artist in artists %}
+                            <li class="{% cycle 'line1' 'line2' %}" 
+                                onclick="filter_lines(this);"
+                                ondblclick="load_line(this);">
+                                {{ artist }}
+                            </li>
+                        {% endfor %}
+                        {% include "includes/loader.html" %}
                     </ul>
                 </div>
             </div>
             <div id="album_browser">
                 <div class="border">
                     <ul class="list_browser">
+                        {% for album in albums %}
+                            <li class="{% cycle 'line1' 'line2' %}" 
+                                onclick="filter_lines(this);"
+                                ondblclick="load_line(this);">
+                                {{ album }}
+                            </li>
+                        {% endfor %}
+                        {% include "includes/loader.html" %}
                     </ul>
                 </div>
             </div>
             <div id="genre_browser">
                 <div class="border">
                     <ul class="list_browser">
+                        {% for genre in genres %}
+                            <li class="{% cycle 'line1' 'line2' %}" 
+                                onclick="filter_lines(this);"
+                                ondblclick="load_line(this);">
+                                {{ genre }}
+                            </li>
+                        {% endfor %}
+                        {% include "includes/loader.html" %}
                     </ul>
                 </div>
             </div>
