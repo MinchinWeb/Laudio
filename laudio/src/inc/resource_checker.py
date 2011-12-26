@@ -61,7 +61,7 @@ class ResourceChecker(object):
                 
         # check for problematic mod_xsendfile settings
         apache_config = settings.LAUDIO_CFG['APACHE_CFG']
-        regex = r'XSendFilePath\s+/\s*'
+        regex = r'XSendFilePath\s+/\s+'
         with open(apache_config) as file:
             config = file.read()
         if re.search(regex, config):
