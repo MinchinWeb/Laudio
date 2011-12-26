@@ -43,6 +43,28 @@ want the source to be downloaded. Then type in::
     $ sudo /bin/bash setup.sh
 
 
+Developement
+============
+Grep the source from github and run the install script::
+
+    $ git clone git@github.com:Raydiation/Laudio.git
+    $ cd Laudio*
+    $ sudo /bin/bash setup.sh
+
+Check the branches with git::
+
+    $ git branch
+    
+Change to the branche you want to develop in::
+
+    $ git checkout $BRANCH
+    
+Then run the developement server::
+
+    $ python laudio/manage.py runserver
+
+Laudio is now available at http://localhost:8000/
+
 Translation
 ===========
 To translate l-audio into your language, you must do the following. First
