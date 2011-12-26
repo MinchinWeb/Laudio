@@ -210,6 +210,7 @@ Player.prototype.play = function (row) {
                 onplay: function () {
                     self.update_volume_icon();
                     self.update_play_icon();
+                    self.set_volume(self.volume);
                 },
                 onresume: function () {
                     self.update_play_icon();
