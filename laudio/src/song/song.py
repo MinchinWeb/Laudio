@@ -87,10 +87,10 @@ class Song(object):
                 year = re.search(regex, value)
                 try:
                     if year:
-                        value = datetime.datetime( int( year.group(1) ), 1, 1 )
+                        value = int( year.group(1) )
                 except ValueError:
                     value = ''
-        
+                    
         # handle empty titles
         elif name == 'title' and value == '':
             value = os.path.basename(self.path)
@@ -159,6 +159,7 @@ class Song(object):
                 album = AlbumModel()
                 album.artist = artist
                 album.name = self.album
+                album.date = self.date
                 album.save()
             try:
                 genre = GenreModel.objects.get(name=self.genre)
@@ -168,7 +169,7 @@ class Song(object):
                 genre.save()
             
             for attr in ('title', 'tracknumber', 'codec', 'bitrate', 
-                         'length', 'date', 'path', 'size'):
+                         'length', 'path', 'size'):
                 setattr( song, attr, getattr(self, attr) )
             
             song.lastmodified = self.lastModified
