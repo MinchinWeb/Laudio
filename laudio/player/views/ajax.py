@@ -46,7 +46,6 @@ def ajax_search(request):
     Searches the database for a simple request
     """
     search = request.POST.get('search', '').lower()
-    print search
     # filter every appropriate column
     search = '%' + search + '%'
     # yeah we have to do this because ordering by lower doesnt work across
@@ -73,6 +72,40 @@ def ajax_search(request):
 	        ORDER BY \
 		        LOWER(art.name), LOWER(alb.name), sng.tracknumber",
 		[search, search, search, search]
+    )
+
+    ctx = {
+        'songs': songs,
+    }
+    return render(request, 'ajax/search.html', ctx)
+
+
+@csrf_exempt
+def ajax_search_artist_letter(request):
+    """
+    Searches the database for artists starting with a letter
+    """
+    search = request.POST.get('search', '').lower()
+    # filter every appropriate column
+    search = search + '%'
+    # yeah we have to do this because ordering by lower doesnt work across
+    # tables
+    songs = Song.objects.raw(
+        "SELECT sng.id AS id, \
+                sng.tracknumber AS tracknumber, \
+                sng.title AS title \
+            FROM player_song sng \
+	        LEFT JOIN player_album alb \
+		        ON sng.album_id = alb.id \
+	        LEFT JOIN player_artist art \
+		        ON alb.artist_id = art.id \
+	        LEFT JOIN player_genre gr \
+		        ON sng.genre_id = gr.id \
+	        WHERE \
+		        LOWER(art.name) LIKE %s \
+	        ORDER BY \
+		        LOWER(art.name), LOWER(alb.name), sng.tracknumber",
+		[search, ]
     )
 
     ctx = {

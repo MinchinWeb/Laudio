@@ -139,9 +139,10 @@ $(document).ready(function () {
         if($(this).attr('id') === 'load_all_songs'){
             search_db('');
         } else {
-            search_db($(this).html());
+            search_db_artist_letters($(this).html());
         }
         $('#browser').slideUp();
+        $('#browser_link').toggleClass('active');
     });
     
     /***************************************************************************
@@ -221,18 +222,13 @@ function play_row(row){
     player.play(row);
 }
 
+
 /**
  * Start a search
- * @param searchterm: The search string
- * @param playid: The player object
+ * @param url: which url we should search
+ * @param data: the data array we should pass
  */
-function search_db(searchterm){
-    var url,
-        data;
-    url = '{% url player:ajax_search %}';
-    data = {
-        search: searchterm
-    }
+function ajax_search(url, data){
     // Start animation
     $('#songlist table tbody').fadeOut('fast');
     $('#songlist .loader').fadeIn('slow');
@@ -269,6 +265,34 @@ function search_db(searchterm){
             //collection_context_menu();
         });
     });
+}
+
+/**
+ * Starts a search for artists and starting letters
+ * @param searchterm: The search string
+ */
+function search_db_artist_letters(searchterm){
+    var url,
+        data;
+    url = '{% url player:ajax_search_artist_letter %}';
+    data = {
+        search: searchterm
+    }
+    ajax_search(url, data);
+}
+
+/**
+ * Starts a search in all columns
+ * @param searchterm: The search string
+ */
+function search_db(searchterm){
+    var url,
+        data;
+    url = '{% url player:ajax_search %}';
+    data = {
+        search: searchterm
+    }
+    ajax_search(url, data);
 }
 
 /**
