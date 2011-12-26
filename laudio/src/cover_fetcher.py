@@ -86,9 +86,9 @@ class CoverFetcher(object):
                     cover = elements.xpath('/lfm/album/image[@size="extralarge"]/text()')[0]
                     return cover
                 except IndexError:
-                    return None
+                    return self.cover
             else:
-                return None
+                return self.cover
 
         except (URLError, HTTPError, UnicodeEncodeError):
-            return None
+            return self.cover

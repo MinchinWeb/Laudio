@@ -29,6 +29,7 @@ Dependencies
 * python-pysqlite2 
 * ttf-dejavu
 * ffmpeg
+* libapache2-mod-xsendfile (1.2)
 
 Installing 
 ==========

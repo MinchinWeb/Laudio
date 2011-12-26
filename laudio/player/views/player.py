@@ -110,6 +110,8 @@ def javascript(request, src):
         tpl = 'javascript/playlist.js'
     elif src == 'settings':
         tpl = 'javascript/settings.js'
+    elif src == 'search':
+        tpl = 'javascript/search.js'
         
     return render(request, tpl)
 

@@ -84,6 +84,7 @@ function Player(manager) {
     this.manager.allowScriptAccess = 'always';
     this.manager.useFastPolling = false;
     this.manager.preferFlash = false;
+    //this.manager.audioFormats.mp3.required = false;
 
     // icon presets
     this.update_shuffle_icon();

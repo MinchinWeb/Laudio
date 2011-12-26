@@ -67,10 +67,11 @@ def send_file(request, path):
     content_type -- the type of the file (audio/vorbis audio/mpeg)
     """                         
     wrapper = FileWrapper(file(path))
-    response = HttpResponse(wrapper,content_type=mimetypes.guess_type(path)[0])
+    mime = mimetypes.guess_type(path)[0]
+    mime = 'audio/ogg'
+    response = HttpResponse(wrapper, content_type=mime)
     response['Content-Length'] = os.path.getsize(path)
-    # uncomment if you want to enable mod x sendfile
-    # response['X-Sendfile'] = smart_str(path)
+    response['X-Sendfile'] = smart_str(path)
     # Accept ranges are needed to make media seekable
     response['Accept-Ranges'] = 'bytes'
     return response
@@ -86,7 +87,7 @@ def download_file(request, path):
     """
     response = send_file(request, path, content_type=mimetypes.guess_type(path)[0])
     filename = smart_str(path)
-    response['Content-Disposition'] = u'attachment; filename=%s' % filename
+    response['Content-Disposition'] = u'attachment; filename=%s' % smart_str(filename)
     return response
     
     

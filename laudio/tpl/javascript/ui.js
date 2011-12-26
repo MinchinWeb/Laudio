@@ -19,7 +19,7 @@
  *
  */
 
-var player;
+var player, searching;
 var $last_selected;
 var shift_key = false;
 var ctrl_key = false;
@@ -27,6 +27,7 @@ var ctrl_key = false;
 $(document).ready(function () {
 
     player = new Player(soundManager);
+    searcher = new Search();
     $last_selected = player.id;
     
     /***************************************************************************
@@ -130,16 +131,16 @@ $(document).ready(function () {
             clearTimeout( timer );
             var value = $(this).val();
             timer = setTimeout(function(){
-                search_db(value);
+                searcher.simple(value);
             }, 500);
         }
     });
 
     $('#browser #letter_browser td').click(function(){
         if($(this).attr('id') === 'load_all_songs'){
-            search_db('');
+            searcher.simple('');
         } else {
-            search_db_artist_letters($(this).html());
+            searcher.artist_letters($(this).html());
         }
         $('#browser').slideUp();
         $('#browser_link').toggleClass('active');
@@ -219,98 +220,6 @@ function play_row(row){
     player.play(row);
 }
 
-
-/**
- * Start a search
- *
- * @param url: which url we should search
- * @param data: the data array we should pass
- */
-function ajax_search(url, data){
-    // Start animation
-    $('#songlist table tbody').fadeOut('fast');
-    $('#songlist .loader').fadeIn('slow');
-    
-    // unbind previous items from context to prevent slowdown
-    $('#songlist table tbody tr').unbind('contextmenu');
-    
-    // now that we got the get url, start query
-    $('#songlist table tbody').load(url, data, function (){
-        $('#songlist .loader').fadeOut('fast', function(){
-            $('#songlist table tbody').fadeIn('slow');
-            // set color to just playing song
-            var lastSong,
-                context;
-            if(player === undefined){
-                lastSong = 0;
-                context = '';
-            } else {
-                lastSong = player.id;
-                context = player.context;
-            }
-            
-            // if we didnt just start it see if the currently played
-            // song is in the collection and highlight it
-            if (lastSong !== 0 && context === 'songlist'){
-                $( id_to_row(lastSong, true) ).addClass('active');
-            }
-            
-            // update table sorting
-            $('#songlist table').trigger('update');
-                
-            // update context menu
-            //collection_context_menu();
-        });
-    }); 
-}
-
-
-/**
- * Starts a search for artists and starting letters
- * @param searchterm: The search string
- */
-function search_db_artist_letters(searchterm){
-    var url,
-        data;
-    url = '{% url player:ajax_search_artist_letter %}';
-    data = {
-        search: searchterm
-    }
-    ajax_search(url, data);
-}
-
-/**
- * Starts a search in all columns
- * @param searchterm: The search string
- */
-function search_db(searchterm){
-    var url,
-        data;
-    url = '{% url player:ajax_search %}';
-    data = {
-        search: searchterm
-    }
-    ajax_search(url, data);
-}
-
-/**
- * Starts a search in all columns
- * @param artist: the artist
- * @param album: the album
- * @param genre: the genre
- */
-function search_db_advanced(title, artist, album, genre){
-    var url,
-        data;
-    url = '{% url player:ajax_search_advanced %}';
-    data = {
-        title: title,
-        artist: artist,
-        album: album,
-        genre: genre
-    }
-    ajax_search(url, data);
-}
 
 /**
  * Function for selecting lines
@@ -402,11 +311,11 @@ function filter_lines(row){
     // start query for other fields
     var browser_id = $(row).parent().parent().parent().attr('id');
     if(browser_id === 'artist_browser'){
-        search_db_advanced('', $(row).html(),  '', '');
+        searcher.advanced('', $(row).html(),  '', '');
     } else if(browser_id === 'album_browser'){
-        search_db_advanced('', '',  $(row).html(), '');
+        searcher.advanced('', '',  $(row).html(), '');
     } else if(browser_id === 'genre_browser'){
-        search_db_advanced('', '', '', $(row).html());
+        searcher.advanced('', '', '', $(row).html());
     }
     $('#browser').slideUp();
     $('#browser_link').toggleClass('active');
