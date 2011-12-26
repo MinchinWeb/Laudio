@@ -32,7 +32,7 @@ from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 
 # Laudio imports
-from laudio.player.models import Song
+from laudio.player.models import Song, Artist, Genre, Album
 import laudio.src.scrobbler as scrobbler
 from laudio.src.music_scanner import MusicScanner
 from laudio.src.cover_fetcher import CoverFetcher
@@ -79,21 +79,17 @@ def ajax_search(request):
     }
     return render(request, 'ajax/search.html', ctx)
 
+
 @csrf_exempt
 def ajax_search_advanced(request):
     """
     Searches the database for a complex query
-    
-    If the get variable browser is not 0, only one row will be loaded:
-    1 for artists
-    2 for albums
-    3 for genres
     """
     artist = '%' + post_var(request, 'artist').lower() + '%'
     title = '%' + post_var(request, 'title').lower() + '%'
     genre = '%' + post_var(request, 'genre').lower() + '%'
     album = '%' + post_var(request, 'album').lower() + '%'
-    browser = int(request.POST.get('browser', 0))
+    
     # yeah we have to do this because ordering by lower doesnt work across
     # tables
     songs = Song.objects.raw(
@@ -109,11 +105,11 @@ def ajax_search_advanced(request):
 		        ON sng.genre_id = gr.id \
 	        WHERE \
 		        LOWER(art.name) LIKE %s \
-		        OR \
+		        AND \
 		        LOWER(alb.name) LIKE %s \
-		        OR \
+		        AND \
 		        LOWER(gr.name) LIKE %s \
-		        OR \
+		        AND \
 		        LOWER(sng.title) LIKE %s \
 	        ORDER BY \
 		        LOWER(art.name), LOWER(alb.name), sng.tracknumber",
@@ -122,14 +118,8 @@ def ajax_search_advanced(request):
 
     ctx = {
         'songs': songs,
-        'browser': browser
     }
-    if browser == 0:
-        tpl = 'ajax/search.html'
-    else:
-        tpl = 'ajax/browser_search.html'
-    return render(request, tpl, ctx)
-
+    return render(request, 'ajax/search.html', ctx)
 
 
 @csrf_exempt

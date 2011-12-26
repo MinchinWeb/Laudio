@@ -96,7 +96,7 @@ def get_var(request, name):
     Keyword arguments:
     request -- The request
     """
-    return urllib.unquote_plus(request.GET.get('name', ''))
+    return urllib.unquote_plus(request.GET.get(name, ''))
     
 
 def post_var(request, name):
@@ -105,4 +105,4 @@ def post_var(request, name):
     Keyword arguments:
     request -- The request
     """
-    return urllib.unquote_plus(request.POST.get('name', ''))
+    return urllib.unquote_plus(request.POST.get(name, ''))

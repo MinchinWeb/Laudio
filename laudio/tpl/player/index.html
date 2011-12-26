@@ -101,11 +101,8 @@
                         {% for artist in artists %}
                             <li class="{% cycle 'line1' 'line2' %}" 
                                 onclick="filter_lines(this);"
-                                ondblclick="load_line(this);">
-                                {{ artist }}
-                            </li>
+                                ondblclick="load_line(this);">{{ artist }}</li>
                         {% endfor %}
-                        {% include "includes/loader.html" %}
                     </ul>
                 </div>
             </div>
@@ -115,11 +112,8 @@
                         {% for album in albums %}
                             <li class="{% cycle 'line1' 'line2' %}" 
                                 onclick="filter_lines(this);"
-                                ondblclick="load_line(this);">
-                                {{ album }}
-                            </li>
+                                ondblclick="load_line(this);">{{ album }}</li>
                         {% endfor %}
-                        {% include "includes/loader.html" %}
                     </ul>
                 </div>
             </div>
@@ -129,19 +123,11 @@
                         {% for genre in genres %}
                             <li class="{% cycle 'line1' 'line2' %}" 
                                 onclick="filter_lines(this);"
-                                ondblclick="load_line(this);">
-                                {{ genre }}
-                            </li>
+                                ondblclick="load_line(this);">{{ genre }}</li>
                         {% endfor %}
-                        {% include "includes/loader.html" %}
                     </ul>
                 </div>
             </div>
-        </div>
-        <div class="overlay_controls">
-            <ul class="horizontal_nav">
-                <li><a href="#" class="button">{% blocktrans %}load{% endblocktrans %}</a></li>
-            </ul>
         </div>
     </div>
 

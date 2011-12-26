@@ -53,26 +53,6 @@
     display: none; 
 }
 
-    .overlay .overlay_controls {
-        position: absolute;
-        z-index: 1;
-        bottom: 37px;
-        left: 0;
-        height: 44px;
-        line-height: 44px;
-        float: left;
-        width: 100%;
-        background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-    }
-
-    .overlay .overlay_controls .horizontal_nav {
-        float: right;
-        margin: 6px 15px 0 0;
-    }
 
 #browser {
     font-family: dejavusans;
@@ -92,7 +72,7 @@
         width: 100%;
         height: auto;
         padding-top: 87px;
-        padding-bottom: 91px;
+        padding-bottom: 51px;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -159,7 +139,7 @@
                         overflow: hidden;
                     }
                     
-                        #browser #browsers div ul.list_browser li:hover {
+                        #browser #browsers div ul.list_browser li:hover,  #browser #browsers div ul.list_browser li.active{
                             background-color: #DCE9BE !important;
                             cursor: pointer;
                         }
