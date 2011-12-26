@@ -25,6 +25,9 @@ import datetime
 import os
 import re
 
+# Django imports
+from django.conf import settings
+
 # Laudio imports
 from laudio.src.inc.debugger import LaudioDebugger
 from laudio.player.models import Song as SongModel

@@ -186,12 +186,13 @@ Player.prototype.play = function (row) {
         self.bitrate = json.bitrate;
         self.duration = json.duration;
         self.date = json.date;
+        self.relpath = json.relpath;
         
         self.manager.onready(function(){
             // play song
             self.manager.createSound({
                 id: self.id,
-                url: '{% url player:ajax_song_file %}' + '?id=' + self.id,
+                url: '{{ STATIC_URL }}audio/' + self.relpath,
                 volume: self.volume
             });
 

@@ -25,6 +25,9 @@ import os
 import ConfigParser
 import re
 
+# Django imports
+from django.conf import settings
+
 
 class LaudioConfig(object):
     """
@@ -61,6 +64,8 @@ class LaudioConfig(object):
             # music settings
             try:
                 self.collectionPath = config.get('settings', 'collection_path')
+                if not self.collectionPath.endswith('/'):
+                    self.collectionPath += '/'
             except ConfigParser.NoOptionError:
                 self.parserError = True
                 
@@ -116,6 +121,12 @@ class LaudioConfig(object):
         """
         config = ConfigParser.SafeConfigParser()
         config.add_section('settings')
+        # add symlink to music directory
+        sym_from = self.collectionPath
+        sym_to = os.path.join(settings.STATIC_ROOT, 'audio')
+        if os.path.exists(sym_to):
+            os.unlink(sym_to)
+        os.symlink(sym_from, sym_to)
         # music settings
         config.set('settings', 'collection_path', str(self.collectionPath))
         config.set('settings', 'collection_startup', str(self.collectionStartup))

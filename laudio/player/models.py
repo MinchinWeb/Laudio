@@ -31,6 +31,11 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+# Laudio imports
+from laudio.src.inc.config import LaudioConfig
+
+
+config = LaudioConfig(settings.LAUDIO_CFG)
 
 
 class Artist(models.Model):
@@ -75,6 +80,11 @@ class Song(models.Model):
 
     def __unicode__(self):
         return self.title
+        
+    def rel_path(self):
+        """Returns the relative path of the song
+        """
+        return self.path.replace(config.collectionPath, '', 1)
 
 
 class Playlist(models.Model):

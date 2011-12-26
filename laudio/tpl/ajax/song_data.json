@@ -8,5 +8,6 @@
   "codec": "{{ song.codec }}",
   "bitrate": "{{ song.bitrate }}",
   "duration": {{ song.length }},
-  "date": "{{ song.date }}"
+  "date": "{{ song.date }}",
+  "relpath": "{{ song.rel_path }}"
 }

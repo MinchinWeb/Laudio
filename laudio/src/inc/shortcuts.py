@@ -65,6 +65,8 @@ def send_file(request, path):
     Keyword arguments:
     path -- the path to the file
     """                         
+    # FIXME: This is a piece of shit that does not properly serve html5 audio
+    # media, i got frustrated, please someone else fix this
     mime = mimetypes.guess_type(path)[0]
     size = os.path.getsize(path)
     response = HttpResponse(content_type=mime)
