@@ -9,5 +9,5 @@
   "bitrate": "{{ song.bitrate }}",
   "duration": {{ song.length }},
   "date": "{{ song.date }}",
-  "relpath": "{{ song.rel_path }}"
+  "relpath": "{{ song.rel_path|urlencode }}"
 }
