@@ -26,13 +26,14 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.conf import settings
 
 # Project imports
 from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.player.forms import SetupForm
 from laudio.src.inc.decorators import check_login
 from laudio.player.models import UserProfile, Artist, Album, Genre
-
+from laudio.src.inc.config import LaudioConfig
 
 def index(request):
     """
@@ -97,7 +98,9 @@ def javascript(request, src):
     src -- The javascript part which should be generated 
     """
     tpl = ''
-    
+    ctx = {
+        'config': LaudioConfig(settings.LAUDIO_CFG)
+    }
     if src == 'main':
         tpl = 'javascript/main.js'
     elif src == 'ui':
@@ -113,7 +116,7 @@ def javascript(request, src):
     elif src == 'search':
         tpl = 'javascript/search.js'
         
-    return render(request, tpl)
+    return render(request, tpl, ctx)
 
 
 def log_me_out(request):
