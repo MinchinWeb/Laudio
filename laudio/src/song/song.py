@@ -118,7 +118,7 @@ class Song(object):
         song -- The database instance of a song. If song is not given
                 a new song will be created and saved in the database 
         """
-        return song.lastmodified == self.lastModified
+        return song.lastmodified != self.lastModified
 
 
     def save(self):
@@ -128,9 +128,9 @@ class Song(object):
         # get the database model of the song
         modi = True
         song = self.getModel()
-        if not hasattr(song, 'lastmodified'):
+        if not song.lastmodified:
             modi = False
-            song.lastmodified = self.lastModified
+            song.lastmodified = 0
 
         # only save to database if song is modified
         if self.isModified(song):

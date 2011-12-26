@@ -21,12 +21,17 @@
 
 
 $(document).ready(function () {
-    $('#settings form tr').hover(function(){
-        $(this).children('.helptext').fadeIn();
-    });
-    
     
     $('#scan_music').click(function(){
         $.post('{% url player:ajax_scan %}'); 
     });
+    
+    $('#reset_music').click(function(){
+        $.post('{% url player:ajax_db_reset %}'); 
+    });
+    
+    $('#tidy_music').click(function(){
+        $.post('{% url player:ajax_db_rmnonexist %}'); 
+    });
+    
 });

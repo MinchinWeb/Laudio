@@ -59,7 +59,7 @@ class LaudioDebugger(object):
                  logs are written to the logfile
         """
         if self.debug:
-            self._log.append( (datetime.datetime.now(), msg, part) ) 
+            self._log.append( (datetime.datetime.now(), part, msg) ) 
             if flush:
                 self.flush()
 

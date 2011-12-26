@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-26 00:34+0100\n"
+"POT-Creation-Date: 2011-12-26 01:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,7 +166,7 @@ msgstr "Keine Berechtigung für %(path)s!"
 msgid "Music collection is not readable!"
 msgstr "Musiksammlung ist nicht lesbar!"
 
-#: player/models.py:37 tpl/player/index.html:180 tpl/player/index.html.py:210
+#: player/models.py:37 tpl/player/index.html:183 tpl/player/index.html.py:213
 msgid "Artist"
 msgstr "Künstler"
 
@@ -176,7 +176,7 @@ msgstr "Künstler"
 msgid "Modified"
 msgstr "Modifiziert"
 
-#: player/models.py:46 tpl/player/index.html:181 tpl/player/index.html.py:214
+#: player/models.py:46 tpl/player/index.html:184 tpl/player/index.html.py:217
 msgid "Album"
 msgstr "Album"
 
@@ -184,15 +184,15 @@ msgstr "Album"
 msgid "Year"
 msgstr "Jahr"
 
-#: player/models.py:55 tpl/player/index.html:182 tpl/player/index.html.py:222
+#: player/models.py:55 tpl/player/index.html:185 tpl/player/index.html.py:225
 msgid "Genre"
 msgstr "Genre"
 
-#: player/models.py:63 tpl/player/index.html:179 tpl/player/index.html.py:198
+#: player/models.py:63 tpl/player/index.html:182 tpl/player/index.html.py:201
 msgid "Title"
 msgstr "Titel"
 
-#: player/models.py:66 tpl/player/index.html:226
+#: player/models.py:66 tpl/player/index.html:229
 msgid "Codec"
 msgstr "Codec"
 
@@ -216,7 +216,7 @@ msgstr "Hinzugefügt"
 msgid "Length"
 msgstr "Länge"
 
-#: player/models.py:72 tpl/player/index.html:230
+#: player/models.py:72 tpl/player/index.html:233
 msgid "Bitrate"
 msgstr "Bitrate"
 
@@ -224,7 +224,7 @@ msgstr "Bitrate"
 msgid "Size"
 msgstr "Grösse"
 
-#: player/models.py:81 tpl/includes/nav.html:7 tpl/player/index.html:165
+#: player/models.py:81 tpl/includes/nav.html:7 tpl/player/index.html:168
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -548,7 +548,7 @@ msgstr ""
 msgid "Create a new XML API user"
 msgstr "Erstelle einen neuen XML API Benutzer"
 
-#: tpl/includes/nav.html:6 tpl/player/index.html:161
+#: tpl/includes/nav.html:6 tpl/player/index.html:164
 msgid "Sidebar"
 msgstr "Seitenleiste"
 
@@ -592,47 +592,51 @@ msgstr "Albums"
 msgid "Genres"
 msgstr "Genres"
 
-#: tpl/player/index.html:118
+#: tpl/player/index.html:39
+msgid "All"
+msgstr ""
+
+#: tpl/player/index.html:121
 msgid "load"
 msgstr "laden"
 
-#: tpl/player/index.html:151
+#: tpl/player/index.html:154
 msgid "Enter search"
 msgstr "Sucheingabe"
 
-#: tpl/player/index.html:168
+#: tpl/player/index.html:171
 msgid "Save"
 msgstr "Speichern"
 
-#: tpl/player/index.html:169
+#: tpl/player/index.html:172
 msgid "Lists"
 msgstr "Listen"
 
-#: tpl/player/index.html:178
+#: tpl/player/index.html:181
 msgid "Nr"
 msgstr "Nr"
 
-#: tpl/player/index.html:202
+#: tpl/player/index.html:205
 msgid "Duration"
 msgstr "Dauer"
 
-#: tpl/player/index.html:206
+#: tpl/player/index.html:209
 msgid "Number"
 msgstr "Nummer"
 
-#: tpl/player/index.html:218
+#: tpl/player/index.html:221
 msgid "Date"
 msgstr "Datum"
 
-#: tpl/player/index.html:237
+#: tpl/player/index.html:240
 msgid "Songs"
 msgstr "Lieder"
 
-#: tpl/player/index.html:241
+#: tpl/player/index.html:244
 msgid "Days"
 msgstr "Tage"
 
-#: tpl/player/index.html:269
+#: tpl/player/index.html:272
 msgid ""
 "\n"
 "                            l-audio is ready, please select your songs \n"

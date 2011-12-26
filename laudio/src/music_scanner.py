@@ -34,6 +34,7 @@ from laudio.src.inc.config import LaudioConfig
 from laudio.src.inc.scan_progress import ScanProgressor
 from laudio.src.song.codecs.vorbis import VorbisSong
 from laudio.src.song.codecs.mp3 import MP3Song
+from laudio.player.models import Song, Artist, Album, Genre, Playlist
 
 
 class MusicScanner(object):
@@ -55,7 +56,7 @@ class MusicScanner(object):
                     path
                     if not given, the collectionpath from the settings is used
         """
-        self.musicDir = musicDir.encode("utf-8")
+        self.musicDir = musicDir.encode('utf-8')
         self.scanned = 0
         self.added = 0
         self.modified = 0
@@ -71,29 +72,29 @@ class MusicScanner(object):
         fileList = []
         for root, directories, files in os.walk(self.musicDir):
             for name in files:
-                if name.lower().endswith(".ogg") or name.lower().endswith(".oga") \
-                                                 or name.lower().endswith("mp3"):
+                if name.lower().endswith('.ogg') or name.lower().endswith('.oga') \
+                                                 or name.lower().endswith('mp3'):
                     fileList.append( os.path.join( root, name ) )
 
         # add a new scan entry
         num_files = len(fileList)
         self.scanLog.setTotal(num_files)
-        self._debugger.log("Music Scanner", "Begin scan of %i songs" % num_files)
+        self._debugger.log('Music Scanner', 'Begin scan of %i songs' % num_files)
         
         # now add the files to the db
         for name in fileList:
             
             # ogg vorbis
-            if name.lower().endswith(".ogg") or name.lower().endswith(".oga"):
+            if name.lower().endswith('.ogg') or name.lower().endswith('.oga'):
                 try:
                     self._addSong( VorbisSong(name) )
                 except mutagen.oggvorbis.OggVorbisHeaderError:
                     self.broken.append(name)
             # mp3
-            if name.lower().endswith(".mp3"):
+            if name.lower().endswith('.mp3'):
                 self._addSong( MP3Song(name) )
         
-        self._debugger.log("Music Scanner", "Finished scan")
+        self._debugger.log('Music Scanner', 'Finished scan')
         
         # reset count after finish
         self.scanLog.reset()
@@ -120,20 +121,20 @@ class MusicScanner(object):
     def rmNonExist(self):
         """Removes tracks from the database which are
         not on the drive any more"""
-        self._debugger.log("Music Scanner", "Removing non existent songs from database")
+        self._debugger.log('Music Scanner', 'Removing non existent songs from database')
         songs = Song.objects.all()
         for song in songs:
             if not os.path.exists(song.path):
                 song.delete()
-                self._debugger.log("Music Scanner", "Removed %s from db: file does \
-                                    not exist any more" % song.path)
+                self._debugger.log('Music Scanner', 'Removed %s from db: file does \
+                                    not exist any more' % song.path)
 
 
     def reset(self):
         """Removes all scanned entries from the db
         """
         # TODO: delete via raw sql
-        self._debugger.log("Music Scanner", "Resetting Database")
+        self._debugger.log('Music Scanner', 'Resetting Database')
         # Song.objects.all().delete() causes database errors
         for item in Song.objects.all():
             item.delete()
@@ -145,3 +146,4 @@ class MusicScanner(object):
             item.delete()
         for item in Playlist.objects.all():
             item.delete()
+        self._debugger.log('Music Scanner', 'Resetted Database')

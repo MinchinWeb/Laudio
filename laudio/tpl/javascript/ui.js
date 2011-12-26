@@ -135,6 +135,15 @@ $(document).ready(function () {
         }
     });
 
+    $('#browser #letter_browser td').click(function(){
+        if($(this).attr('id') === 'load_all_songs'){
+            search_db('');
+        } else {
+            search_db($(this).html());
+        }
+        $('#browser').slideUp();
+    });
+    
     /***************************************************************************
      * Playlist and Content
      **************************************************************************/
