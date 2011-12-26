@@ -16,7 +16,7 @@ Installed on the machine where your music collection resides, it can be accessed
 in the whole network. By forwarding Port 80 on your router,
 even your friends can listen to it over the Internet.
 
-Get a live preview on http://laudio-player.org/
+Get a live preview on http://l-audio.org/
 
 Dependencies
 ============

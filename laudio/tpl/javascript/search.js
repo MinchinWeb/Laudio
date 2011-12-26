@@ -55,7 +55,7 @@ Search.prototype.ajax_search = function (url, data) {
     // now that we got the get url, start query
     $('#' + self.songlist + ' table tbody').load(url, data, function (){
         $('#' + self.songlist + ' .loader').fadeOut('fast', function(){
-            $('#' + self.songlist + ' table tbody').fadeIn('slow');
+            $('#' + self.songlist + ' table tbody').fadeIn('fast');
             // set color to just playing song
             var lastSong,
                 context;
