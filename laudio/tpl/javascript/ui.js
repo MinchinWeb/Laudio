@@ -530,7 +530,7 @@ function playlist_context_menu(){
         {
             '{% trans 'Move down' %}': {
                 onclick: function(menuItem, menu) { 
-                    $($('#playlistSongs .selected').get().reverse()).each( function(){
+                    $($('#playlist .selected').get().reverse()).each( function(){
                         $(this).next().after($(this));
                     });
                     update_line_colors('#playlist table');
