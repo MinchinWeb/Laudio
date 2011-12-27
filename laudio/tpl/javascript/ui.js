@@ -1,3 +1,5 @@
+{% load i18n %}
+{% load theme %}
 /**
  * Laudio - A webbased musicplayer
  *
@@ -19,7 +21,7 @@
  *
  */
 
-var player, searching;
+var player, searching, playlist;
 var $last_selected;
 var shift_key = false;
 var ctrl_key = false;
@@ -27,6 +29,7 @@ var ctrl_key = false;
 $(document).ready(function () {
 
     player = new Player(soundManager);
+    playlist = new Playlist();
     searcher = new Search();
     $last_selected = player.id;
     
@@ -40,11 +43,13 @@ $(document).ready(function () {
         {% if user.get_profile.hidePlaylist %}
             $('#playlist').css('display', 'none');
             $('#playlist_header').css('display', 'none');
+            $('#playlist_link').removeClass('active');
         {% endif %}
         
         {% if user.get_profile.hideSidebar %}
             $('#sidebar').css('display', 'none');
             $('#sidebar_header').css('display', 'none');
+            $('#sidebar_link').removeClass('active');
         {% endif %}
         
     {% else %}
@@ -173,6 +178,8 @@ $(document).ready(function () {
     /***************************************************************************
      * Playlist and Content
      **************************************************************************/
+    collection_area_context_menu();
+    playlist_area_context_menu();
     // check for shift key pressed
     $(window).keydown(function (e) {
         if (e.which === 16) {
@@ -226,12 +233,18 @@ $(document).ready(function () {
         return false;
     });  
 
-
     // selecting lines
     $('#playlist tbody tr').click(function () {
         select_lines(this);
     });
 
+    // make playlist items sortable
+    $('#playlist table tbody').sortable({
+        revert: true,
+        stop: function(){
+            update_line_colors('#playlist table');
+        }
+    });
 });
 
 
@@ -343,3 +356,204 @@ function filter_lines(row){
     $('#browser_link').toggleClass('active');
 }
 
+/**
+ * Sets the context menu for the current elements in the list
+ */
+function collection_context_menu(){
+    // set context menu details
+    var songMenu = [
+        {
+            '{% trans 'Play' %}': {
+                onclick: function(menuItem, menu) { 
+                    play_row(this);
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/play.png',
+            }
+                        
+        }, $.contextMenu.separator, 
+        {
+            '{% trans 'Add to playlist' %}': {
+                onclick: function(menuItem, menu) {
+                    
+                    // append each element to the playlist
+                    $('#songlist .selected').each( function(){ 
+                        playlist.add(this);
+                    });
+                    
+
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/add.png',
+            }
+                        
+        }, 
+        {
+            '{% trans 'Download' %}': {
+                onclick: function(menuItem, menu) {
+                    $('#songlist .selected').each( function(){
+                        var id = row_to_id( $(this).attr('id') );
+                        window.open('{% url player:ajax_song_download %}?id=' + id);
+                    });
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/save2.png',
+            }
+        }, 
+        
+        $.contextMenu.separator, 
+                    
+        {
+            'Select All': function(){
+                $('#songlist tbody tr').addClass('selected');
+            }
+        }
+    ];
+    
+    // bind context menu to the collection
+    $(function() {
+        $('#songlist tbody tr').contextMenu(songMenu,
+            { 
+                theme:'vista',
+            }
+        ); 
+    });
+}
+
+/**
+ * Sets the context menu for the table body where no songs are
+ */
+function collection_area_context_menu(){
+    // set context menu details
+    var songAreaMenu = [
+        {
+            'Select All': function(){
+                $('#songlist tbody tr').addClass('selected');
+            }
+        }
+    ];
+    
+    // bind context menu to the collection
+    $(function() {
+        $('#library').contextMenu(songAreaMenu,
+            { 
+                theme:'vista',
+            }
+        ); 
+    });
+}
+
+/**
+ * Sets the context menu for the playlist
+ */
+function playlist_context_menu(){
+    // set context menu details
+    var playListMenu = [
+        {
+            '{% trans 'Play' %}': {
+                onclick: function(menuItem, menu) { 
+                    play_row(this);
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/play.png',
+            }
+                        
+        },$.contextMenu.separator, 
+        {
+            '{% trans 'Move up' %}': {
+                onclick: function(menuItem, menu) { 
+                    $('#playlist .selected').each( function(){
+                        $(this).prev().before($(this));
+                    });
+                    update_line_colors('#playlistSongs');
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/up.png',
+            }
+                        
+        },
+        {
+            '{% trans 'Move down' %}': {
+                onclick: function(menuItem, menu) { 
+                    $($('#playlistSongs .selected').get().reverse()).each( function(){
+                        $(this).next().after($(this));
+                    });
+                    update_line_colors('#playlist table');
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/down.png',
+            }
+        },
+        {
+            '{% trans 'Download' %}': {
+                onclick: function(menuItem, menu) {
+                    $('#playlist .selected').each( function(){
+                            var id = $(this).attr('title');
+                            window.open('{% url player:ajax_song_download %}?id=' + id);
+                    });
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/download.png',
+            }
+        },
+        {
+            '{% trans 'Remove' %}': {
+                onclick: function(menuItem, menu) {
+                    $('#playlist .selected').each( function(){
+                        $(this).remove();
+                    });
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/remove.png',
+            }
+        },  
+        $.contextMenu.separator, 
+                    
+        {
+            '{% trans 'Select all' %}': function(){
+                $('#playlist table tr').addClass('selected');
+            }
+        },
+        {
+            '{% trans 'Clear all' %}': {
+                onclick: function(menuItem, menu) {
+                    playlist.clear();
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/remove.png',
+            }
+        }
+    ];
+    
+    // bind context menu to the collection
+    $(function() {
+        $('#playlist table tr').contextMenu(playListMenu,
+            { 
+                theme:'vista',
+            }
+        ); 
+    });
+}
+
+
+/**
+ * Sets the context menu for the playlist area
+ */
+function playlist_area_context_menu(){
+    // set context menu details
+    var playListAreaMenu = [                    
+        {
+            '{% trans 'Select all' %}': function(){
+                $('#playlist tr').addClass('selected');
+            }
+        },
+        {
+            '{% trans 'Clear all' %}': {
+                onclick: function(menuItem, menu) {
+                    playlist.clear();
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/remove.png',
+            }
+        }
+    ];
+    
+    // bind context menu to the collection
+    $(function() {
+        $('#playlist').contextMenu(playListAreaMenu,
+            { 
+                theme:'vista',
+            }
+        ); 
+    });
+}

@@ -25,7 +25,46 @@
  * The playlist class which is used to handle everything playlist related
  */
 function Playlist() {
+    this.playlist = 'playlist';
+    this.playlist_header = 'playlist_header h1';
+    this.last_row_id = 1;
+}
 
+/**
+ * Adds a dom element to the current playlist
+ *
+ * @param row: The dom element from the songlist
+ */
+Playlist.prototype.add = function (row) {
+    var id = row_to_id( $(row).attr('id') );
+    var title = $(row).children('td:eq(1)').html();
+    var artist = $(row).children('td:eq(2)').html();
+
+    var self = this;
+    $('#' + this.playlist + ' table > tbody').append($('<tr>')
+        .attr('title', id)
+        .attr('id', 'plrow' + self.last_row_id+1)
+        .dblclick( function(){
+            play_row(this);
+        })
+        .click( function(){
+            select_lines(this);
+        })
+        .append($('<td>')
+            .html(artist + ' - ' + title)
+        )
+    );
+    update_line_colors('#playlist table');
+    playlist_context_menu();
+}
+
+
+/**
+ * Clears the playlist
+ */
+Playlist.prototype.clear = function () {
+    $('#' + this.playlist + ' tbody').empty('tr');
+    $('#' + this.playlist_header).html('Playlist');
 }
 
 /**
@@ -33,6 +72,6 @@ function Playlist() {
  *
  * @param name: The name of the playlist
  */
-Player.prototype.save = function (name) {
+Playlist.prototype.save = function (name) {
 
 }

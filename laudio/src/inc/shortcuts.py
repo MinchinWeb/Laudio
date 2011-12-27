@@ -63,6 +63,7 @@ def send_file(request, path):
     Send a file    
     
     Keyword arguments:
+    request -- the request object
     path -- the path to the file
     """                         
     # FIXME: This is a piece of shit that does not properly serve html5 audio
@@ -77,16 +78,21 @@ def send_file(request, path):
     return response
     
 
-def download_file(request, path):
+def download_file(request, song):
     """                                                                         
     Downloads a file
     
     Keyword arguments:
-    path -- the path to the file
+    request -- the request object
+    song -- the song object
     """
-    response = send_file(request, path, content_type=mimetypes.guess_type(path)[0])
-    filename = smart_str(path)
-    response['Content-Disposition'] = u'attachment; filename=%s' % smart_str(filename)
+    mime = mimetypes.guess_type(song.path)[0]
+    size = os.path.getsize(song.path)
+    wrapper = FileWrapper(file(song.path))
+    response = HttpResponse(wrapper, content_type=mime)
+    response['Content-Length'] = size
+    filename = '%i %s - %s' % (song.tracknumber, song.album.artist, song.title)
+    response['Content-Disposition'] = u'attachment; filename=%s' % filename.replace(' ', '_')
     return response
     
     

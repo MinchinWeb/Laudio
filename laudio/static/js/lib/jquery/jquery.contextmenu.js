@@ -201,7 +201,10 @@
 		// Show the context menu
 		show: function(t,e) {
             if(t.tagName.toLowerCase() === "tr"){
-                select_line(t.id, 1);
+                // select line only when not more than 1 line is selected
+                if($('.selected').length <= 1){
+                    select_lines(t);
+                }
             }
 			var cmenu=this, x=e.pageX, y=e.pageY;
 			cmenu.target = t; // Preserve the object that triggered this context menu so menu item click methods can see it

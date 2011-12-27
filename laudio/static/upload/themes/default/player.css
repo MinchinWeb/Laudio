@@ -523,6 +523,7 @@
             
             #songlist table .selected, #playlist table .selected {
                 background-color: #e5e5e5 !important;
+                color: #333 !important;
             }
             
             #songlist table .line1, #playlist table .line1 {
@@ -550,4 +551,11 @@
         padding: 80px 50px 50px 50px;
         text-align: center;
     }
+    
+/**
+ * Context menu
+ */
+.context-menu-item-inner {
+    background-size: 20px 20px;
+}
 

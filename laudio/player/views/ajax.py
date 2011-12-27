@@ -353,5 +353,5 @@ def ajax_song_download(request):
     """
     id = request.GET.get('id', '')
     song = get_object_or_404(Song, id=id)
-    return download_file(request, song.path)    
+    return download_file(request, song)    
 
