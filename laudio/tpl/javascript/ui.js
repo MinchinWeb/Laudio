@@ -245,6 +245,24 @@ $(document).ready(function () {
             update_line_colors('#playlist table');
         }
     });
+    
+    // playlist header links
+    $('#playlist_header #open_playlist').click( function(){
+        $('#playlist_header #header_menu #save_playlist').toggle('fade', 'fast');
+        $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast', function(){
+            $('#playlist #playlists').slideToggle();
+            $('#playlist_header #header_menu #cancel_playlist').toggle('fade', 'fast');
+        });
+    });
+    
+    $('#playlist_header #cancel_playlist').click( function(){
+        $('#playlist #playlists').slideToggle();
+        $('#playlist_header #header_menu #cancel_playlist').toggle('fade', 'fast', function(){
+            $('#playlist_header #header_menu #save_playlist').toggle('fade', 'fast');
+            $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast');        
+        });
+    });
+    
 });
 
 

@@ -360,19 +360,19 @@
             padding-left: 140px;
         }
 
-        #titlebar #playlist_header .header_menu {
+        #titlebar #playlist_header #header_menu {
             float: right;
             margin: 0;
             padding: 0;
         }
         
-            #titlebar #playlist_header .header_menu li {
+            #titlebar #playlist_header #header_menu li {
                 display: inline-block;
                 float: left;
                 margin-left: 1px;
             }
     
-                #titlebar #playlist_header .header_menu li a {
+                #titlebar #playlist_header #header_menu li a {
                     color: #222;
                     background-color: #ddd;
                     font-family: dejavusans;
@@ -383,9 +383,13 @@
                     padding: 0 3px;
                 }
                  
-                    #titlebar #playlist_header .header_menu li a:hover{
+                    #titlebar #playlist_header #header_menu li a:hover{
                             
                     }
+                    
+        #titlebar #playlist_header #header_menu #cancel_playlist {
+            display: none;
+        }
     
     #titlebar #songlist_header {
         height: 100%;
@@ -507,6 +511,27 @@
     border-right: 1px solid #ccc;
 }
 
+    #playlist #playlists {
+        float: left;
+        position: absolute;
+        width: 340px;
+        z-index: 3;
+        margin: 0;
+        padding: 0;
+        background-color: #ddd;
+        border-bottom: 1px solid #ccc;
+        box-shadow: 0px 0px 15px #222;
+        display: none;
+    }
+        #playlist #playlists li {
+            list-style-type: none;
+            cursor: pointer;
+            padding: 2px 0 2px 15px;
+        }
+
+    #playlist table {
+    }
+
     #songlist table, #playlist table {
         width: 100%;
     }
@@ -517,7 +542,11 @@
         }
     
             #songlist table .active, #playlist table .active {
-                background-color: #333 !important;
+                background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
+                background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
+                background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
+                background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
+                background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
                 color: #fefefe;
             }
             
