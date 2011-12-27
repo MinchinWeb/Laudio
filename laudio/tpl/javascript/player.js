@@ -229,6 +229,11 @@ Player.prototype.play = function (row) {
             });
 
             self.set_sidebar_info(); 
+            
+            // set cover
+            $.getJSON('{% url player:ajax_song_cover %}', { id: queryid }, function (json) {
+                $('#songcover').css('background-image', 'url(\'' + json.path + '\')');
+            });
         });
 
     });
@@ -387,10 +392,6 @@ Player.prototype.set_sidebar_info = function (id) {
     $('#' + this.songdata + ' tr:eq(7) td').html(this.codec);
     $('#' + this.songdata + ' tr:eq(8) td').html(this.bitrate + ' kb/s');
     
-    // set cover
-    $.getJSON('{% url player:ajax_song_cover %}', { id: this.id }, function (json) {
-        $('#songcover').css('background-image', 'url(\'' + json.path + '\')');
-    });
 }
 
 

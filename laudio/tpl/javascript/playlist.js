@@ -41,9 +41,10 @@ Playlist.prototype.add = function (row) {
     var artist = $(row).children('td:eq(2)').html();
 
     var self = this;
+    this.last_row_id++;
     $('#' + this.playlist + ' table > tbody').append($('<tr>')
         .attr('title', id)
-        .attr('id', 'plrow' + self.last_row_id+1)
+        .attr('id', 'plrow' + self.last_row_id)
         .dblclick( function(){
             play_row(this);
         })
