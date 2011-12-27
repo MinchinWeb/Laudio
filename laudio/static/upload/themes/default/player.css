@@ -523,7 +523,7 @@
             
             #songlist table .selected, #playlist table .selected {
                 background-color: #e5e5e5 !important;
-                color: #333 !important;
+                color: #000 !important;
             }
             
             #songlist table .line1, #playlist table .line1 {

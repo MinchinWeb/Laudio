@@ -191,7 +191,10 @@ to::
     
     <Directory /your/music/directory/>
 
-
+Versioning
+==========
+l-audio uses even stable odd unstable versioning, e.g. 0.4 would be stable whereas 
+0.5 would be unstable
 
 FAQ
 ===
