@@ -22,6 +22,9 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # System imports
 import os
+import tarfile
+import shutil
+import re
 
 # Django imports
 from django.conf import settings
@@ -32,6 +35,7 @@ from django.utils.translation import ugettext_lazy as _
 # Laudio imports
 from laudio.player.models import UserProfile, XMLAPIUser
 from laudio.src.inc.config import LaudioConfig
+from laudio.src.inc.shortcuts import handle_uploaded_file
 
 
 class SetupForm(forms.ModelForm):
@@ -264,12 +268,48 @@ class SettingsForm(forms.Form):
 
 
 class ThemeForm(forms.Form):
-    themepath = forms.FileField()
-    # TODO: finish form
+    theme = forms.FileField()
     
-    def clean_themepath(self):
+    def install_theme(self, upload_file):
         """
         Checks if a the theme is already in the themepath or the 
         theme is called default
+        
+        Keyword arguments
+        upload_file -- The upload file object which we get from request.FILES
         """
-        pass
+        name = upload_file.name
+        upload_theme_path = os.path.join( settings.MEDIA_ROOT, 'themes/' )
+        dest_name = '%s%s' % (upload_theme_path, name)
+        
+        # check if theres already a tar.gz file in the media with the same name
+        # if so, just delete it
+        if name in os.listdir( upload_theme_path ):
+            os.unlink( dest_name )
+        
+        # move tar.gz to the theme folder
+        handle_uploaded_file( upload_file, dest_name )
+
+        # check if theres already a folder like in the tar.gz
+        with tarfile.open(dest_name, 'r:*') as tar:
+            for file in tar:
+                # check if the themename overwrites the default theme which it 
+                # must not
+                topdir = file.name.split('/')[0]
+                if topdir == 'default':
+                    os.unlink(dest_name)
+                    raise TypeError('Theme must not be name default')
+                # check if the file contains invalid characters
+                if re.search(r'[^\w]', topdir):
+                    os.unlink(dest_name)
+                    raise TypeError('Theme name contains illegal characters')
+                # if themename is not default, remove the theme if its there
+                if topdir in os.listdir( upload_theme_path ):
+                    print 'rmtree'
+                    shutil.rmtree( os.path.join(upload_theme_path, topdir) )
+        
+            # finally extract the tar file
+            tar.extractall(upload_theme_path)
+        
+        # delete remaining tar.gz file
+        os.unlink(dest_name)

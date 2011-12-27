@@ -103,10 +103,15 @@
                         <th>{% trans 'Name' %}</th>
                         <th>{% trans 'Delete' %}</th>
                     </tr>
-                    {% for theme in themes %}
+                    {% for th in themes %}
                         <tr>
-                            <td>{{ theme }}</td>
-                            <td><a href="{% url player:config_settings_delete_theme theme %}">{% trans 'Delete' %}</a></td>
+                            <td>{{ th }}</td>
+                            <td> 
+                                {% if th != 'default' %}
+                                    <a href="{% url player:config_settings_delete_theme th %}">{% trans 'Delete' %}</a>
+                                {% endif %}
+                           </td>
+                                    
                         </tr>
                     {% endfor %}
                 </table>

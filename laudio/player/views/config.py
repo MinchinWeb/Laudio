@@ -22,6 +22,8 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 # System imports
 import os
+import tarfile
+import shutil
 
 # Django imports
 from django.contrib.auth.models import User
@@ -36,6 +38,7 @@ from laudio.src.inc.shortcuts import render as csrf_render
 from laudio.src.inc.decorators import check_login
 from laudio.src.inc.resource_checker import ResourceChecker
 from laudio.src.inc.config import LaudioConfig
+from laudio.src.inc.debugger import LaudioDebugger
 from laudio.player.models import XMLAPIUser
 from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
     UserEditProfileForm, UserEditForm, XMLAPIUserForm, ThemeForm
@@ -45,7 +48,14 @@ from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
 def config_settings(request):
     """The settings view
     """
-    themes = os.listdir( '%s/themes/' % (settings.MEDIA_ROOT) )
+    # get all files in the themepath that are folders
+    themes = []
+    themepath = os.path.join(settings.MEDIA_ROOT, 'themes/')
+    for entry in os.listdir( themepath ):
+        path = os.path.join(themepath, entry)
+        if os.path.isdir( path ):
+            themes.append(entry)
+    
     users = User.objects.all()
     xml_users = XMLAPIUser.objects.all()
     warnings = ResourceChecker().get_warnings()
@@ -244,10 +254,14 @@ def config_settings_new_theme(request):
     """The settings view for creating a new xml api user
     """
     # get form
+    debug = LaudioDebugger()
     if request.method == 'POST':
         theme_form = ThemeForm(request.POST, request.FILES)
         if theme_form.is_valid():
-            theme_form.save()
+            try:
+                theme_form.install_theme(request.FILES['theme'])
+            except (tarfile.CompressionError, tarfile.ReadError, TypeError) as e:
+                debug.log('Theme Upload', e)
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'theme_form': theme_form
@@ -270,6 +284,13 @@ def config_settings_delete_theme(request, themename):
     """
     if request.method == 'POST':
         # todo unlink theme
+        if themename != 'default':
+            themes_dir = os.path.join(settings.MEDIA_ROOT, 'themes/')
+            theme_path = os.path.join(themes_dir, themename)
+            shutil.rmtree(theme_path)
+        else:
+            debug = LaudioDebugger()
+            debug.log('Theme Deletion', 'Can not delete default theme')
         return HttpResponseRedirect(reverse('player:config_settings'))
     else:
         ctx = {

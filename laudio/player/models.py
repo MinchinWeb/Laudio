@@ -121,10 +121,13 @@ class XMLAPIUser(models.Model):
 
 # get themes in the themes directory
 THEMES = []
-for theme in os.listdir( os.path.join(settings.MEDIA_ROOT, 'themes/') ):
-    THEMES.append(
-        (theme, theme)
-        )
+themes_dir = os.path.join(settings.MEDIA_ROOT, 'themes/')
+for theme in os.listdir( themes_dir ):
+    path = os.path.join(themes_dir, theme)
+    if os.path.isdir(path):
+        THEMES.append(
+            (theme, theme)
+            )
 # activate streaming compression
 STREAM_QUALITY = (
     (1, '64 kbit/s'),

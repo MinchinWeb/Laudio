@@ -106,3 +106,16 @@ def post_var(request, name):
     request -- The request
     """
     return urllib.unquote_plus(request.POST.get(name, ''))
+    
+    
+def handle_uploaded_file(f, dest_path):
+    """Writes a file from one path to another path
+    
+    Keyword arguments:
+    f -- The file object
+    dest_path -- The path where you want to upload it to
+    """
+    destination = open(dest_path, 'wb+')
+    for chunk in f.chunks():
+        destination.write(chunk)
+    destination.close()
