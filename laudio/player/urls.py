@@ -53,6 +53,8 @@ urlpatterns += patterns('laudio.player.views.ajax',
     url(r'^ajax/song/cover/$', 'ajax_song_cover', name='ajax_song_cover'),
     # playlist data
     url(r'^ajax/playlist/list/$', 'ajax_playlist_list', name='ajax_playlist_list'),
+    url(r'^ajax/playlist/load/$', 'ajax_playlist_load', name='ajax_playlist_load'),
+    url(r'^ajax/playlist/save/$', 'ajax_playlist_save', name='ajax_playlist_save'),
 )
 
 # settings/config views

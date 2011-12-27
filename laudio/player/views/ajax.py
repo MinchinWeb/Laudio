@@ -366,3 +366,32 @@ def ajax_playlist_list(request):
         'playlists': playlists
     }
     return render(request, 'ajax/playlists.html', ctx) 
+    
+    
+@check_login("user")
+def ajax_playlist_load(request):
+    """
+    Returns all entries of a playlist
+    """
+    name = request.POST.get('name', '')
+    playlist = get_object_or_404(Playlist, user=request.user, name=name)
+    songs = playlist.songs.all()
+    ctx = {
+        'playlist': playlist,
+        'songs': songs
+    }
+    return render(request, 'ajax/playlist_songs.html', ctx) 
+
+
+@check_login("user")
+def ajax_playlist_save(request):
+    """
+    Returns all playlists of a user
+    """
+    success = 0
+    msg = ""
+    ctx = {
+        'success': success,
+        'msg': msg
+    }
+    return render(request, 'ajax/success.json', ctx) 

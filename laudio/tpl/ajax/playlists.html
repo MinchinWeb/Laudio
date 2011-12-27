@@ -1,3 +1,5 @@
 {% for playlist in playlists %}
-    <li>{{ playlist.name }}</li>
+    <li class="{% cycle 'line1' 'line2' %}" onclick="load_playlist(this)">{{ playlist.name }}</li>
 {% endfor %}
+<li class="line1" onclick="load_playlist(this)">test</li>
+<li class="line2" onclick="load_playlist(this)">test</li>

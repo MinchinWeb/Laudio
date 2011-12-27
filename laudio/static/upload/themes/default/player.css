@@ -139,7 +139,8 @@
                         overflow: hidden;
                     }
                     
-                        #browser #browsers div ul.list_browser li:hover,  #browser #browsers div ul.list_browser li.active{
+                        #browser #browsers div ul.list_browser li:hover,  
+                        #browser #browsers div ul.list_browser li.active {
                             background-color: #e5e5e5 !important;
                             cursor: pointer;
                         }
@@ -520,6 +521,19 @@
             padding: 2px 0 2px 15px;
         }
             
+            #playlists ul li:hover {
+                background-color: #e5e5e5 !important;
+                cursor: pointer;
+            }
+                    
+            #playlists ul li.line1 {
+                background-color: #ddd;
+            }
+                        
+            #playlists ul li.line2 {
+                background-color: #f6f6f6;
+            }         
+    
 #playlist {
     width: 340px;
     height: 100%;
@@ -528,19 +542,19 @@
     float: left;
 }
 
+    #songlist table, 
     #playlist table {
-    }
-
-    #songlist table, #playlist table {
         width: 100%;
     }
 
-        #songlist table tr:hover, #playlist table tr:hover {
+        #songlist table tr:hover, 
+        #playlist table tr:hover {
             background-color: #e5e5e5;
             cursor: pointer;
         }
     
-            #songlist table .active, #playlist table .active {
+            #songlist table .active, 
+            #playlist table .active {
                 background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
                 background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
                 background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%) !important;
@@ -549,16 +563,19 @@
                 color: #fefefe;
             }
             
-            #songlist table .selected, #playlist table .selected {
+            #songlist table .selected, 
+            #playlist table .selected {
                 background-color: #e5e5e5 !important;
                 color: #000 !important;
             }
             
-            #songlist table .line1, #playlist table .line1 {
+            #songlist table .line1, 
+            #playlist table .line1 {
                 background-color: #f6f6f6;
             }
         
-            #songlist table .line2, #playlist table .line2 {
+            #songlist table .line2, 
+            #playlist table .line2 {
             }
             
             #songlist table td, #playlist table td {

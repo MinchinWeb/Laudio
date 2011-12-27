@@ -247,21 +247,25 @@ $(document).ready(function () {
     });
     
     // playlist header links
+    // javascript callbacks, thats how you write them ;D
     $('#playlist_header #open_playlist').click( function(){
+        // fade in headers
         $('#playlist_header #header_menu #save_playlist').toggle('fade', 'fast');
-        $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast', function(){
-            $('#playlist').toggle('fade', 'fast', function(){
-                $('#playlists').toggle('fade', 'fast', function(){
-                    $('#playlists ul').fadeOut('fast');
-                    $('#playlists .loader').fadeIn('fast');
-                    
-                    var url = '{% url player:ajax_playlist_list %}';
-                    $('#playlists ul').load(url, function (){
-                        $('#playlists .loader').fadeOut('fast', function(){
-                            $('#playlists ul').fadeOut('fast');
-                        });
+        $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast');
+        // clear li items in the playlist list to avoid clutter
+        $('#playlists ul').empty('li');
+        // fade out the playlist entry list and the entries already in there
+        $('#playlist').fadeOut('fast', function(){
+            $('#playlists').fadeIn('fast', function(){
+                $('#playlists ul').fadeOut('fast', function(){
+                    $('#playlists .loader').fadeIn('fast', function(){
+                        var url = '{% url player:ajax_playlist_list %}';
+                        $('#playlists ul').load(url, function (){
+                            $('#playlists .loader').fadeOut('fast', function(){
+                                $('#playlists ul').fadeIn('fast');
+                            });
+                        });                        
                     });
-                    
                 });
             });
             $('#playlist_header #header_menu #cancel_playlist').toggle('fade', 'fast');
@@ -278,6 +282,7 @@ $(document).ready(function () {
         });
     });
     
+    
 });
 
 
@@ -290,6 +295,23 @@ function play_row(row){
     player.play(row);
 }
 
+/**
+ * Loads a playlist into the playlist list
+ *
+ * @param entry: The dom element which we have clicked
+ */
+function load_playlist(entry){
+    $('#playlists').toggle('fade', 'fast', function(){
+        $('#playlist').toggle('fade', 'fast', function(){
+            playlist.load($(entry).html());
+        });
+    });
+    $('#playlist_header #header_menu #cancel_playlist').toggle('fade', 'fast', function(){
+        $('#playlist_header #header_menu #save_playlist').toggle('fade', 'fast');
+        $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast');        
+    });
+    
+}
 
 /**
  * Function for selecting lines

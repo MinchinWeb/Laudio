@@ -30,6 +30,8 @@ function Playlist() {
     // this id gets incremented when a new item is added to the playlist to 
     // ensure unique row ids
     this.last_row_id = 0;
+    
+    this.url_load_playlist = '{% url player:ajax_playlist_load %}';
 }
 
 /**
@@ -67,7 +69,7 @@ Playlist.prototype.add = function (row) {
  */
 Playlist.prototype.clear = function () {
     $('#' + this.playlist + ' tbody').empty('tr');
-    $('#' + this.playlist_header).html('Playlist');
+    $('#' + this.playlist_header).html({% trans 'Playlist' %});
 }
 
 /**
@@ -76,5 +78,34 @@ Playlist.prototype.clear = function () {
  * @param name: The name of the playlist
  */
 Playlist.prototype.save = function (name) {
+
+}
+
+/**
+ * Loads a playlist
+ *
+ * @param name: The name of the playlist
+ */
+Playlist.prototype.load = function (name) {
+    // unbind previous items from context to prevent slowdown
+    $('#' + this.playlist + ' table tbody tr').unbind('contextmenu');
+    var data = { 
+        name: name
+    };
+    var self = this;
+    
+    // now that we got the get url, start query
+    $('#' + self.playlist + ' table tbody').fadeOut('fast', function(){
+        $('#' + self.playlist + ' .loader').fadeIn('fast', function(){
+            $('#' + self.playlist + ' table tbody').load(self.url_load_playlist, data, function (){
+                $('#' + self.playlist + ' .loader').fadeOut('fast', function(){
+                    $('#' + self.playlist + ' table tbody').fadeIn('fast');
+                    // update context menu
+                    playlist_context_menu();
+                });
+            }); 
+        });
+    });
+    
 
 }
