@@ -260,8 +260,8 @@ def config_settings_new_theme(request):
         if theme_form.is_valid():
             try:
                 theme_form.install_theme(request.FILES['theme'])
-            except (tarfile.CompressionError, tarfile.ReadError, TypeError) as e:
-                debug.log('Theme Upload', e)
+            except (tarfile.CompressionError, tarfile.ReadError, TypeError), msg:
+                debug.log('Theme Upload', msg)
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'theme_form': theme_form
