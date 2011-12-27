@@ -152,19 +152,25 @@ Player.prototype.play = function (row) {
         return false;
     }
     
-    // check if a song is still playing
+    // check if a song is still playing and if so remove active class
+    this.context = $('#' + row.id).parent().parent().parent().attr("id");
     if(this.id !== 0 &&
        this.manager.getSoundById(this.id) !== null &&
        this.manager.getSoundById(this.id).playState === 1){
         this.manager.destroySound(this.id);
-        $(row).removeClass('active');
+        var rowid;
+        if(this.context === this.songlist){
+            rowid = id_to_row(this.id, true);
+        } else {
+            rowid = id_to_plrow(this.id, true);
+        }
+        $(rowid).removeClass('active');
     }
-
-    select_lines(row);
+    $(row).addClass('active');
+    $(row).removeClass('selected');
     
     // get context
     var queryid;
-    this.context = $('#' + row.id).parent().parent().parent().attr("id");
     if (this.context === this.songlist) {
         this.id = row_to_id(row.id);
         queryid = this.id;

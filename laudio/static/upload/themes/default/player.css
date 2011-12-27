@@ -65,7 +65,7 @@
         line-height: 50px;
         text-align: center;
         font-size: 14pt;
-        text-decoration: underline;
+
     }
 
     #browser #browsers {
@@ -140,7 +140,7 @@
                     }
                     
                         #browser #browsers div ul.list_browser li:hover,  #browser #browsers div ul.list_browser li.active{
-                            background-color: #DCE9BE !important;
+                            background-color: #e5e5e5 !important;
                             cursor: pointer;
                         }
                         
@@ -295,11 +295,11 @@
         right: 16px;
         width: 34px;
         z-index: 3;
-        background-image: linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -o-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -moz-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -webkit-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
-        background-image: -ms-linear-gradient(bottom, rgb(46,38,51) 0%, rgb(40,31,46) 100%);
+        background-image: linear-gradient(bottom, rgb(46,38,50) 0%, rgb(40,31,46) 100%);
+        background-image: -o-linear-gradient(bottom, rgb(46,38,50) 0%, rgb(40,31,46) 100%);
+        background-image: -moz-linear-gradient(bottom, rgb(46,38,50) 0%, rgb(40,31,46) 100%);
+        background-image: -webkit-linear-gradient(bottom, rgb(46,38,50) 0%, rgb(40,31,46) 100%);
+        background-image: -ms-linear-gradient(bottom, rgb(46,38,50) 0%, rgb(40,31,46) 100%);
         padding: 16px 0;
         border: 1px solid #ccc;
         border-radius: 3px;
@@ -483,7 +483,7 @@
     
         #sidebar table th {
             text-align: right;
-            color: #555152;
+            color: #555153;
             font-weight: normal;
             width: 70px;
         }
@@ -512,16 +512,17 @@
     }
 
         #songlist table tr:hover, #playlist table tr:hover {
-            background-color: #DCE9BE !important;
+            background-color: #e5e5e5;
             cursor: pointer;
         }
     
             #songlist table .active, #playlist table .active {
-                background-color: #DCE9BE !important;
+                background-color: #333 !important;
+                color: #fefefe;
             }
             
             #songlist table .selected, #playlist table .selected {
-                background-color: #DCE9BE !important;
+                background-color: #e5e5e5 !important;
             }
             
             #songlist table .line1, #playlist table .line1 {

@@ -33,7 +33,7 @@
     height: 100%;
     width: 100%;
     overflow: auto;
-    background-color: #555152;
+    background-color: #333;
     padding: 0;
 }
 
@@ -43,7 +43,7 @@
         font-size: 16pt;
         text-align: center;
         width: 100%;
-        background-color: #99173C;
+        background-color: #99173D;
         color: #fefefe;
         font-weight: normal;
         border-bottom: 1px solid #444;
@@ -56,7 +56,7 @@
         list-style-type: none;
         padding: 0;
         height: 50px;
-        background-color: #555152;
+        background-color: #333;
     }
     
         #settings .utils li {
@@ -76,7 +76,7 @@
             }
             
                 #settings .utils li a:hover {
-                    background-color: #2E2633;
+                    background-color: #2E2634;
                 }
     
     #settings .section {
@@ -91,7 +91,7 @@
     
         #settings p.warning {
             color: #fefefe;
-            background-color: #99173C;
+            background-color: #99173D;
             line-height: 25px;
             padding: 0 30px;
             margin: -20px 0 20px 0;
@@ -114,7 +114,7 @@
             }
             
                 #settings form td span.helptext {
-                    background-color: #DCE9BE;
+                    background-color: #DCE9BF;
                     padding: 3px;
                     display: none;
                 }
