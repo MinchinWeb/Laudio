@@ -159,7 +159,7 @@ it must not contain any other characters than English characters, numbers and un
 If the themename does not follow these rules, the upload will fail!
 
 If you've made your changes, simply create a tar.gz or a tar.bz2 and upload it
-in the settings page. The tar file must have the themefolder on its top directory!
+in the settings page. The tar file must have the themefolder in its top directory!
 You may also just move your $theme_name folder into the
 laudio/static/upload/themes/default directory.
 
