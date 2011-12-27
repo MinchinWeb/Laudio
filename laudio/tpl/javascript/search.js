@@ -75,7 +75,7 @@ Search.prototype.ajax_search = function (url, data) {
             
             // update table sorting
             $('#' + self.songlist + ' table').trigger('update');
-                
+
             // update context menu
             //collection_context_menu();
         });

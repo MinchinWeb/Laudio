@@ -276,6 +276,15 @@
             <div id="songlist">
                 {% include "includes/loader.html" %}
                 <table>
+                    <thead style="display: none;">
+                        <tr>
+                            <th>{% trans 'Nr' %}</th>
+                            <th>{% trans 'Title' %}</th>
+                            <th>{% trans 'Artist' %}</th>
+                            <th>{% trans 'Album' %}</th>
+                            <th>{% trans 'Genre' %}</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <td class="load_notice">{% blocktrans %}

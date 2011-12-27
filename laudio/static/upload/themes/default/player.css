@@ -424,11 +424,11 @@
                 }
                 
                 #titlebar #songlist_header th.sortup:hover {
-                    background-image: url('img/asc.png');
+                    background-image: url('img/asc.png') !important;
                 }
                 
                 #titlebar #songlist_header th.sortdown:hover {
-                    background-image: url('img/desc.png');
+                    background-image: url('img/desc.png') !important;
                 }
 
 .collNr { width: 5%; }

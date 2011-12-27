@@ -57,7 +57,7 @@ $(document).ready(function () {
      * navigation links
      **************************************************************************/
     $('#browser_link').click(function () {
-        $('#browser').slideToggle();
+        $('#browser').toggle('slide');
         $(this).toggleClass('active');
     });
 
@@ -165,7 +165,7 @@ $(document).ready(function () {
         } else {
             searcher.artist_letters($(this).html());
         }
-        $('#browser').slideUp();
+        $('#browser').toggle('slide');
         $('#browser_link').toggleClass('active');
     });
     
@@ -204,24 +204,25 @@ $(document).ready(function () {
     /**
      * Tablesorting
      */
-    $('.collNr a').live('click', function() {
-        activate_tablesorter(this, [[0,0],[2,0], [3,0], [4,0]], [[0,1],[2,0], [3,0], [4,0]]);
+    $('#songlist table').tablesorter();
+    $('.collNr').click( function() {
+        activate_tablesorter(this, [[0,0],[2,0], [3,0], [4,0]], [[0,1], [2,0], [3,0], [4,0]] );
         return false;
     });
-    $('.collTitle a').live('click', function() {
+    $('.collTitle').click( function() {
         activate_tablesorter(this, [[1,0],[2,0], [3,0], [4,0]], [[1,1],[2,0], [3,0], [4,0]]);
         return false;
     });
-    $('.collArtist a').live('click', function() {
+    $('.collArtist').click( function() {
         activate_tablesorter(this, [[2,0], [3,0], [0,0]], [[2,1], [3,0], [0,0]]);
         return false;
     });
-    $('.collAlbum a').live('click', function() {
+    $('.collAlbum').click( function() {
         activate_tablesorter(this, [[3,0], [2,0], [0,0]], [[3,1], [2,0], [0,0]]);
         return false;
     });
-    $('.collGenre a').live('click', function() {
-        activate_tablesorter(this, [[4,0],[2,0], [3,0], [0,0]], [[4,1], [2,0], [3,0], [0,0]]);
+    $('.collGenre').click( function() {
+        activate_tablesorter(this, [[4,0], [2,0], [3,0], [0,0]], [[4,1], [2,0], [3,0], [0,0]]);
         return false;
     });  
 
@@ -300,22 +301,20 @@ function update_line_colors(id){
  * @param sorting: The sorting for the songlist
  */
 function activate_tablesorter (header_link, sorting_up, sorting_down) {
-    if($('#songlist table tbody tr').length){
-        $('#songlist table').tablesorter();
-        if($(header_link).attr('class') == 'sortup'){
-            var sorting = sorting_up;
-            $('#songlist_header table th a').removeClass('sortup');
-            $('#songlist_header table th a').removeClass('sortdown');
-            $(header_link).removeClass('sortup');
+    var sorting;
+    if($('#songlist table tbody tr').length > 1){
+        if($(header_link).hasClass('sortup')){
+            sorting = sorting_up;
+            $('#songlist_header th').removeClass('sortup');
+            $('#songlist_header th').removeClass('sortdown');
             $(header_link).addClass('sortdown');
         } else {
-            var sorting = sorting_down;
-            $('#songlist_header table th a').removeClass('sortup');
-            $('#songlist_header table th a').removeClass('sortdown');
-            $(header_link).removeClass('sortdown');
+            $('#songlist_header th').removeClass('sortup');
+            $('#songlist_header th').removeClass('sortdown');
+            sorting = sorting_down;
             $(header_link).addClass('sortup');
         }
-        $('#songlist table').trigger('sorton',[sorting]);
+        $('#songlist table').trigger('sorton', [sorting]);
         update_line_colors('songlist table');
     }
 }

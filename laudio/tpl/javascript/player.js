@@ -158,14 +158,9 @@ Player.prototype.play = function (row) {
        this.manager.getSoundById(this.id) !== null &&
        this.manager.getSoundById(this.id).playState === 1){
         this.manager.destroySound(this.id);
-        var rowid;
-        if(this.context === this.songlist){
-            rowid = id_to_row(this.id, true);
-        } else {
-            rowid = id_to_plrow(this.id, true);
-        }
-        $(rowid).removeClass('active');
     }
+    
+    $('.active').removeClass('active');
     $(row).addClass('active');
     $(row).removeClass('selected');
     
