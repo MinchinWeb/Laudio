@@ -449,15 +449,17 @@ function collection_context_menu(){
                         window.open('{% url player:ajax_song_download %}?id=' + id);
                     });
                 },
-                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/save2.png',
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/download.png',
             }
         }, 
         
         $.contextMenu.separator, 
-                    
         {
-            'Select All': function(){
-                $('#songlist tbody tr').addClass('selected');
+            '{% trans 'Select all' %}': {
+                onclick: function(menuItem, menu){
+                    $('#songlist tbody tr').addClass('selected');
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/selectall.png',
             }
         }
     ];
@@ -479,15 +481,18 @@ function collection_area_context_menu(){
     // set context menu details
     var songAreaMenu = [
         {
-            'Select All': function(){
-                $('#songlist tbody tr').addClass('selected');
+            '{% trans 'Select all' %}': {
+                onclick: function(menuItem, menu){
+                    $('#songlist tbody tr').addClass('selected');
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/selectall.png',
             }
         }
     ];
     
     // bind context menu to the collection
     $(function() {
-        $('#library').contextMenu(songAreaMenu,
+        $('#songlist').contextMenu(songAreaMenu,
             { 
                 theme:'vista',
             }
@@ -516,7 +521,7 @@ function playlist_context_menu(){
                     $('#playlist .selected').each( function(){
                         $(this).prev().before($(this));
                     });
-                    update_line_colors('#playlistSongs');
+                    update_line_colors('#playlist table');
                 },
                 icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/up.png',
             }
@@ -541,7 +546,7 @@ function playlist_context_menu(){
                             window.open('{% url player:ajax_song_download %}?id=' + id);
                     });
                 },
-                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/save2.png',
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/download.png',
             }
         },
         {
@@ -555,10 +560,12 @@ function playlist_context_menu(){
             }
         },  
         $.contextMenu.separator, 
-                    
         {
-            '{% trans 'Select all' %}': function(){
-                $('#playlist table tr').addClass('selected');
+            '{% trans 'Select all' %}': {
+                onclick: function(menuItem, menu){
+                    $('#playlist tr').addClass('selected');
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/selectall.png',
             }
         },
         {
@@ -589,8 +596,11 @@ function playlist_area_context_menu(){
     // set context menu details
     var playListAreaMenu = [                    
         {
-            '{% trans 'Select all' %}': function(){
-                $('#playlist tr').addClass('selected');
+            '{% trans 'Select all' %}': {
+                onclick: function(menuItem, menu){
+                    $('#playlist tr').addClass('selected');
+                },
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/selectall.png',
             }
         },
         {
