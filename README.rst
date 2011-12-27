@@ -194,7 +194,14 @@ to::
 Versioning
 ==========
 l-audio uses even stable odd unstable versioning, e.g. 0.4 would be stable whereas 
-0.5 would be unstable
+0.5 would be unstable.
+
+The numbers are given in the following way::
+
+    MAIN_VERSION.NEW_FEATURE.BUGFIX
+
+so 0.5.3.2 would be the unstable release 0.5, with the 3rd release of a minor 
+feature and the second bugfix release.
 
 FAQ
 ===
