@@ -27,7 +27,9 @@
 function Playlist() {
     this.playlist = 'playlist';
     this.playlist_header = 'playlist_header h1';
-    this.last_row_id = 1;
+    // this id gets incremented when a new item is added to the playlist to 
+    // ensure unique row ids
+    this.last_row_id = 0;
 }
 
 /**

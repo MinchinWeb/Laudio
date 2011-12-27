@@ -486,7 +486,7 @@ function playlist_context_menu(){
                             window.open('{% url player:ajax_song_download %}?id=' + id);
                     });
                 },
-                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/download.png',
+                icon: '{{ MEDIA_URL }}themes/{% theme user %}/img/save2.png',
             }
         },
         {
