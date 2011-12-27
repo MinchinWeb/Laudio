@@ -69,7 +69,6 @@ Playlist.prototype.add = function (row) {
  */
 Playlist.prototype.clear = function () {
     $('#' + this.playlist + ' tbody').empty('tr');
-    $('#' + this.playlist_header).html({% trans 'Playlist' %});
 }
 
 /**
@@ -79,6 +78,15 @@ Playlist.prototype.clear = function () {
  */
 Playlist.prototype.save = function (name) {
 
+}
+
+/**
+ * Sets the header of the playlists
+ *
+ * @param to: The name of the the new header
+ */
+Playlist.prototype.change_header = function (to) {
+    $('#' + this.playlist_header).html(to);
 }
 
 /**

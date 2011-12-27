@@ -246,7 +246,7 @@ $(document).ready(function () {
         }
     });
     
-    // playlist header links
+    // playlist header links open!
     // javascript callbacks, thats how you write them ;D
     $('#playlist_header #open_playlist').click( function(){
         // fade in headers
