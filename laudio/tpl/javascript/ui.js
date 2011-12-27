@@ -62,7 +62,7 @@ $(document).ready(function () {
      * navigation links
      **************************************************************************/
     $('#browser_link').click(function () {
-        $('#browser').toggle('slide');
+        $('#browser').toggle('fade');
         $(this).toggleClass('active');
     });
 
@@ -250,13 +250,28 @@ $(document).ready(function () {
     $('#playlist_header #open_playlist').click( function(){
         $('#playlist_header #header_menu #save_playlist').toggle('fade', 'fast');
         $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast', function(){
-            $('#playlist #playlists').slideToggle();
+            $('#playlist').toggle('fade', 'fast', function(){
+                $('#playlists').toggle('fade', 'fast', function(){
+                    $('#playlists ul').fadeOut('fast');
+                    $('#playlists .loader').fadeIn('fast');
+                    
+                    var url = '{% url player:ajax_playlist_list %}';
+                    $('#playlists ul').load(url, function (){
+                        $('#playlists .loader').fadeOut('fast', function(){
+                            $('#playlists ul').fadeOut('fast');
+                        });
+                    });
+                    
+                });
+            });
             $('#playlist_header #header_menu #cancel_playlist').toggle('fade', 'fast');
         });
     });
     
     $('#playlist_header #cancel_playlist').click( function(){
-        $('#playlist #playlists').slideToggle();
+        $('#playlists').toggle('fade', 'fast', function(){
+            $('#playlist').toggle('fade', 'fast');
+        });
         $('#playlist_header #header_menu #cancel_playlist').toggle('fade', 'fast', function(){
             $('#playlist_header #header_menu #save_playlist').toggle('fade', 'fast');
             $('#playlist_header #header_menu #open_playlist').toggle('fade', 'fast');        

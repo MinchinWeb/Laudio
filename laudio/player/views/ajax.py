@@ -32,7 +32,7 @@ from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 
 # Laudio imports
-from laudio.player.models import Song, Artist, Genre, Album
+from laudio.player.models import Song, Artist, Genre, Album, Playlist, PlaylistEntry
 import laudio.src.scrobbler as scrobbler
 from laudio.src.music_scanner import MusicScanner
 from laudio.src.cover_fetcher import CoverFetcher
@@ -355,3 +355,14 @@ def ajax_song_download(request):
     song = get_object_or_404(Song, id=id)
     return download_file(request, song)    
 
+
+@check_login("user")
+def ajax_playlist_list(request):
+    """
+    Returns all playlists of a user
+    """
+    playlists = Playlist.objects.filter(user=request.user)
+    ctx = {
+        'playlists': playlists
+    }
+    return render(request, 'ajax/playlists.html', ctx) 

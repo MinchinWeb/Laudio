@@ -501,33 +501,32 @@
 /**
  * Playlist
  */
-#playlist {
-    overflow-y: auto;
+#playlists {
+    height: 100%;
+    overflow: auto;
     width: 340px;
-    min-height: 100%;
+    display: none;
     float: left;
-    overflow-y: auto;
-    background-color: #fff;
-    border-right: 1px solid #ccc;
 }
-
-    #playlist #playlists {
-        float: left;
-        position: absolute;
-        width: 340px;
-        z-index: 3;
+    
+    #playlists ul {     
         margin: 0;
         padding: 0;
-        background-color: #ddd;
-        border-bottom: 1px solid #ccc;
-        box-shadow: 0px 0px 15px #222;
-        display: none;
     }
-        #playlist #playlists li {
+        
+        #playlists ul li {
             list-style-type: none;
             cursor: pointer;
             padding: 2px 0 2px 15px;
         }
+            
+#playlist {
+    width: 340px;
+    height: 100%;
+    overflow: auto;
+    background-color: #fff;
+    float: left;
+}
 
     #playlist table {
     }
@@ -574,6 +573,7 @@
 #songlist {
     height: 100%;
     overflow: auto;
+    border-left: 1px solid #ccc;
 }
 
     #songlist .load_notice {
