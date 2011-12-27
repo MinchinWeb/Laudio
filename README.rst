@@ -136,7 +136,48 @@ Then update the setup.py and by adding this to package_data::
 
     'laudio/locale/pl/*',
         'laudio/locale/pl/LC_MESSAGES/*',
-        
+
+How to create and deploy your own Themes
+========================================
+A sample theme is available in::
+
+    laudio/static/upload/themes/default
+
+To start a new one simply copy the theme and make changes to it.
+
+The theme must have the following layout, but you may have additional files and 
+folders in the $theme_name folder::
+
+    $theme_name/
+    $theme_name/main.css
+    $theme_name/player.css
+    $theme_name/settings.css
+    $theme_name/setup.css
+
+$theme_name is your own theme name. The theme name must not be 'default', also
+it must not contain any other characters than English characters, numbers and underscores (regex [a-zA-Z0-9_]).
+If the themename does not follow these rules, the upload will fail!
+
+If you've made your changes, simply create a tar.gz or a tar.bz2 and upload it
+in the settings page. You may also just move your $theme_name folder into the
+laudio/static/upload/themes/default directory.
+
+$theme_name/main.css
+--------------------
+Is loaded on every page
+
+$theme_name/player.css
+----------------------
+Only loaded on the player page
+
+$theme_name/settings.css
+------------------------
+Loaded on the login page, the profile page and the settings page
+
+$theme_name/setup.css
+---------------------
+Only loaded on the setup page
+
 
 Security
 ========

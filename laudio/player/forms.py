@@ -305,7 +305,6 @@ class ThemeForm(forms.Form):
                     raise TypeError('Theme name contains illegal characters')
                 # if themename is not default, remove the theme if its there
                 if topdir in os.listdir( upload_theme_path ):
-                    print 'rmtree'
                     shutil.rmtree( os.path.join(upload_theme_path, topdir) )
         
             # finally extract the tar file
