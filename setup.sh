@@ -19,6 +19,7 @@
 
 # general constants
 INSTALL_DIR="/usr/share/laudio"
+LAUDIO_CONF_DIR="/etc/laudio"
 STANDARD_HTTP_USER="www-data"
 CREATE_DIRS=(   "/usr/share/laudio" 
                 "/var/lib/laudio" 
@@ -60,7 +61,7 @@ case "$DISTRO" in
     0)
         echo "Installing for Ubuntu"
         echo "Installing Dependencies"
-        apt-get install python-lxml python-django python-mutagen apache2 sqlite3 libapache2-mod-wsgi python-pysqlite2 ttf-dejavu ffmpeg libapache2-mod-xsendfile
+        apt-get install python-lxml python-django python-mutagen apache2 sqlite3 libapache2-mod-wsgi python-pysqlite2 ttf-dejavu ffmpeg
         echo "Setting up Apache"
         APACHE=$STANDARD_HTTP_USER
         echo "Removing previous installations"
@@ -69,8 +70,8 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv dist/server_cfg/apache /etc/laudio
-        mv dist/server_cfg/lighttpd /etc/laudio
+        mv dist/server_cfg/apache $LAUDIO_CONF_DIR
+        mv dist/server_cfg/lighttpd $LAUDIO_CONF_DIR
         rm -rf /etc/apache2/conf.d/laudio_apache.conf 
         ln -s /etc/laudio/apache/laudio.conf /etc/apache2/conf.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
@@ -85,9 +86,13 @@ case "$DISTRO" in
         chown -R $APACHE:$APACHE $INSTALL_DIR
         chmod -R 0755 $INSTALL_DIR
         
+        echo "Symlinking fonts"
+        sudo rm $INSTALL_DIR/laudio/static/upload/themes/default/fonts/*
+        ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf $INSTALL_DIR/laudio/static/upload/themes/default/font/DejaVuSans-Bold.ttf
+        ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed.ttf $INSTALL_DIR/laudio/static/upload/themes/default/font/DejaVuSansCondensed.ttf
         
         echo "Creating Database"
-        python /usr/share/laudio/laudio/manage.py syncdb --noinput
+        python $INSTALL_DIR/laudio/manage.py syncdb --noinput
         chown -R $APACHE:$APACHE $DATABASE_FILE
         chmod -R 0755 $DATABASE_FILE
 
@@ -100,7 +105,6 @@ case "$DISTRO" in
         echo "Installing for Arch Linux"
         echo "Installing Dependencies"
         pacman -S django python-lxml mutagen apache python-pysqlite sqlite3 mod_wsgi ttf-dejavu ffmpeg
-        yaourt -S mod_xsendfile
         echo "Setting up Apache"  
         APACHE=$ARCH_HTTP_USER
         # check if the entry is already there
@@ -119,8 +123,8 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv dist/server_cfg/apache /etc/laudio
-        mv dist/server_cfg/lighttpd /etc/laudio
+        mv dist/server_cfg/apache $LAUDIO_CONF_DIR
+        mv dist/server_cfg/lighttpd $LAUDIO_CONF_DIR
         rm -rf /etc/httpd/conf/extra/laudio_apache.conf 
         ln -s /etc/laudio/apache/laudio.conf /etc/httpd/conf/extra/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
@@ -136,7 +140,7 @@ case "$DISTRO" in
         chmod -R 0755 $INSTALL_DIR
         
         echo "Creating Database"
-        python2 /usr/share/laudio/laudio/manage.py syncdb --noinput
+        python2 $INSTALL_DIR/laudio/manage.py syncdb --noinput
         chown -R $APACHE:$APACHE $DATABASE_FILE
         chmod -R 0755 $DATABASE_FILE
 
@@ -151,7 +155,7 @@ case "$DISTRO" in
     2)
         echo "Installing for Gentoo"
         echo "Installing Dependencies"
-        emerge -av dev-python/django dev-python/lxml media-libs/mutagen dev-python/pysqlite dev-db/sqlite www-apache/mod_wsgi www-servers/apache ttf-dejavu ffmpeg www-apache/mod_xsendfile
+        emerge -av dev-python/django dev-python/lxml media-libs/mutagen dev-python/pysqlite dev-db/sqlite www-apache/mod_wsgi www-servers/apache ttf-dejavu ffmpeg
         echo "Setting up Apache"
         APACHE=$STANDARD_HTTP_USER
         echo "Removing previous installations"
@@ -160,8 +164,8 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv dist/server_cfg/apache /etc/laudio
-        mv dist/server_cfg/lighttpd /etc/laudio
+        mv dist/server_cfg/apache $LAUDIO_CONF_DIR
+        mv dist/server_cfg/lighttpd $LAUDIO_CONF_DIR
         rm -rf /etc/apache2/vhosts.d/laudio_apache.conf
         ln -s /etc/laudio/apache/laudio.conf /etc/apache2/vhosts.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
@@ -177,7 +181,7 @@ case "$DISTRO" in
         chmod -R 0755 $INSTALL_DIR
         
         echo "Creating Database"
-        python /usr/share/laudio/laudio/manage.py syncdb --noinput
+        python $INSTALL_DIR/laudio/manage.py syncdb --noinput
         chown -R $APACHE:$APACHE $DATABASE_FILE
         chmod -R 0755 $DATABASE_FILE
 
