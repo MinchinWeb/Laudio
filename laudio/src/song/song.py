@@ -157,7 +157,6 @@ class Song(object):
                 album = AlbumModel.objects.get(name=self.album)
             except AlbumModel.DoesNotExist:
                 album = AlbumModel()
-                album.artist = artist
                 album.name = self.album
                 album.date = self.date
                 album.save()

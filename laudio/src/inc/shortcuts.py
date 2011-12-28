@@ -91,7 +91,7 @@ def download_file(request, song):
     wrapper = FileWrapper(file(song.path))
     response = HttpResponse(wrapper, content_type=mime)
     response['Content-Length'] = size
-    filename = '%i %s - %s' % (song.tracknumber, song.album.artist, song.title)
+    filename = '%i %s - %s' % (song.tracknumber, song.artist, song.title)
     response['Content-Disposition'] = u'attachment; filename=%s' % filename.replace(' ', '_')
     return response
     

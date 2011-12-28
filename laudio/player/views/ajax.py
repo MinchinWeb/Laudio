@@ -58,7 +58,7 @@ def ajax_search(request):
 	        LEFT JOIN player_album alb \
 		        ON sng.album_id = alb.id \
 	        LEFT JOIN player_artist art \
-		        ON alb.artist_id = art.id \
+		        ON sng.artist_id = art.id \
 	        LEFT JOIN player_genre gr \
 		        ON sng.genre_id = gr.id \
 	        WHERE \
@@ -100,7 +100,7 @@ def ajax_search_advanced(request):
 	        LEFT JOIN player_album alb \
 		        ON sng.album_id = alb.id \
 	        LEFT JOIN player_artist art \
-		        ON alb.artist_id = art.id \
+		        ON sng.artist_id = art.id \
 	        LEFT JOIN player_genre gr \
 		        ON sng.genre_id = gr.id \
 	        WHERE \
@@ -140,7 +140,7 @@ def ajax_search_artist_letter(request):
 	        LEFT JOIN player_album alb \
 		        ON sng.album_id = alb.id \
 	        LEFT JOIN player_artist art \
-		        ON alb.artist_id = art.id \
+		        ON sng.artist_id = art.id \
 	        LEFT JOIN player_genre gr \
 		        ON sng.genre_id = gr.id \
 	        WHERE \

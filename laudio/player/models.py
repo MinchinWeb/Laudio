@@ -47,7 +47,6 @@ class Artist(models.Model):
 
 
 class Album(models.Model):
-    artist = models.ForeignKey(Artist)
     name = models.CharField(_('Album'), max_length=150)
     date = models.CharField(_('Year'), max_length=100);
     modified = models.DateTimeField(_('Modified'), auto_now=True)
@@ -66,8 +65,9 @@ class Genre(models.Model):
 
 class Song(models.Model):
     title = models.CharField(_('Title'), max_length=250)
-    album = models.ForeignKey(Album)
-    genre = models.ForeignKey(Genre)
+    album = models.ForeignKey('Album')
+    genre = models.ForeignKey('Genre')
+    artist = models.ForeignKey('Artist')
     codec = models.CharField(_('Codec'), max_length=10)
     tracknumber = models.IntegerField(_('Tracknumber'))
     path = models.FilePathField(_('Path'))

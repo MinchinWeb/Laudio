@@ -2,7 +2,7 @@
   "id": "{{ song.id }}",
   "tracknr": "{{ song.tracknumber }}",
   "title": "{{ song.title }}",
-  "artist": "{{ song.album.artist }}",
+  "artist": "{{ song.artist }}",
   "album": "{{ song.album }}",
   "genre": "{{ song.genre }}",
   "codec": "{{ song.codec }}",

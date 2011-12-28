@@ -46,7 +46,7 @@ class CoverFetcher(object):
         song -- The django model of the song we want to get the cover from
         request -- The request object
         """
-        self.artist = song.album.artist.name.encode('utf-8')
+        self.artist = song.artist.name.encode('utf-8')
         self.album = song.album.name.encode('utf-8')
 
         # standardpath, we default to this if no cover is being found
