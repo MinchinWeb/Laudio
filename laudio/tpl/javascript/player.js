@@ -498,7 +498,13 @@ Player.prototype.current_row_id = function () {
  * @return: Returns true if the player is playing a song, otherwise false
  */
 Player.prototype.is_playing = function () {
-    return !this.manager.getSoundById(this.id).paused;
+    var song = this.manager.getSoundById(this.id);
+    if(song === undefined){
+        return false;
+    } else {
+        return !song.paused;
+    }
+    
 }
 
 /**
