@@ -50,16 +50,17 @@ class CoverFetcher(object):
         self.album = song.album.name.encode('utf-8')
 
         # standardpath, we default to this if no cover is being found
-        self.cover = settings.STATIC_URL + 'img/nocover.png'
+        self.default_cover = settings.STATIC_URL + 'img/nocover.png'
         
     
     def fetch(self):
         """ Fetches the songcover from different services"""
         # get cover from last.fm        
         cover = self._lastFM()
-        if cover is not None:
-            self.cover = cover
-            return self.cover
+        if cover == None:
+            return self.default_cover
+        else:
+            return cover
         
     
     def _lastFM(self):
@@ -77,18 +78,16 @@ class CoverFetcher(object):
         url_values = urllib.urlencode(data)
         url = 'http://ws.audioscrobbler.com/2.0/'
         full_url = url + '?' + url_values
-        
         try:
             response = urllib2.urlopen(full_url)
             elements = etree.fromstring(response.read())
             if elements.get('status') == 'ok':
                 try:
-                    cover = elements.xpath('/lfm/album/image[@size="extralarge"]/text()')[0]
-                    return cover
+                    return elements.xpath('/lfm/album/image[@size="extralarge"]/text()')[0]
                 except IndexError:
-                    return self.cover
+                    return None
             else:
-                return self.cover
+                return None
 
         except (URLError, HTTPError, UnicodeEncodeError):
-            return self.cover
+            return None
