@@ -34,6 +34,7 @@ LAUDIO_CFG = {
 }
 CONF = LaudioConfig(LAUDIO_CFG)
 LAUDIO_URL = CONF.url
+#LAUDIO_URL = ''
 LAUDIO_SQLITE_PATH = '/var/lib/laudio/laudio.db'
 DEBUG_LOG = '/var/log/laudio/debug.log'
 SCAN_LOG = '/var/log/laudio/scan.log'

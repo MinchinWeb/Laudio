@@ -399,7 +399,7 @@ Player.prototype.set_sidebar_info = function () {
  */
 Player.prototype.set_title_info = function (id) {
     var info = this.title + " - " + this.artist;
-    document.title = info;    
+    document.title = decode_html_entities(info);    
 }
 
 /**
