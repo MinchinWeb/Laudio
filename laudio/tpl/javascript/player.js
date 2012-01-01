@@ -229,6 +229,7 @@ Player.prototype.play = function (row) {
             });
 
             self.set_sidebar_info(); 
+            self.set_title_info();
             
             // set cover
             $.getJSON('{% url player:ajax_song_cover %}', { id: queryid }, function (json) {
@@ -369,9 +370,8 @@ Player.prototype.scrobble = function (id) {
 /**
  * Sets the values for the sidebar
  *
- * @param id: The id of the song, integer
  */
-Player.prototype.set_sidebar_info = function (id) {
+Player.prototype.set_sidebar_info = function () {
     // calculate date
     var mins,
         secs;
@@ -394,6 +394,13 @@ Player.prototype.set_sidebar_info = function (id) {
     
 }
 
+/**
+ * Sets the value for the <title> element
+ */
+Player.prototype.set_title_info = function (id) {
+    var info = this.title + " - " + this.artist;
+    document.title = info;    
+}
 
 /**
  * Sets the database values of the sidebar
