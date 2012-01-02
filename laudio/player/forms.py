@@ -135,46 +135,10 @@ class XMLAPIUserEditForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    lastFMPass1 = forms.CharField(label=_('Last.fm Password'), widget=forms.PasswordInput)
-    lastFMPass2 = forms.CharField(label=_('Confirm Last.fm password'), widget=forms.PasswordInput)
-    libreFMPass1 = forms.CharField(label=_('Libre.fm Password'), widget=forms.PasswordInput)
-    libreFMPass2 = forms.CharField(label=_('Confirm Libre.fm password'), widget=forms.PasswordInput)
 
     class Meta:
         model = UserProfile
-        exclude = ('user', 'lastFMPass', 'libreFMPass')
-
-    def clean_lastFMPass2(self):
-        """Password confirmation checker
-        """
-        lastFMPass1 = self.cleaned_data.get("lastFMPass1", "")
-        lastFMPass2 = self.cleaned_data["lastFMPass2"]
-        if lastFMPass1 != lastFMPass2:
-            raise forms.ValidationError(_("The two password fields didn't match."))
-
-    def clean_libreFMPass2(self):
-        """Password confirmation checker
-        """
-        libreFMPass1 = self.cleaned_data.get("libreFMPass1", "")
-        libreFMPass2 = self.cleaned_data["libreFMPass2"]
-        if libreFMPass1 != libreFMPass2:
-            raise forms.ValidationError(_("The two password fields didn't match."))
-
-    def save(self, commit=True):
-        """Sets the password for the user on save
-        
-        Keyword arguments:
-        commit -- True if the values should be saved into the db
-        """
-        profile = super(UserProfileForm, self).save(commit=False)
-        # dont save if the password is empty
-        if self.cleaned_data["lastFMPass1"] == '':
-            profile.lastFMPass = self.cleaned_data["lastFMPass1"]
-        if self.cleaned_data["libreFMPass1"] == '':
-            profile.libreFMPass = self.cleaned_data["libreFMPass1"]
-        if commit:
-            profile.save()
-        return user
+        exclude = ('user',)
 
 
 class UserForm(forms.ModelForm):
@@ -249,7 +213,7 @@ class UserEditForm(forms.ModelForm):
 class UserEditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user', 'lastFMPass', 'libreFMPass')
+        exclude = ('user',)
 
 
 class SettingsForm(forms.Form):
