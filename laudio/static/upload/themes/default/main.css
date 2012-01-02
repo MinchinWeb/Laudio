@@ -107,6 +107,14 @@ textarea {
     width: 258px;
 }
 
+input.correct {
+    background-color: #DCE9BD;
+}
+
+input.incorrect {
+    background-color: #F66767;
+}
+
 /**
  * Navigation
  */

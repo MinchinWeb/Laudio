@@ -59,3 +59,37 @@ $(document).ajaxSend(function(event, xhr, settings) {
         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
     }
 });
+
+// js actions which are available in the whole applicatin
+$(document).ready(function () {
+    
+    // password check
+    $('#id_password1').keyup(function(){
+        validate_password($(this), $('#id_password2'))
+    });
+    $('#id_password2').keyup(function(){
+        validate_password($(this), $('#id_password1'))
+    });
+
+});
+
+
+/**
+ * Function which adds or removes the correct classes on 2 fields
+ *
+ * @param $input1: The first jquery input element
+ * @param $input2: The second jquery input element
+ */
+function validate_password($input1, $input2){
+    if($input1.val() === $input2.val()){
+        $input1.removeClass('incorrect');
+        $input2.removeClass('incorrect');
+        $input1.addClass('correct');
+        $input2.addClass('correct');
+    } else {
+        $input1.removeClass('correct');
+        $input2.removeClass('correct');
+        $input1.addClass('incorrect');
+        $input2.addClass('incorrect');
+    }
+}
