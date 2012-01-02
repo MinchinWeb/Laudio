@@ -135,8 +135,8 @@ class XMLAPIUserEditForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
-    password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Confirm password'), widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=False, widget=forms.PasswordInput)
     is_superuser = forms.BooleanField(label=_('Superuser'),
         help_text=_('Sets if the user is a superuser. If a superuser exists, \
                     only superusers can view the settings dialogue'), required=False)
