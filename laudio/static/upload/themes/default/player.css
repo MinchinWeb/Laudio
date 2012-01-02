@@ -48,7 +48,6 @@
     left: 0;
     position: absolute;
     z-index: 2;
-    background-color: #fefefe;
     padding-top: 37px;
     display: none; 
 }
@@ -56,6 +55,7 @@
 
 #browser {
     font-family: dejavusans;
+    background-color: #f5f5f5;
 }
 
     #browser #browser_headers div {
@@ -65,7 +65,6 @@
         line-height: 50px;
         text-align: center;
         font-size: 14pt;
-
     }
 
     #browser #browsers {
@@ -83,7 +82,7 @@
             width: 23.75%;
             margin-left: 1%;
             height: 100%;
-            background-color: #ddd;
+            background-color: #ccc;
         }
         
         #browser #browsers div:first-of-type {
@@ -91,22 +90,21 @@
         }
         
             #browser #browsers div table {
-                background-color: #fefefe;
                 border: 1px solid #ddd;
                 height: 100%;
                 width: 100%;
             }
             
                 #browser #browsers div#letter_browser table td {
-                    border: 1px solid #aaa;
-                    background-color: #ddd;
+                    border: 1px solid #ccc;
+                    background-color: #eee;
                     text-align: center;
                     width: 25%;
                     cursor: pointer;
                 }
 
                     #browser #browsers div#letter_browser table td:hover {
-                        background-color: #ccc;
+                        background-color: #ddd;
                     }
 
                 #browser #browsers div div.border {
@@ -123,7 +121,7 @@
                     padding: 0;
                     height: 100%;
                     width: 100%;
-                    background-color: #fefefe;
+                    background-color: #f5f5f5;
                     float: left;
                     overflow: auto;
                 }
@@ -141,15 +139,15 @@
                     
                         #browser #browsers div ul.list_browser li:hover,  
                         #browser #browsers div ul.list_browser li.active {
-                            background-color: #e5e5e5 !important;
+                            background-color: #ddd !important;
                             cursor: pointer;
                         }
                         
                         #browser #browsers div ul.list_browser li.line1 {
-                            background-color: #f6f6f6;
                         }
                         
                         #browser #browsers div ul.list_browser li.line2 {
+                            background-color: #eee;                        
                         }
                     
 
@@ -454,6 +452,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    background-color: #f5f5f5;
 }
 
 
@@ -538,7 +537,6 @@
     width: 340px;
     height: 100%;
     overflow: auto;
-    background-color: #fff;
     float: left;
 }
 
@@ -549,7 +547,7 @@
 
         #songlist table tr:hover, 
         #playlist table tr:hover {
-            background-color: #e5e5e5;
+            background-color: #ddd;
             cursor: pointer;
         }
     
@@ -565,17 +563,16 @@
             
             #songlist table .selected, 
             #playlist table .selected {
-                background-color: #e5e5e5 !important;
-                color: #000 !important;
+                background-color: #ddd !important;
             }
             
             #songlist table .line1, 
             #playlist table .line1 {
-                background-color: #f6f6f6;
             }
         
             #songlist table .line2, 
             #playlist table .line2 {
+                background-color: #eee;
             }
             
             #songlist table td, #playlist table td {

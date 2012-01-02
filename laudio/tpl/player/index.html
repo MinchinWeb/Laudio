@@ -37,7 +37,7 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td id="load_all_songs">{% trans 'All' %}</td>
+                            <td colspan="4" id="load_all_songs">{% trans 'All' %}</td>
                         </tr>
                         <tr>
                             <td>A</td>
@@ -100,9 +100,11 @@
                 <div class="border">
                     <ul class="list_browser">
                         {% for artist in artists %}
+                            {% if artist.name %}
                             <li class="{% cycle 'line1' 'line2' %}" 
                                 onclick="filter_lines(this);"
                                 ondblclick="load_line(this);">{{ artist }}</li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
@@ -111,9 +113,11 @@
                 <div class="border">
                     <ul class="list_browser">
                         {% for album in albums %}
+                            {% if album.name %}
                             <li class="{% cycle 'line1' 'line2' %}" 
                                 onclick="filter_lines(this);"
                                 ondblclick="load_line(this);">{{ album }}</li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
@@ -122,9 +126,11 @@
                 <div class="border">
                     <ul class="list_browser">
                         {% for genre in genres %}
+                            {% if genre.name %}
                             <li class="{% cycle 'line1' 'line2' %}" 
                                 onclick="filter_lines(this);"
                                 ondblclick="load_line(this);">{{ genre }}</li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
