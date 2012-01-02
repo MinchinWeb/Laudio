@@ -238,7 +238,7 @@ Yes the following keyboard shortcuts are supported:
 * [alt] + [i]: index page
 
 ``Important``: Browsers implement this differently. In the case of Firefox you have
-to press [shift][alt] instead of [alt], Opera uses shift+esc instead of [alt]
+to press [shift] + [alt] instead of [alt], Opera uses [shift] + [esc] instead of [alt]
 
 See http://en.wikipedia.org/wiki/Access_key#Access_in_different_browsers for more infos
 
