@@ -209,33 +209,33 @@ Are keyboard shortcuts available?
 ---------------------------------
 Yes the following keyboard shortcuts are supported:
 
-* [alt] [n]: next song
+* [alt] + [n]: next song
 
-* [alt] [b]: previous song
+* [alt] + [b]: previous song
 
-* [alt] [p]: play/pause
+* [alt] + [p]: play/pause
 
-* [alt] [s]: shuffle on/off
+* [alt] + [s]: shuffle on/off
 
-* [alt] [r]: repeat on/off
+* [alt] + [r]: repeat on/off
 
-* [alt] [m]: mute on/off
+* [alt] + [m]: mute on/off
 
-* [alt] [j]: jump to currently playing song
+* [alt] + [j]: jump to currently playing song
 
-* [alt] [w]: toggle sidebar
+* [alt] + [w]: toggle sidebar
 
-* [alt] [q]: toggle playlist
+* [alt] + [q]: toggle playlist
 
-* [alt] [e]: toggle browser
+* [alt] + [e]: toggle browser
 
-* [alt] [u]: userprofile
+* [alt] + [u]: userprofile
 
-* [alt] [x]: settings
+* [alt] + [x]: settings
 
-* [alt] [l]: login/logout
+* [alt] + [l]: login/logout
 
-* [alt] [i]: index page
+* [alt] + [i]: index page
 
 ``Important``: Browsers implement this differently. In the case of Firefox you have
 to press [shift][alt] instead of [alt], Opera uses shift+esc instead of [alt]
