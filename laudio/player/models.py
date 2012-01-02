@@ -158,7 +158,7 @@ class UserProfile(models.Model):
                     hides the sidebar in the Collection view so you have \
                     to click sidebar to view it'), blank=True)
     theme = models.CharField(_('l-audio theme'), max_length=100, choices=THEMES, 
-        help_text=_('Choose a custom theme'))
+        help_text=_('Choose a custom theme'), blank=True)
     stream_transcoding = models.BooleanField(_('Enable stream transcoding'),
         help_text=_('Activate this if you have a slow internet connection \
                     and want l-audio to deliver a lower bandwidth stream'), blank=True)

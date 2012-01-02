@@ -101,7 +101,8 @@
             color: #fefefe;
             background-color: #99173D;
             line-height: 25px;
-            padding: 0 30px;
+            padding: 0;
+            text-align: center;
             border: 1px solid #ccc;
             border-bottom: 0;
             border-top: 0;
