@@ -134,13 +134,6 @@ class XMLAPIUserEditForm(forms.ModelForm):
         return user
 
 
-class UserProfileForm(forms.ModelForm):
-
-    class Meta:
-        model = UserProfile
-        exclude = ('user',)
-
-
 class UserForm(forms.ModelForm):
     password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
     password2 = forms.CharField(label=_('Confirm password'), widget=forms.PasswordInput)
@@ -174,6 +167,13 @@ class UserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        exclude = ('user',)
 
 
 class UserEditForm(forms.ModelForm):

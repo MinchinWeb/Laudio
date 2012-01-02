@@ -104,9 +104,9 @@ def config_settings_new_user(request):
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
+            user = user_form.save()
             profile_form.save(commit=False)
-            profile_form.user = User.objects.get(username=user_form.username)
+            profile_form.user = user.id
             profile_form.save()
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
