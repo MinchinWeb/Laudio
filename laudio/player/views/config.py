@@ -105,9 +105,9 @@ def config_settings_new_user(request):
         profile_form = UserProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            profile_form.save(commit=False)
-            profile_form.user = user.id
-            profile_form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'user_form': user_form,
@@ -135,12 +135,10 @@ def config_settings_edit_user(request, userid):
     if request.method == 'POST':
         user = get_object_or_404(User, id=userid)
         user_profile = user.get_profile()
-        user_form = UserForm(request.POST, instance=user)
-        profile_form = UserProfileForm(request.POST, instance=user_profile)
+        user_form = UserEditForm(request.POST, instance=user)
+        profile_form = UserEditProfileForm(request.POST, instance=user_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            profile_form.save(commit=False)
-            profile_form.user = User.objects.get(username=user_form.username)
             profile_form.save()
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {

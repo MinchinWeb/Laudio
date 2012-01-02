@@ -73,14 +73,14 @@ def setup(request):
         if request.method == 'POST':
             form = SetupForm(request.POST)
             if form.is_valid():
-                userform = form.save(commit=False)
-                userform.is_active = True
-                userform.is_superuser = True
-                userform.is_staff = True
-                userform.save()
+                user = form.save(commit=False)
+                user.is_active = True
+                user.is_superuser = True
+                user.is_staff = True
+                user.save()
                 # create a profile
                 profile = UserProfile()
-                profile.user = User.objects.get(username=userform.username)
+                profile.user = user
                 profile.save()
                 return HttpResponseRedirect(reverse('player:index'))
         ctx = {
