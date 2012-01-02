@@ -78,6 +78,10 @@ $(document).ready(function () {
         $('#sidebar_header').toggle('slide');
     });
 
+    $('.load_notice').click(function () {
+        $('#browser').toggle('fade');
+        $(this).toggleClass('active');
+    });
 
     /***************************************************************************
      * controls
