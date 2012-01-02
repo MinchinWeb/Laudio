@@ -157,6 +157,10 @@ $(document).ready(function () {
     /**
      * Search
      */
+     
+    // autofocus on search input
+    $('#search input')[0].focus(); 
+     
     var timer;
     $('#search input').keyup(function(e) {
         if($(this).attr('value').length >= 2){
