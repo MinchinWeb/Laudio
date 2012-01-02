@@ -126,7 +126,8 @@ class LaudioConfig(object):
         sym_to = os.path.join(settings.STATIC_ROOT, 'audio')
         if os.path.exists(sym_to):
             os.unlink(sym_to)
-        os.symlink(sym_from, sym_to)
+        if self.collectionPath != '' and os.path.exists(sym_from):
+            os.symlink(sym_from, sym_to)
         # music settings
         config.set('settings', 'collection_path', str(self.collectionPath))
         config.set('settings', 'collection_startup', str(self.collectionStartup))

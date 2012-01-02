@@ -242,13 +242,14 @@ class SettingsForm(forms.Form):
         help_text=_('Activates debugging (Writes detailed logs and activates the \
                     Flash debug pluging)'))
     
-    def clean_collection(self):
+    def clean_collection_path(self):
         """We move down folder by folder from the given path and check,
         if we can cd into the folder (we need a+x to cd into it).
         If we get any errors, we stop and tell the user to execute the right
         commands."""
         data = self.cleaned_data['collection_path']
-
+        if not os.path.exists(data):
+            raise forms.ValidationError( _('Path %(path)s does not exist!') % {'path': data} )
         checkPath = data.split('/')
         checkedPath = ''
         for p in checkPath:            
