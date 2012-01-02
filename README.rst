@@ -69,7 +69,7 @@ Then run the developement server::
 
     $ python laudio/manage.py runserver
 
-Laudio is now available at http://localhost:8000/
+l-audio is now available at http://localhost:8000/
 
 Translation
 ===========
