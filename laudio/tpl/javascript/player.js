@@ -154,10 +154,11 @@ Player.prototype.play = function (row) {
     
     // check if a song is still playing and if so remove active class
     this.context = $('#' + row.id).parent().parent().parent().attr("id");
-    if(this.id !== 0 &&
-       this.manager.getSoundById(this.id) !== null &&
-       this.manager.getSoundById(this.id).playState === 1){
-        this.manager.destroySound(this.id);
+    if(this.id !== 0 && this.manager.getSoundById(this.id).playState === 1){
+        var song = this.manager.getSoundById(this.id);
+        if(song !== undefined){
+            this.manager.destroySound(this.id);
+        }
     }
     
     $('.active').removeClass('active');

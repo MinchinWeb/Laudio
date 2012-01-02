@@ -16,14 +16,25 @@
     <div id="content">
 
         <div id="settings">
-            <h1>{% trans 'Edit an XML API user' %}</h1>
-            <form method="post" class="section" action="{% url player:xml_config_settings_edit_user userid %}">
-                {% csrf_token %}
-                <table>
-                    {{ user_form.as_table }}
-                </table>
-                <p class="submit"><input type="submit" value="{% blocktrans %}update{% endblocktrans %}" /></p>
-            </form>
+            <h1>{% blocktrans with username=config_user.username %}Edit XML API user {{ username }}{% endblocktrans %}</h1>
+            <div class="section">
+                <form method="post" action="{% url player:xml_config_settings_edit_user config_user.id %}">
+                    {% csrf_token %}
+                    <table>
+                        {% for field in user_form %}
+                            <tr>
+                                <th>{{ field.label }}
+                                {% if field.help_text %}
+                                    <br /><span class="helptext">{{ field.help_text }}</span></th>
+                                {% endif %}
+                                <td>{{ field }}</td>
+                                <td>{{ field.errors }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <p class="submit"><input type="submit" value="{% blocktrans %}update{% endblocktrans %}" /></p>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

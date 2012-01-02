@@ -20,7 +20,16 @@
             <form method="post" class="section" action="{% url player:config_settings_new_theme %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
-                    {{ theme_form.as_table }}
+                    {% for field in theme_form %}
+                        <tr>
+                            <th>{{ field.label }}
+                            {% if field.help_text %}
+                                <br /><span class="helptext">{{ field.help_text }}</span></th>
+                            {% endif %}
+                            <td>{{ field }}</td>
+                            <td>{{ field.errors }}</td>
+                        </tr>
+                    {% endfor %}
                 </table>
                 <p class="submit"><input type="submit" value="{% blocktrans %}upload{% endblocktrans %}" /></p>
             </form>

@@ -41,7 +41,7 @@ from laudio.src.inc.config import LaudioConfig
 from laudio.src.inc.debugger import LaudioDebugger
 from laudio.player.models import XMLAPIUser
 from laudio.player.forms import UserProfileForm, UserForm, SettingsForm, \
-    UserEditProfileForm, UserEditForm, XMLAPIUserForm, ThemeForm
+    UserEditProfileForm, UserEditForm, XMLAPIUserForm, ThemeForm, XMLAPIUserEditForm
 
 
 @check_login('admin')
@@ -146,7 +146,7 @@ def config_settings_edit_user(request, userid):
         ctx = {
             'user_form': user_form,
             'profile_form': profile_form,
-            'userid': userid
+            'config_user': user
         }
         return csrf_render(request, 'config/settings_edit_user.html', ctx)
     else:
@@ -157,7 +157,7 @@ def config_settings_edit_user(request, userid):
         ctx = {
             'user_form': user_form,
             'profile_form': profile_form,
-            'userid': userid
+            'config_user': user
         }
         return csrf_render(request, 'config/settings_edit_user.html', ctx)
 
@@ -212,21 +212,21 @@ def xml_config_settings_edit_user(request, userid):
     # get form
     if request.method == 'POST':
         user = get_object_or_404(XMLAPIUser, id=userid)
-        user_form = XMLAPIUserForm(request.POST, instance=user)
+        user_form = XMLAPIUserEditForm(request.POST, instance=user)
         if user_form.is_valid():
             user_form.save()
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'user_form': user_form,
-            'userid': userid
+            'config_user': user
         }
         return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
     else:
         user = get_object_or_404(XMLAPIUser, id=userid)
-        user_form = XMLAPIUserForm(instance=user)
+        user_form = XMLAPIUserEditForm(instance=user)
         ctx = {
             'user_form': user_form,
-            'userid': userid
+            'config_user': user
         }
         return csrf_render(request, 'config/xml_settings_edit_user.html', ctx)
 

@@ -20,8 +20,26 @@
             <form method="post" class="section" action="{% url player:config_settings_new_user %}">
                 {% csrf_token %}
                 <table>
-                    {{ user_form.as_table }}
-                    {{ profile_form.as_table }}
+                    {% for field in user_form %}
+                        <tr>
+                            <th>{{ field.label }}
+                            {% if field.help_text %}
+                                <br /><span class="helptext">{{ field.help_text }}</span></th>
+                            {% endif %}
+                            <td>{{ field }}</td>
+                            <td>{{ field.errors }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for field in profile_form %}
+                        <tr>
+                            <th>{{ field.label }}
+                            {% if field.help_text %}
+                                <br /><span class="helptext">{{ field.help_text }}</span></th>
+                            {% endif %}
+                            <td>{{ field }}</td>
+                            <td>{{ field.errors }}</td>
+                        </tr>
+                    {% endfor %}
                 </table>
                 <p class="submit"><input type="submit" value="{% blocktrans %}create{% endblocktrans %}" /></p>
             </form>

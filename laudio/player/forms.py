@@ -46,7 +46,7 @@ class SetupForm(forms.ModelForm):
         model = User
         exclude = ('first_name', 'last_name', 'is_staff', 'last_login',
                    'date_joined', 'groups', 'user_permissions', 'password', 
-                   'is_active', 'is_superuser')
+                   'is_active', 'is_superuser', 'email')
            
     def clean_password2(self):
         """Password confirmation checker
@@ -71,13 +71,68 @@ class SetupForm(forms.ModelForm):
         
 
 class XMLAPIUserForm(forms.ModelForm):
+    password1 = forms.CharField(label=_('Password'), required=True, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=True, widget=forms.PasswordInput)
+    
     class Meta:
         model = XMLAPIUser
-        exclude = ('modified', 'token', 'last_handshake')
-        widgets = {
-            'password': forms.PasswordInput(render_value=False),
-        }
+        exclude = ('modified', 'token', 'last_handshake', 'password')
+           
+    def clean_password2(self):
+        """Password confirmation checker
+        """
+        password1 = self.cleaned_data.get("password1", "")
+        password2 = self.cleaned_data["password2"]
+        if password1 != password2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+        return password2
+
+    def save(self, commit=True):
+        """Sets the password for the user on save
         
+        Keyword arguments:
+        commit -- True if the values should be saved into the db
+        """
+        user = super(XMLAPIUserForm, self).save(commit=False)
+        # dont save if the password is empty
+        if self.cleaned_data["password1"] == '':
+            user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+
+class XMLAPIUserEditForm(forms.ModelForm):
+    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirm password'), required=False, widget=forms.PasswordInput)
+    
+    class Meta:
+        model = XMLAPIUser
+        exclude = ('modified', 'token', 'last_handshake', 'password')
+           
+    def clean_password2(self):
+        """Password confirmation checker
+        """
+        password1 = self.cleaned_data.get("password1", "")
+        password2 = self.cleaned_data["password2"]
+        if password1 != password2:
+            raise forms.ValidationError(_("The two password fields didn't match."))
+        return password2
+
+    def save(self, commit=True):
+        """Sets the password for the user on save
+        
+        Keyword arguments:
+        commit -- True if the values should be saved into the db
+        """
+        user = super(XMLAPIUserEditForm, self).save(commit=False)
+        # dont save if the password is empty
+        if self.cleaned_data["password1"] == '':
+            user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
 
 class UserProfileForm(forms.ModelForm):
     lastFMPass1 = forms.CharField(label=_('Last.fm Password'), widget=forms.PasswordInput)

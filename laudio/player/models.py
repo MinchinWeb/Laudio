@@ -116,7 +116,6 @@ class XMLAPIUser(models.Model):
 
     def set_password(self, password):
         self.password = hashlib.sha256(password)
-        self.save()
 
 
 # get themes in the themes directory
