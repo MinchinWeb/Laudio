@@ -135,8 +135,8 @@ def config_settings_edit_user(request, userid):
     if request.method == 'POST':
         user = get_object_or_404(User, id=userid)
         user_profile = user.get_profile()
-        user_form = UserEditForm(request.POST, instance=user)
-        profile_form = UserEditProfileForm(request.POST, instance=user_profile)
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, instance=user_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -150,8 +150,8 @@ def config_settings_edit_user(request, userid):
     else:
         user = get_object_or_404(User, id=userid)
         user_profile = user.get_profile()
-        user_form = UserEditForm(instance=user)
-        profile_form = UserEditProfileForm(instance=user_profile)    
+        user_form = UserForm(instance=user)
+        profile_form = UserProfileForm(instance=user_profile)    
         ctx = {
             'user_form': user_form,
             'profile_form': profile_form,
