@@ -56,7 +56,7 @@ class MusicScanner(object):
                     path
                     if not given, the collectionpath from the settings is used
         """
-        self.musicDir = musicDir.encode('utf-8')
+        self.musicDir = musicDir
         self.scanned = 0
         self.added = 0
         self.modified = 0
@@ -64,7 +64,6 @@ class MusicScanner(object):
         self.noRights = []
         self._debugger = LaudioDebugger()
         self.scanLog = ScanProgressor()
-
 
     def scan(self):
         """ Scans a directory recursively for ogg files """
@@ -83,7 +82,6 @@ class MusicScanner(object):
         
         # now add the files to the db
         for name in fileList:
-            
             # ogg vorbis
             if name.lower().endswith('.ogg') or name.lower().endswith('.oga'):
                 try:

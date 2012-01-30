@@ -66,6 +66,7 @@ class LaudioConfig(object):
                 self.collectionPath = config.get('settings', 'collection_path')
                 if not self.collectionPath.endswith('/'):
                     self.collectionPath += '/'
+                self.collectionPath = self.collectionPath.encode('utf-8')
             except ConfigParser.NoOptionError:
                 self.parserError = True
                 

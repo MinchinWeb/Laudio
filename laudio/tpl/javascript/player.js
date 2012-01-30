@@ -161,7 +161,7 @@ Player.prototype.play = function (row) {
         }
     }
     
-    $('.active').removeClass('active');
+    $('#content .active').removeClass('active');
     $(row).addClass('active');
     $(row).removeClass('selected');
     

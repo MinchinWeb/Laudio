@@ -178,7 +178,7 @@ $(document).ready(function () {
         } else {
             searcher.artist_letters($(this).html());
         }
-        $('#browser').toggle('slide');
+        $('#browser').toggle('fade');
         $('#browser_link').toggleClass('active');
     });
     
@@ -328,7 +328,7 @@ function load_playlist(entry){
  */
 function select_lines(row) {
     if (!(shift_key || ctrl_key)) {
-        $(row).siblings().removeClass('selected');
+        $('.selected').removeClass('selected');
     }
 
     var $select_from,
