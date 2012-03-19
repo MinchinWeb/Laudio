@@ -24,6 +24,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import ConfigParser
 import re
+import codecs
 
 # Django imports
 from django.conf import settings
@@ -59,14 +60,14 @@ class LaudioConfig(object):
         # read in main config
         try:
             config = ConfigParser.SafeConfigParser(allow_no_value=True)
-            config.read(self.mainConfig)
+            with codecs.open(self.mainConfig, 'r', encoding='utf-8') as f:
+                config.readfp(f)
                 
             # music settings
             try:
-                self.collectionPath = config.get('settings', 'collection_path')
+                self.collectionPath = config.get('settings', 'collection_path').encode('utf-8')
                 if not self.collectionPath.endswith('/'):
                     self.collectionPath += '/'
-                self.collectionPath = self.collectionPath.encode('utf-8')
             except ConfigParser.NoOptionError:
                 self.parserError = True
                 
@@ -108,14 +109,17 @@ class LaudioConfig(object):
             self.save()
         
         # now try to read in the server config
-        with open(self.apacheConfig, 'r') as confFile:
-            conf = confFile.read()
-            regex = r'WSGIScriptAlias (.*) .*wsgi/django.wsgi'
-            url = re.search(regex, conf).group(1)
-            if url.endswith('/'):
-                url = url[:-1]
-            self.url = url
-
+        try:
+            with open(self.apacheConfig, 'r') as confFile:
+                conf = confFile.read()
+                regex = r'WSGIScriptAlias (.*) .*wsgi/django.wsgi'
+                url = re.search(regex, conf).group(1)
+                if url.endswith('/'):
+                    url = url[:-1]
+                self.url = url
+        except IOError:
+            # FIXME: log error
+            pass
 
     def save(self):
         """Writes the current values into the configfile
@@ -130,7 +134,7 @@ class LaudioConfig(object):
         if self.collectionPath != '' and os.path.exists(sym_from):
             os.symlink(sym_from, sym_to)
         # music settings
-        config.set('settings', 'collection_path', str(self.collectionPath))
+        config.set('settings', 'collection_path', str(self.collectionPath).encode('utf-8'))
         config.set('settings', 'collection_startup', str(self.collectionStartup))
         config.set('settings', 'require_login', str(self.requireLogin))
         config.set('settings', 'debug', str(self.debug))
