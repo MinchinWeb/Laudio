@@ -65,6 +65,7 @@ def config_settings(request):
         settings_form = SettingsForm(request.POST)
         if settings_form.is_valid():
             settings_form.save()
+            
             return HttpResponseRedirect(reverse('player:config_settings'))
         ctx = {
             'settings_form': settings_form,

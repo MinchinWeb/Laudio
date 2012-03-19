@@ -48,7 +48,7 @@ class LaudioConfig(object):
         # set default values
         self.parserError = False
         # music settings
-        self.collectionPath = ''
+        self.collectionPath = '/home/user/music/'
         self.collectionStartup = False
         self.requireLogin = False
         self.debug = False
@@ -126,13 +126,6 @@ class LaudioConfig(object):
         """
         config = ConfigParser.SafeConfigParser()
         config.add_section('settings')
-        # add symlink to music directory
-        sym_from = self.collectionPath
-        sym_to = os.path.join(settings.STATIC_ROOT, 'audio')
-        if os.path.exists(sym_to):
-            os.unlink(sym_to)
-        if self.collectionPath != '' and os.path.exists(sym_from):
-            os.symlink(sym_from, sym_to)
         # music settings
         config.set('settings', 'collection_path', str(self.collectionPath).encode('utf-8'))
         config.set('settings', 'collection_startup', str(self.collectionStartup))
@@ -144,3 +137,15 @@ class LaudioConfig(object):
         with open(self.mainConfig, 'wb') as confFile:
             config.write(confFile)
 
+
+    def symlink_collection(self, path):
+        """add symlink to music directory
+        keyword arguments
+        path -- the path to the music directory
+        """
+        source = self.collectionPath
+        linkName = os.path.join(settings.STATIC_ROOT, 'audio')
+        if os.path.exists(linkName):
+            os.unlink(linkName)
+        if self.collectionPath != '' and os.path.exists(source):
+            os.symlink(source, linkName)

@@ -285,6 +285,7 @@ class SettingsForm(forms.Form):
         config.transcoding = self.cleaned_data['transcoding']
         config.tokenLifespan = self.cleaned_data['token_lifespan']
         config.save()
+        config.symlink_collection(config.collectionPath)
 
 
 class ThemeForm(forms.Form):
