@@ -22,14 +22,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
 
 import os
-import sys
-from os.path import dirname
-# append laudio's parent directory to the sys path
-relPath = dirname(dirname(dirname( os.path.abspath(__file__) )))
-sys.path.append(os.path.abspath(relPath))
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'laudio.settings'
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "laudio.settings")
 
-import django.core.handlers.wsgi
-application = django.core.handlers.wsgi.WSGIHandler()
+# This application object is used by any WSGI server configured to use this
+# file. This includes Django's development server, if the WSGI_APPLICATION
+# setting points here.
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
 
+# Apply WSGI middleware here.
+# from helloworld.wsgi import HelloWorldApplication
+# application = HelloWorldApplication(application)

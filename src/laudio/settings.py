@@ -20,27 +20,22 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-# Base imports
 import os.path
 
-# Laudio imports
 from src.inc.config import LaudioConfig
 
 # laudio config vars
-LAUDIO_CFG = {
+LAUDIO_VARS = {
     'MAIN_CFG': '/etc/laudio/laudio.cfg',
     'APACHE_CFG': '/etc/laudio/apache/laudio.conf',
-    'LIGHTTPD_CFG': '/etc/laudio/lighttpd/laudio.conf',    
+    'LIGHTTPD_CFG': '/etc/laudio/lighttpd/laudio.conf',
+    'LAUDIO_SQLITE_PATH': '/var/lib/laudio/laudio.db',
+    'DEBUG_LOG': '/var/log/laudio/debug.log',
+    'SCAN_LOG': '/var/log/laudio/scan.log',
+    'LAST_FM_API_KEY': 'a1d1111ab0b08262e6d7484cc5dc949a',
 }
-CONF = LaudioConfig(LAUDIO_CFG)
-LAUDIO_URL = CONF.url
-#LAUDIO_URL = ''
-LAUDIO_SQLITE_PATH = '/var/lib/laudio/laudio.db'
-DEBUG_LOG = '/var/log/laudio/debug.log'
-SCAN_LOG = '/var/log/laudio/scan.log'
-LAUDIO_VERSION = '0.6.0.0'
-LAST_FM_API_KEY = 'a1d1111ab0b08262e6d7484cc5dc949a'
 
+LAUDIO_CONFIG = LaudioConfig(LAUDIO_VARS)
 
 # django configuration
 DEBUG = True
@@ -174,7 +169,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'laudio',
     'laudio.player',
 )
 

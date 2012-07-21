@@ -1,5 +1,5 @@
 include MANIFEST.in AUTHORS COPYING COPYRIGHT README.rst setup.sh
 
-recursive-include laudio/ *
+recursive-include src/ *
 recursive-include dist/ *
 

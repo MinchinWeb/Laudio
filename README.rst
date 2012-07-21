@@ -22,7 +22,7 @@ Dependencies
 ============
 * python (2.7)
 * python-lxml 
-* python-django (1.3)
+* python-django (1.4)
 * python-mutagen 
 * apache2 
 * sqlite3 
@@ -55,8 +55,7 @@ Grep the source from github and run the install script::
 
     $ git clone git@github.com:Raydiation/Laudio.git
     $ cd Laudio*
-    $ sudo /bin/bash setup.sh
-
+    $ sudo make
 Check the branches with git::
 
     $ git branch
@@ -67,7 +66,7 @@ Change to the branche you want to develop in::
     
 Then run the developement server::
 
-    $ python laudio/manage.py runserver
+    $ python src/laudio/manage.py runserver
 
 l-audio is now available at http://localhost:8000/
 
