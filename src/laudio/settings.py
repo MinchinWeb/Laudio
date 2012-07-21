@@ -29,7 +29,7 @@ LAUDIO_VARS = {
     'MAIN_CFG': '/etc/laudio/laudio.cfg',
     'APACHE_CFG': '/etc/laudio/apache/laudio.conf',
     'LIGHTTPD_CFG': '/etc/laudio/lighttpd/laudio.conf',
-    'LAUDIO_SQLITE_PATH': '/var/lib/laudio/laudio.db',
+    'DB_PATH': '/var/lib/laudio/laudio.db',
     'DEBUG_LOG': '/var/log/laudio/debug.log',
     'SCAN_LOG': '/var/log/laudio/scan.log',
     'LAST_FM_API_KEY': 'a1d1111ab0b08262e6d7484cc5dc949a',
@@ -52,7 +52,7 @@ AUTH_PROFILE_MODULE = 'player.UserProfile'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': LAUDIO_SQLITE_PATH,    # Or path to database file if using sqlite3.
+        'NAME': LAUDIO_VARS['DB_PATH'],    # Or path to database file if using sqlite3.
         #'USER': '',                      # Not used with sqlite3.
         #'PASSWORD': '',                  # Not used with sqlite3.
         #'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -91,22 +91,29 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+# If you set this to False, Django will not use timezone-aware datetimes.
+USE_TZ = True
+
 # Shortcut for the installation directory
-INSTALL_DIR = os.path.dirname( os.path.abspath(__file__) )
+PROJECT_PATH = os.path.dirname( os.path.abspath(__file__) )
+
+# Use this to adjust the root url. For instance if you want to run l-audio under
+# /laudio/ you must set the ROOT_URL to /laudio
+ROOT_URL = ''
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' 'static/' subdirectories and in STATICFILES_DIRS.
 # Example: '/home/media/media.lawrence.com/static/'
-STATIC_ROOT = os.path.join( INSTALL_DIR, 'static/')
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'static/')
 
 # URL prefix for static files.
 # Example: 'http://media.lawrence.com/static/'
-STATIC_URL = LAUDIO_URL + '/static/'
+STATIC_URL = ROOT_URL + '/static/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: '/home/media/media.lawrence.com/media/'
-MEDIA_ROOT = os.path.join( STATIC_ROOT, 'upload/')
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'upload/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -120,7 +127,6 @@ ADMIN_MEDIA_PREFIX =  LAUDIO_URL + '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join( INSTALL_DIR, 'player/static/'),
     # Put strings here, like '/home/html/static' or 'C:/www/django/static'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -140,7 +146,7 @@ SECRET_KEY = 'h6%=n5c(b(9u@-^@0ke^u@=y%r-e1ke)13^c2325gn!w#=c3=f'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+#    'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -151,12 +157,17 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'laudio.urls'
 
+# Python dotted path to the WSGI application used by Django's runserver.
+WSGI_APPLICATION = 'laudio.wsgi.application'
+
 TEMPLATE_DIRS = (
-    os.path.join(INSTALL_DIR, 'tpl'),
+    os.path.join(PROJECT_PATH, 'templates'),
     # Put strings here, like '/home/html/django_templates' or 'C:/www/django/templates'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -169,7 +180,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'laudio.core',
+    'laudio.settings',
     'laudio.player',
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -180,9 +197,15 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
@@ -195,4 +218,3 @@ LOGGING = {
     }
 }
 
-USER_LOGOUT = 'laudio.player.views.player.index'

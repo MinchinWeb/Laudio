@@ -51,7 +51,7 @@ def render(request, tpl, tplvars={}):
     """
     tplvars.update(csrf(request))
     # pass config vars
-    tplvars['config'] = LaudioConfig(settings.LAUDIO_CFG)
+    tplvars['config'] = settings.LAUDIO_CONFIG
     tplvars['index_view'] = reverse('player:index')
     return render_to_response(tpl, tplvars,
                                context_instance=RequestContext(request))
