@@ -52,9 +52,9 @@ def index(request):
 def player(request):
     """Shows the player if there are superusers
     """
-    artists = Artist.objects.all().distinct('name').order_by('name')
-    albums = Album.objects.all().distinct('name').order_by('name')
-    genres = Genre.objects.all().distinct('name').order_by('name')
+    artists = Artist.objects.all().order_by('name')
+    albums = Album.objects.all().order_by('name')
+    genres = Genre.objects.all().order_by('name')
     ctx = {
         'artists': artists,
         'albums': albums,
