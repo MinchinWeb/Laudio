@@ -102,7 +102,7 @@ function setup_devel_rights {
 function setup_production_rights {
    for elem in ${needed_dirs[@]}; do
       if [[ -e $elem ]]; then
-         chown -R $apache_ug:apache_ug $elem
+         chown -R $apache_ug:$apache_ug $elem
          chmod -R 0755 $elem
       fi
    done
