@@ -21,20 +21,9 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 # Django imports
+from django.conf import settings 
 from django.conf.urls.defaults import *
-from django.conf import settings
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
-urlpatterns = patterns('',
-)
-
-# if debug is set, serve static files
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
-
-urlpatterns += patterns('',
-    url(r'server/^', include('laudio.apps.api.urls', namespace='api', app_name='api')),
-    url(r'settings/^', include('laudio.apps.settings.urls', namespace='settings', app_name='settings')),
-    url(r'^', include('laudio.apps.core.urls', namespace='core', app_name='core')),
+urlpatterns = patterns('laudio.apps.api.views',
+    url(r'^xml.server.php$', 'xml_api', name='xml_api'),
 )

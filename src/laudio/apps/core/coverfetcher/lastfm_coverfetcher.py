@@ -34,7 +34,7 @@ from django.core.urlresolvers import reverse
 from laudio.player.models import UserProfile
 
 
-class CoverFetcher(object):
+class LastFMCoverFetcher(object):
     """
     Class for fetching covers from last.fm or harddisk
     """

@@ -22,7 +22,7 @@ along with Laudio.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
 
-from src.inc.config import LaudioConfig
+from apps.core.inc.config import LaudioConfig
 
 # laudio config vars
 LAUDIO_VARS = {
@@ -47,7 +47,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-AUTH_PROFILE_MODULE = 'player.UserProfile'
+AUTH_PROFILE_MODULE = 'apps.core.UserProfile'
 
 DATABASES = {
     'default': {
@@ -123,7 +123,7 @@ MEDIA_URL = STATIC_URL + 'upload/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: 'http://foo.com/static/admin/', '/static/admin/'.
-ADMIN_MEDIA_PREFIX =  LAUDIO_URL + '/static/admin/'
+ADMIN_MEDIA_PREFIX =  ROOT_URL + '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -180,9 +180,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'laudio.core',
-    'laudio.settings',
-    'laudio.player',
+    'laudio.apps.core',
+    #'laudio.apps.settings',
+    #'laudio.apps.api',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -200,14 +200,14 @@ LOGGING = {
     'handlers': {
         'console': {
             'level': 'INFO',
-            'class': 'logging.StreamHandler'
+            'class': 'logging.StreamHandler',
         },
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(LAUDIO_VARS['DEBUG_LOG']
-        },
-    },
+            'filename': os.path.join(LAUDIO_VARS['DEBUG_LOG']),
+      },
+   },
     'loggers': {
         'django': {
             'handlers': ['console'],

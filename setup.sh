@@ -116,20 +116,20 @@ function install_deps {
    fi
 
    if [[ "$distro" == "debian" ]]; then 
-      apt-get install $debian_deps
+      apt-get install "$debian_deps"
    fi
 
    if [[ "$distro" == "arch" ]]; then 
-      pacman -Sy $arch_deps
+      pacman -Sy "$arch_deps"
    fi
 
    if [[ "$distro" == "gentoo" ]]; then 
-      emerge -av $gentoo_deps
+      emerge -av "$gentoo_deps"
    fi
 
    if [[ "$distro" == "unknown" ]]; then 
       echo "Unknown Distribution! Please install the following dependencies"
-      echo -e $general_deps
+      echo -e "$general_deps"
    fi
 }
 
@@ -205,8 +205,10 @@ function production_setup {
    symlink_fonts
    create_database
    mv src $install_dir
+   mkdir -p $install_dir/src/laudio/static/upload
    chmod 0755 $database_path
    chown $apache_ug:$apache_ug $database_path
+   chown -R $apache_ug:$apache_ug $install_dir/src/laudio/static
    restart_apache
 }
 

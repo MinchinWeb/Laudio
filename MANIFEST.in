@@ -1,4 +1,4 @@
-include MANIFEST.in AUTHORS COPYING COPYRIGHT README.rst setup.sh
+include MANIFEST.in AUTHORS COPYING COPYRIGHT README.md setup.sh
 
 recursive-include src/ *
 recursive-include dist/ *
