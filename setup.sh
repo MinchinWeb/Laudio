@@ -156,8 +156,9 @@ function install_configs {
 }
 
 function symlink_fonts {
-   ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf $install_dir/laudio/static/upload/themes/default/font/DejaVuSans-Bold.ttf
-   ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed.ttf $install_dir/laudio/static/upload/themes/default/font/DejaVuSansCondensed.ttf
+   # FIXME for different distros
+   ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf src/laudio/static/upload/themes/default/font/DejaVuSans-Bold.ttf
+   ln -s /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed.ttf src/laudio/static/upload/themes/default/font/DejaVuSansCondensed.ttf
 }
 
 function restart_apache {
