@@ -61,8 +61,8 @@ fi
 # check for distro
 distro="unknown"
 if [ -f /etc/system-release ]; then 
-  if grep -Fxq Fedora /etc/system-release; then
-     $distro="fedora"
+  if grep -Fq Fedora /etc/system-release; then
+     distro="fedora"
   fi
 fi
 # TODO: check for other distros
@@ -99,6 +99,7 @@ function setup_devel_rights {
    done
 }
 
+# FIXME: please check this again thouroughly
 function setup_production_rights {
    for elem in ${needed_dirs[@]}; do
       if [[ -e $elem ]]; then
@@ -110,25 +111,25 @@ function setup_production_rights {
 
 # installs the dependencies on the required platform
 function install_deps {
-   if [ "$distro" -eq "fedora" ]; then 
+   if [[ "$distro" == "fedora" ]]; then 
       yum install $fedora_deps
    fi
 
-   if [ "$distro" -eq "debian" ]; then 
+   if [[ "$distro" == "debian" ]]; then 
       apt-get install $debian_deps
    fi
 
-   if [ "$distro" -eq "arch" ]; then 
+   if [[ "$distro" == "arch" ]]; then 
       pacman -Sy $arch_deps
    fi
 
-   if [ "$distro" -eq "gentoo" ]; then 
+   if [[ "$distro" == "gentoo" ]]; then 
       emerge -av $gentoo_deps
    fi
 
-   if [ "$distro" -eq "unknown" ]; then 
+   if [[ "$distro" == "unknown" ]]; then 
       echo "Unknown Distribution! Please install the following dependencies"
-      echo $general_deps
+      echo -e $general_deps
    fi
 }
 
@@ -186,12 +187,13 @@ function restart_apache {
 
 # developement setup, dont use this in production!
 function devel_setup {
-   require_root
-   install_deps
-   create_dirs
-   setup_devel_rights
-   create_database
-   chmod 0777 $database_path
+   #require_root
+   #install_deps
+   #create_dirs
+   #setup_devel_rights
+   #create_database
+   #chmod 0777 $database_path
+   echo $distro
 }
 
 function production_setup {
