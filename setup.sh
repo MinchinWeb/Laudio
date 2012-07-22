@@ -60,7 +60,7 @@ fi
 
 # check for distro
 distro="unknown"
-if [ -d /etc/system-release ]; then 
+if [ -f /etc/system-release ]; then 
   if grep -Fxq Fedora /etc/system-release; then
      $distro="fedora"
   fi
