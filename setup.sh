@@ -187,12 +187,12 @@ function restart_apache {
 
 # developement setup, dont use this in production!
 function devel_setup {
-   #require_root
-   #install_deps
-   #create_dirs
-   #setup_devel_rights
-   #create_database
-   #chmod 0777 $database_path
+   require_root
+   install_deps
+   create_dirs
+   setup_devel_rights
+   create_database
+   chmod 0777 $database_path
    echo $distro
 }
 
