@@ -202,7 +202,8 @@ function production_setup {
    symlink_fonts
    create_database
    mv src $install_dir
-   setup_production_rights
+   chmod 0755 $database_path
+   chown $apache_ug:$apache_ug $database_path
    restart_apache
 }
 
