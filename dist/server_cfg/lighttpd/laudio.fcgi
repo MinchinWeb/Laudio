@@ -2,7 +2,7 @@
 import sys, os
 
 # Add application root to PYTHON_PATH
-sys.path.insert(0, "/usr/share/laudio")
+sys.path.insert(0, "/usr/share/laudio/src/laudio")
 
 # Setup Django
 from django.core.servers.fastcgi import runfastcgi
