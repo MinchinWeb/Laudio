@@ -198,6 +198,7 @@ function production_setup {
    install_deps
    create_dirs
    setup_production_rights
+   install_configs
    symlink_fonts
    create_database
    mv src $install_dir
