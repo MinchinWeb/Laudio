@@ -70,8 +70,8 @@ case "$DISTRO" in
                 rm -r $elem
             fi
         done
-        mv dist/server_cfg/apache $LAUDIO_CONF_DIR
-        mv dist/server_cfg/lighttpd $LAUDIO_CONF_DIR
+        cp dist/server_cfg/apache $LAUDIO_CONF_DIR
+        cp dist/server_cfg/lighttpd $LAUDIO_CONF_DIR
         rm -rf /etc/apache2/conf.d/laudio_apache.conf 
         ln -s /etc/laudio/apache/laudio.conf /etc/apache2/conf.d/laudio_apache.conf 
         echo "Creating Directories and installing laudio"
@@ -82,7 +82,7 @@ case "$DISTRO" in
             chown -R $APACHE:$APACHE $elem
             chmod -R 0755 $elem
         done
-        mv laudio $INSTALL_DIR
+        cp -R laudio $INSTALL_DIR
         chown -R $APACHE:$APACHE $INSTALL_DIR
         chmod -R 0755 $INSTALL_DIR
         
